@@ -14,12 +14,12 @@ Static site for the Mandem TeamSpeak server. Repo arazez/mandem-ts-website (rena
 | Task | File |
 |---|---|
 | Bot data contract | `docs/SITE-DATA.md` |
-| Pages (one per navbar item) | root .html files; each page's script in `assets/` |
+| Pages (one per navbar item, plus unlisted `admin.html`: never link it) | root .html files; each page's script in `assets/` |
 | Navbar, footer, adding a page | `assets/layout.js` |
 | Reading any data file (the only place) | `assets/data.js` |
 | UK time, date-only dates, donation window | `assets/time.js` |
 | Data file check (also run by GitHub on push) | `tools/validate-data.mjs` |
-| Docs budget, hidden characters, Commands page vs bot guide (runs at session start) | `tools/check-docs.mjs` |
+| Docs budget, hidden characters, command pages vs bot guide (runs at session start) | `tools/check-docs.mjs` |
 
 ## Gotchas
 - Tool quirk: typed backslash-u escapes become real, often invisible characters, and heredocs eat backslashes. Build such characters with String.fromCharCode in node, then run `tools/check-docs.mjs` (it scans for them).
@@ -33,4 +33,3 @@ Static site for the Mandem TeamSpeak server. Repo arazez/mandem-ts-website (rena
 
 ## State
 - Milestone: Phase 2 done; site live at mandem.arazez.com.
-- Open: modal limit. Site says 200 characters, bot guide says 500; owner checking.
