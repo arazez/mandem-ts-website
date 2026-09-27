@@ -18,7 +18,10 @@ Commands page rules:
 - Leave out admin-only and owner-only commands, including !donation, !sync, !control, !trivia reset, !uno void and the admins' Twitch controls, plus anything else the guide marks as admin or owner only. They go on the Admin page.
 
 Admin page rules:
-- Include only commands the guide marks as admin, owner or Super Admin only, and the extra powers the owner and Super Admins have over everyday commands (such as !unlock <channel>, !role add <name> leader). Say who can use each section in a <p class="muted"> line.
+- Include only commands the guide marks as admin, owner or Super Admin only, and the extra powers the owner and Super Admins have over everyday commands (such as !unlock <channel>, !role add <name> leader).
+- Name the exact TeamSpeak ranks that can use each command, never "admins". The guide's "Admin" means the groups on the bot's admin list, which the guide says is currently just the Owner group: label those commands Owner, and if the guide's list changes, name the groups it now holds.
+- Start each command's <dd> with its "who" row, copying the existing markup: <div class="who"><span class="who-label">Who can use it</span> then one <span class="role-pill role-...">Rank</span> per rank. assets/admin.js filters the page by these pills; a new rank needs a pill class in assets/site.css and a switch button.
+- A note that only matters to some ranks gets data-ranks="owner super-admin" (space-separated) so the filter hides it for others.
 - Keep it unlisted: never link to it from any page, the navbar or the footer, and keep its <meta name="robots" content="noindex"> line.
 - Leave out setup detail: .env setting names, group numbers and file paths on the bot's computer.
 - No example that pairs a name with a donation amount.

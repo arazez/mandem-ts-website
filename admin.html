@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin commands | Mandem Server</title>
 <meta name="robots" content="noindex">
-<meta name="description" content="Bot commands for the Mandem Server's admins and owner.">
+<meta name="description" content="Bot commands for the Mandem Server's owner and Super Admins.">
 <meta property="og:title" content="Admin commands | Mandem Server">
-<meta property="og:description" content="Bot commands for the Mandem Server's admins and owner.">
+<meta property="og:description" content="Bot commands for the Mandem Server's owner and Super Admins.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mandem.arazez.com/admin">
 <meta property="og:site_name" content="Mandem Server">
@@ -25,6 +25,7 @@
 <script src="assets/theme.js"></script>
 <script type="module" src="assets/layout.js"></script>
 <script type="module" src="assets/commands.js"></script>
+<script type="module" src="assets/admin.js"></script>
 </head>
 <body data-page="admin">
 <!-- Unlisted: never link this page from the navbar, the footer or any other page. -->
@@ -32,23 +33,39 @@
 
 <div class="wrap wide page-head">
   <h1>Admin commands</h1>
-  <p class="lead">Commands for the server's admins and owner. Anyone else who tries one gets "You do not have permission". Type <code class="cmd">!bot</code> in the server or channel chat first, then send these in its private chat. Everyone's commands are on the <a href="commands">Commands</a> page. Tip: click any command to copy it.</p>
+  <p class="lead">Commands only some ranks can use. Each one shows the ranks that can use it; anyone else gets "You do not have permission". Type <code class="cmd">!bot</code> in the server or channel chat first, then send these in its private chat. Everyone's commands are on the <a href="commands">Commands</a> page. Tip: click any command to copy it.</p>
+  <!-- The rank switch is wired up by assets/admin.js; without it, everything shows. -->
+  <div class="version-switch" role="group" aria-label="Show commands for" hidden>
+    <span class="muted small">Show commands for:</span>
+    <button type="button" data-rank="all" aria-pressed="true">All ranks</button>
+    <button type="button" data-rank="owner" aria-pressed="false">Owner</button>
+    <button type="button" data-rank="super-admin" aria-pressed="false">Super Admin</button>
+    <button type="button" data-rank="admin" aria-pressed="false">Admin</button>
+    <button type="button" data-rank="moderator" aria-pressed="false">Moderator</button>
+    <span class="muted small" id="rank-count" aria-live="polite"></span>
+  </div>
 </div>
 
 <main class="wrap wide page docs">
   <!-- Side index: built by assets/commands.js from the headings and commands below -->
   <aside class="toc" id="toc" aria-label="On this page"></aside>
 
-  <!-- Command list: written by the commands-page-writer agent from the bot's docs/COMMANDS.md -->
+  <!-- Command list: written by the commands-page-writer agent from the bot's docs/COMMANDS.md.
+       Each command's <dd> starts with a "who" row of role pills; assets/admin.js filters by them. -->
   <!-- commands-source sha256=a0c4c891ecfda3fca1361e783a7a2f3a2a23e3d49b55a80550c2980fcb671816 -->
   <div id="commands">
+
+    <div class="notice role-empty" hidden>
+      <strong>Nothing on this page for this rank yet</strong>
+      For now the bot lets only the Owner group use its admin commands. Everything this rank can use is on the <a href="commands">Commands</a> page.
+    </div>
 
     <section class="cmd-group">
       <h2>Help</h2>
       <div class="card">
         <dl class="cmd-list">
           <dt><code class="cmd">!helplistadmin</code></dt>
-          <dd>Lists the admin commands in chat, one line each. <code class="cmd">!help</code> points admins to it.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Lists the admin commands in chat, one line each. <code class="cmd">!help</code> points you to it.</dd>
         </dl>
       </div>
     </section>
@@ -56,16 +73,15 @@
     <section class="cmd-group">
       <h2>Donations</h2>
       <div class="card">
-        <p class="muted">Admins.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!donation add &lt;name&gt; &lt;pounds&gt; [date]</code></dt>
-          <dd>Records a donation in whole pounds, up to the per-person limit for this donation window, and gives out what it earns: 1 banner week and 1 modal week per £1, plus the mute once that person's donations in the window reach the mute minimum. The date is optional (today if left out), written day first, and must fall inside the donation window and not in the future. Refused once the goal is reached, unless that's switched off. Put names with spaces in quotes. The reply gives the donation's number, in case it needs voiding.<br><span class="cmd-example">Example date: <code class="cmd">05/10/2026</code></span></dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Records a donation in whole pounds, up to the per-person limit for this donation window, and gives out what it earns: 1 banner week and 1 modal week per £1, plus the mute once that person's donations in the window reach the mute minimum. The date is optional (today if left out), written day first, and must fall inside the donation window and not in the future. Refused once the goal is reached, unless that's switched off. Put names with spaces in quotes. The reply gives the donation's number, in case it needs voiding.<br><span class="cmd-example">Example date: <code class="cmd">05/10/2026</code></span></dd>
 
           <dt><code class="cmd">!donation void &lt;number&gt;</code></dt>
-          <dd>Reverses a donation by its number. Takes back the weeks it added, never below zero and not weeks already started. Takes back its mute only if it's unused and the person's window total drops below the mute minimum. Lowers the total raised. A donation can only be voided once.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Reverses a donation by its number. Takes back the weeks it added, never below zero and not weeks already started. Takes back its mute only if it's unused and the person's window total drops below the mute minimum. Lowers the total raised. A donation can only be voided once.</dd>
 
           <dt><code class="cmd">!donation list [name]</code></dt>
-          <dd>Shows the latest donations, newest first, or just one person's. Marks voided ones and ones that gave a mute.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Shows the latest donations, newest first, or just one person's. Marks voided ones and ones that gave a mute.</dd>
         </dl>
       </div>
     </section>
@@ -73,10 +89,9 @@
     <section class="cmd-group">
       <h2>Checking the bot's files</h2>
       <div class="card">
-        <p class="muted">Admins.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!sync</code></dt>
-          <dd>Re-reads the perks and donations files from the website and the private list of linked accounts, sends any changes still waiting for the website, and says whether each file passes its checks. A file that fails is rejected and the bot keeps using the last good copy. While the perks or donations file is rejected, the commands that change it refuse: fix the file, run <code class="cmd">!sync</code> to check it passes, and they work again. Also says when the website was last read. Use it after editing a file by hand. Online admins get a private message whenever a file is rejected.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Re-reads the perks and donations files from the website and the private list of linked accounts, sends any changes still waiting for the website, and says whether each file passes its checks. A file that fails is rejected and the bot keeps using the last good copy. While the perks or donations file is rejected, the commands that change it refuse: fix the file, run <code class="cmd">!sync</code> to check it passes, and they work again. Also says when the website was last read. Use it after editing a file by hand. You get a private message whenever a file is rejected, if you're online.</dd>
         </dl>
       </div>
     </section>
@@ -84,49 +99,49 @@
     <section class="cmd-group">
       <h2>The website's records</h2>
       <div class="card">
-        <p class="muted">Admins. These change the website's files for you, so there's no need to edit them by hand. Each reply shows the old and new value, every change goes in the audit log, and the website shows it about 10 minutes later. Put names with spaces in quotes.</p>
+        <p class="muted" data-ranks="owner">These change the website's files for you, so there's no need to edit them by hand. Each reply shows the old and new value, every change goes in the audit log, and the website shows it about 10 minutes later. Put names with spaces in quotes.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!site show</code></dt>
-          <dd>Shows the total raised, the goal, the thresholds, the donation window and how many people are listed.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Shows the total raised, the goal, the thresholds, the donation window and how many people are listed.</dd>
 
           <dt><code class="cmd">!site set &lt;setting&gt; &lt;value&gt;</code></dt>
-          <dd>Changes one setting: <code>raised</code> or <code>goal</code> (pounds, pence allowed, like 12.50); <code>adminMinimum</code>, <code>muteMinimum</code> or <code>maxPerPerson</code> (whole pounds); <code>closeWhenGoalReached</code> (on or off). Warns if <code>muteMinimum</code> is above <code>maxPerPerson</code>, since then nobody could earn a mute.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Changes one setting: <code>raised</code> or <code>goal</code> (pounds, pence allowed, like 12.50); <code>adminMinimum</code>, <code>muteMinimum</code> or <code>maxPerPerson</code> (whole pounds); <code>closeWhenGoalReached</code> (on or off). Warns if <code>muteMinimum</code> is above <code>maxPerPerson</code>, since then nobody could earn a mute.</dd>
 
           <dt><code class="cmd">!site set window &lt;month&gt; &lt;day&gt; &lt;days&gt;</code></dt>
-          <dd>Sets when the donation window opens each year and how many days it lasts, counting the first. The month can be a number or a name.<br><span class="cmd-example">Example: <code class="cmd">!site set window October 1 31</code></span></dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Sets when the donation window opens each year and how many days it lasts, counting the first. The month can be a number or a name.<br><span class="cmd-example">Example: <code class="cmd">!site set window October 1 31</code></span></dd>
 
           <dt><code class="cmd">!donor add &lt;name&gt; [level]</code></dt>
-          <dd>Adds someone to the <a href="supporters">Supporters</a> list, with an optional level (any text, several words allowed). <code class="cmd">!donation add</code> already adds new donors, without a level.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Adds someone to the <a href="supporters">Supporters</a> list, with an optional level (any text, several words allowed). <code class="cmd">!donation add</code> already adds new donors, without a level.</dd>
 
           <dt><code class="cmd">!donor level &lt;name&gt; &lt;level|none&gt;</code></dt>
-          <dd>Gives a donor a level, or takes it off with <code>none</code>. For example when they reach the admin minimum and get the role in TeamSpeak.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Gives a donor a level, or takes it off with <code>none</code>. For example when they reach the admin minimum and get the role in TeamSpeak.</dd>
 
           <dt><code class="cmd">!donor remove &lt;name&gt;</code></dt>
-          <dd>Takes someone off the Supporters list. Their perks stay.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Takes someone off the Supporters list. Their perks stay.</dd>
 
           <dt><code class="cmd">!perk set &lt;name&gt; &lt;banner|modal|mute&gt; &lt;value&gt;</code></dt>
-          <dd>Fixes someone's perks by hand. Banner and modal are whole weeks not yet started. A mute is <code>ready</code>, <code>none</code>, or the date it comes back, day first. A name that isn't in any file yet is accepted, with a warning in case it's a typo.<br><span class="cmd-example">Example: <code class="cmd">!perk set Bob mute 01/04/2027</code></span></dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Fixes someone's perks by hand. Banner and modal are whole weeks not yet started. A mute is <code>ready</code>, <code>none</code>, or the date it comes back, day first. A name that isn't in any file yet is accepted, with a warning in case it's a typo.<br><span class="cmd-example">Example: <code class="cmd">!perk set Bob mute 01/04/2027</code></span></dd>
 
           <dt><code class="cmd">!perk remove &lt;name&gt;</code></dt>
-          <dd>Takes all of someone's perks away, but not while one of their weeks is running.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Takes all of someone's perks away, but not while one of their weeks is running.</dd>
 
           <dt><code class="cmd">!identity add &lt;name&gt; &lt;user&gt;</code></dt>
-          <dd>Links the TeamSpeak account of someone online now to a supporter, so they can use their perks. Part of their nickname is enough. One person can have several accounts linked, one per computer or phone, but each account can belong to only one person. The list stays private on the bot's computer and never goes on the website.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Links the TeamSpeak account of someone online now to a supporter, so they can use their perks. Part of their nickname is enough. One person can have several accounts linked, one per computer or phone, but each account can belong to only one person. The list stays private on the bot's computer and never goes on the website.</dd>
 
           <dt><code class="cmd">!identity add &lt;name&gt; uid &lt;ID&gt;</code></dt>
-          <dd>The same for someone who's offline, using their TeamSpeak unique ID. They can get it with <code class="cmd">!whoami</code>.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>The same for someone who's offline, using their TeamSpeak unique ID. They can get it with <code class="cmd">!whoami</code>.</dd>
 
           <dt><code class="cmd">!identity list &lt;name&gt;</code></dt>
-          <dd>Shows the accounts linked to a supporter.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Shows the accounts linked to a supporter.</dd>
 
           <dt><code class="cmd">!identity remove &lt;name&gt; &lt;ID&gt;</code></dt>
-          <dd>Unlinks one account from a supporter.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Unlinks one account from a supporter.</dd>
 
           <dt><code class="cmd">!uid &lt;user&gt;</code></dt>
-          <dd>Shows the unique ID of someone online, and who it's linked to.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Shows the unique ID of someone online, and who it's linked to.</dd>
 
           <dt><code class="cmd">!audit [how many]</code></dt>
-          <dd>Shows the latest audit log entries, newest first: 10 unless you say, at most 50. Each says when, what, who did it ("the bot" for automatic things) and the details.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Shows the latest audit log entries, newest first: 10 unless you say, at most 50. Each says when, what, who did it ("the bot" for automatic things) and the details.</dd>
         </dl>
       </div>
     </section>
@@ -134,30 +149,31 @@
     <section class="cmd-group">
       <h2>Modal and banner</h2>
       <div class="card">
-        <p class="muted">Owner only, except <code class="cmd">!modal remove</code> and <code class="cmd">!banner remove</code>, which Super Admins can use too. The owner never has to start a week, and the bot never refuses them because someone else holds the modal or banner.</p>
+        <p class="muted" data-ranks="owner">The owner never has to start a week, and the bot never refuses them because someone else holds the modal or banner.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!modal default &lt;text&gt;</code> / <code class="cmd">!modal default off</code></dt>
-          <dd>Sets your everyday modal, shown whenever nobody has a week running. If someone does, it waits and shows by itself when their week ends. <code>off</code> means no pop-up when nobody has a week.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Sets your everyday modal, shown whenever nobody has a week running. If someone does, it waits and shows by itself when their week ends. <code>off</code> means no pop-up when nobody has a week.</dd>
 
           <dt><code class="cmd">!banner default &lt;picture address&gt; [link]</code> / <code class="cmd">!banner default off</code></dt>
-          <dd>The same for the banner. Any picture site works for your own banner. <code>off</code> means no banner.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>The same for the banner. Any picture site works for your own banner. <code>off</code> means no banner.</dd>
 
           <dt><code class="cmd">!modal service &lt;text&gt;</code></dt>
-          <dd>Puts up an important service modal at once, above everything else. If someone holds the modal, their week pauses, so they lose no time, and they're told. Nobody can start a modal week while it's up. Send it again to change the text.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Puts up an important service modal at once, above everything else. If someone holds the modal, their week pauses, so they lose no time, and they're told. Nobody can start a modal week while it's up. Send it again to change the text.</dd>
 
           <dt><code class="cmd">!modal service off</code></dt>
-          <dd>Takes the service modal down. The holder's message comes back and their week picks up where it left off.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Takes the service modal down. The holder's message comes back and their week picks up where it left off.</dd>
 
           <dt><code class="cmd">!modal remove</code></dt>
-          <dd>Takes a rude modal off the server. No pop-up shows until the holder puts up a new one. Their week keeps running, and they're told it was removed for moderation reasons.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span> <span class="role-pill role-super-admin" data-rank="super-admin">Super Admin</span></div>Takes a rude modal off the server. No pop-up shows until the holder puts up a new one. Their week keeps running, and they're told it was removed for moderation reasons.</dd>
 
           <dt><code class="cmd">!banner remove</code></dt>
-          <dd>Swaps a rude banner for your everyday one. Their week keeps running, and they're told.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span> <span class="role-pill role-super-admin" data-rank="super-admin">Super Admin</span></div>Swaps a rude banner for the owner's everyday one. Their week keeps running, and they're told.</dd>
 
           <dt><code class="cmd">!control revoke &lt;modal|banner&gt;</code></dt>
-          <dd>Owner only. Ends someone's week early and brings your everyday one back. The rest of their week isn't refunded: to give it back, add a week with <code class="cmd">!perk set</code>.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Ends someone's week early and brings your everyday one back. The rest of their week isn't refunded: to give it back, add a week with <code class="cmd">!perk set</code>.</dd>
         </dl>
-        <p class="muted">When a Super Admin removes something, the holder's message doesn't name them, and the owner's online accounts are told who did it. Every action goes in the audit log. If you change the modal or banner by hand in TeamSpeak while nobody has a week running, the bot keeps it as the new everyday one. During someone's week, it puts theirs back within 30 seconds.</p>
+        <p class="muted" data-ranks="owner super-admin">When a Super Admin removes something, the holder's message doesn't name them, and the owner's online accounts are told who did it. Every action goes in the audit log.</p>
+        <p class="muted" data-ranks="owner">If you change the modal or banner by hand in TeamSpeak while nobody has a week running, the bot keeps it as the new everyday one. During someone's week, it puts theirs back within 30 seconds.</p>
       </div>
     </section>
 
@@ -166,34 +182,35 @@
       <div class="card">
         <dl class="cmd-list">
           <dt><code class="cmd">!locks</code></dt>
-          <dd>Admins. Lists every locked channel: who locked it and when, who's in it, and who has stepped out.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Lists every locked channel: who locked it and when, who's in it, and who has stepped out.</dd>
 
           <dt><code class="cmd">!unlock &lt;channel&gt;</code></dt>
-          <dd>Super Admins and the owner can end any lock from anywhere on the server. That's how a Super Admin unlocks, since they can't walk into a locked channel. Part of the name is enough.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span> <span class="role-pill role-super-admin" data-rank="super-admin">Super Admin</span></div>Ends any lock from anywhere on the server. That's how a Super Admin unlocks, since they can't walk into a locked channel. Part of the name is enough.</dd>
         </dl>
-        <p class="muted">The owner can walk into a locked channel without joining the lock. Nobody can poke, message, move, kick or ban the users inside, the owner's account included; only YATQA logged in as serveradmin can. If the owner drags someone into a locked channel who doesn't belong there, the bot moves them out again.</p>
+        <p class="muted" data-ranks="owner super-admin">Nobody can poke, message, move, kick or ban the users inside a lock, the owner's account included; only YATQA logged in as serveradmin can.</p>
+        <p class="muted" data-ranks="owner">The owner can walk into a locked channel without joining the lock. If the owner drags someone into a locked channel who doesn't belong there, the bot moves them out again.</p>
       </div>
     </section>
 
     <section class="cmd-group">
       <h2>Twitch</h2>
       <div class="card">
-        <p class="muted">Admins. Online admins get a message when someone asks to link a channel.</p>
+        <p class="muted" data-ranks="owner">You get a message when someone asks to link a channel, if you're online.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!twitch pending</code></dt>
-          <dd>Lists links waiting for approval.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Lists links waiting for approval.</dd>
 
           <dt><code class="cmd">!twitch approve &lt;channel or name&gt;</code></dt>
-          <dd>Approves a link. Check it really is their channel first. If that channel is already linked to someone else, the reply says so.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Approves a link. Check it really is their channel first. If that channel is already linked to someone else, the reply says so.</dd>
 
           <dt><code class="cmd">!twitch deny &lt;channel or name&gt;</code></dt>
-          <dd>Turns a link down. They're told.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Turns a link down. They're told.</dd>
 
           <dt><code class="cmd">!twitch list</code></dt>
-          <dd>Every approved link, who's on the <a href="live">Live now</a> page, and who's live right now. It also says if checking Twitch is switched off.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Every approved link, who's on the <a href="live">Live now</a> page, and who's live right now. It also says if checking Twitch is switched off.</dd>
 
           <dt><code class="cmd">!twitch remove &lt;channel or name&gt;</code></dt>
-          <dd>Removes someone's link, and their [LIVE] tag with it. They're told.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Removes someone's link, and their [LIVE] tag with it. They're told.</dd>
         </dl>
       </div>
     </section>
@@ -201,13 +218,12 @@
     <section class="cmd-group">
       <h2>Trivia</h2>
       <div class="card">
-        <p class="muted">Owner only.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!trivia reset &lt;name&gt;</code></dt>
-          <dd>Takes someone off the leaderboard, for example if they cheated. Part of the name as it shows on the leaderboard is enough; they don't need to be online.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Takes someone off the leaderboard, for example if they cheated. Part of the name as it shows on the leaderboard is enough; they don't need to be online.</dd>
 
           <dt><code class="cmd">!trivia reset all</code></dt>
-          <dd>Wipes the whole leaderboard. The bot asks you to send <code class="cmd">!trivia reset all confirm</code> first.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Wipes the whole leaderboard. The bot asks you to send <code class="cmd">!trivia reset all confirm</code> first.</dd>
         </dl>
       </div>
     </section>
@@ -215,16 +231,15 @@
     <section class="cmd-group">
       <h2>Uno</h2>
       <div class="card">
-        <p class="muted">Owner only.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!uno reset &lt;name&gt;</code> / <code class="cmd">!uno reset all</code></dt>
-          <dd>The same as for trivia, for the Uno leaderboard.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>The same as for trivia, for the Uno leaderboard.</dd>
 
           <dt><code class="cmd">!uno games</code></dt>
-          <dd>The last 10 games with their numbers: who played, who won and how many points, or whether it's still going. Each game's number is also in its first message.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>The last 10 games with their numbers: who played, who won and how many points, or whether it's still going. Each game's number is also in its first message.</dd>
 
           <dt><code class="cmd">!uno void &lt;number&gt;</code></dt>
-          <dd>Against cheating. A game still being played ends at once and nobody scores. A finished game stops counting, so the winner loses exactly the points it gave them.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Against cheating. A game still being played ends at once and nobody scores. A finished game stops counting, so the winner loses exactly the points it gave them.</dd>
         </dl>
       </div>
     </section>
@@ -232,13 +247,16 @@
     <section class="cmd-group">
       <h2>Community channels</h2>
       <div class="card">
-        <p class="muted">The owner and Super Admins can use <code class="cmd">!role</code> and <code class="cmd">!pull</code> in any community channel, from inside it. The everyday uses are on the <a href="commands">Commands</a> page.</p>
+        <p class="muted" data-ranks="owner super-admin">Run these from inside the community channel. A channel's own leaders have the everyday versions, on the <a href="commands">Commands</a> page.</p>
         <dl class="cmd-list">
+          <dt><code class="cmd">!role add &lt;name&gt; &lt;member|admin&gt;</code> / <code class="cmd">!role remove &lt;name&gt;</code></dt>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span> <span class="role-pill role-super-admin" data-rank="super-admin">Super Admin</span></div>Gives or takes away the Member or Channel Admin role in any community channel, not just your own. Only the owner can remove or demote a Community Leader.</dd>
+
           <dt><code class="cmd">!role add &lt;name&gt; leader</code></dt>
-          <dd>Owner only. Makes someone the channel's Community Leader, the top role above Channel Admin. Only the owner can give, change or remove it: nobody else, Super Admins included, can remove or demote a Leader. If the role isn't set up yet, the bot says so.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Makes someone the channel's Community Leader, the top role above Channel Admin. Only the owner can give, change or remove it: nobody else, Super Admins included. If the role isn't set up yet, the bot says so.</dd>
 
           <dt><code class="cmd">!pull &lt;name&gt;</code></dt>
-          <dd>Only the owner can pull a Community Leader out of their own channel.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span> <span class="role-pill role-super-admin" data-rank="super-admin">Super Admin</span></div>Brings someone into any community channel you're in, from anywhere on the server except AFK. Only the owner can pull a Community Leader out of their own channel.</dd>
         </dl>
       </div>
     </section>
