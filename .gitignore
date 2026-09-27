@@ -1,0 +1,16 @@
+# Private to the bot's seedbox: maps names to TeamSpeak unique IDs. Never commit.
+identities.json
+
+# Logs, build and scratch output
+*.log
+logs/
+node_modules/
+dist/
+build/
+_site/
+out/
+tmp/
+scratch/
+
+# Personal Claude Code settings
+.claude/settings.local.json

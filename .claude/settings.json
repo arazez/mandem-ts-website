@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./node_modules/**)",
+      "Read(./dist/**)",
+      "Read(./build/**)",
+      "Read(./_site/**)",
+      "Read(./out/**)",
+      "Read(./vendor/**)",
+      "Read(**/*.min.js)",
+      "Read(**/*.min.css)",
+      "Read(**/*.png)",
+      "Read(**/*.jpg)",
+      "Read(**/*.jpeg)",
+      "Read(**/*.gif)",
+      "Read(**/*.webp)",
+      "Read(**/*.ico)",
+      "Read(**/*.avif)",
+      "Read(**/*.woff)",
+      "Read(**/*.woff2)",
+      "Read(**/*.ttf)",
+      "Read(**/*.otf)",
+      "Read(**/*.mp4)",
+      "Read(**/*.webm)",
+      "Read(**/*.mp3)",
+      "Read(**/*.zip)",
+      "Read(**/*.pdf)",
+      "Read(**/*.log)"
+    ]
+  }
+}

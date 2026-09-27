@@ -690,9 +690,9 @@
   // touching this file.
   var DONATIONS_FILE = "donations.json";
 
-  // Remaining perks per donor. Kept separate from donations.json so a bot
-  // (or you, by hand) can own it. Point this at a bot-served URL later if
-  // you like; the JSON shape stays the same (see README).
+  // Remaining perks per donor. Kept separate from donations.json so the bot
+  // can own it. Don't point this at a bot-served URL: the bot commits the
+  // file to this repo instead (docs/SITE-DATA.md).
   var PERKS_FILE = "perks.json";
 
   // Used if donations.json can't be loaded (e.g. missing, or opening this
