@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ | Mandem Server</title>
+<meta name="description" content="Common questions about Mandem Server's TeamSpeak: installing, connecting, the bot, perks and backing up your identity.">
+<meta property="og:title" content="FAQ | Mandem Server">
+<meta property="og:description" content="Common questions about Mandem Server's TeamSpeak: installing, connecting, the bot, perks and backing up your identity.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎧</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<script type="module" src="assets/layout.js"></script>
+<script type="module" src="assets/faq.js"></script>
+</head>
+<body data-page="faq">
+<nav id="site-nav"></nav>
+
+<div class="wrap page-head">
+  <h1>FAQ</h1>
+  <p class="lead">Common questions about the server.</p>
+</div>
+
+<main class="wrap page">
+  <!-- The switch is wired up by assets/faq.js; without it, both versions show. -->
+  <div class="version-switch" role="group" aria-label="TeamSpeak version" hidden>
+    <span class="muted small">Steps for:</span>
+    <button type="button" data-v="ts3" aria-pressed="true">TeamSpeak 3</button>
+    <button type="button" data-v="ts6" aria-pressed="false">TeamSpeak 6</button>
+  </div>
+
+  <details class="faq" open>
+    <summary>How do I install TeamSpeak?</summary>
+    <div class="v" data-v="ts3">
+      <p class="v-label">TeamSpeak 3</p>
+      <ol>
+        <li>Go to the <a href="https://www.teamspeak.com/en/downloads/#dl-ts3" target="_blank" rel="noopener noreferrer">TeamSpeak downloads page</a> and, under <em>TeamSpeak 3</em>, pick your system.</li>
+        <li>Install it and open it. Accept the licence when asked.</li>
+        <li>Choose a nickname. That's the name everyone on the server sees.</li>
+      </ol>
+    </div>
+    <div class="v" data-v="ts6">
+      <p class="v-label">TeamSpeak 6</p>
+      <ol>
+        <li>Go to the <a href="https://www.teamspeak.com/en/downloads/#dl-ts6" target="_blank" rel="noopener noreferrer">TeamSpeak downloads page</a> and, under <em>TeamSpeak 6</em>, pick your system.</li>
+        <li>Install it and open it. You can sign in to a myTeamSpeak account or skip that.</li>
+        <li>Choose a nickname. That's the name everyone on the server sees.</li>
+      </ol>
+    </div>
+  </details>
+
+  <details class="faq">
+    <summary>How do I connect to the server?</summary>
+    <p>The easiest way: click <a href="ts3server://ts.arazez.com">Join the server</a>, and TeamSpeak opens and connects.</p>
+    <div class="v" data-v="ts3">
+      <p class="v-label">TeamSpeak 3</p>
+      <ol>
+        <li>Open <em>Connections → Connect</em> (or press Ctrl+S).</li>
+        <li>Enter the address <code class="addr">ts.arazez.com</code> and your nickname, then click <em>Connect</em>.</li>
+        <li>To save it for next time: <em>Bookmarks → Add to Bookmarks</em>.</li>
+      </ol>
+    </div>
+    <div class="v" data-v="ts6">
+      <p class="v-label">TeamSpeak 6</p>
+      <ol>
+        <li>Type <code class="addr">ts.arazez.com</code> into the search bar at the top left.</li>
+        <li>Choose to connect straight away, or save it as a bookmark for next time.</li>
+      </ol>
+    </div>
+  </details>
+
+  <details class="faq">
+    <summary>How do I talk to the bot?</summary>
+    <p>You can't see the bot in the channel list, because TeamSpeak hides bots. Instead:</p>
+    <ol>
+      <li>Type <code class="cmd">!bot</code> in the server chat tab, or in your channel's chat.</li>
+      <li>The bot messages you privately. Send every other command in that private chat.</li>
+      <li>If your messages stop getting replies (say you reconnected, or the bot restarted), close that chat and send <code class="cmd">!bot</code> again.</li>
+    </ol>
+    <p>Everything it can do is on the <a href="commands.html">Commands</a> page.</p>
+  </details>
+
+  <details class="faq">
+    <summary>How do perks work?</summary>
+    <p>Once a year there's a donation window to cover the server's running costs. Supporters get perks: every £1 buys a week of control over the server banner and a week over the pop-up message everyone sees when they join, and bigger donations add a 1-hour mute and server admin.</p>
+    <p>You use your perks by messaging the bot. A week only starts when you tell it to, so there's no rush.
+      Your perks are tied to your TeamSpeak identity (see the next questions), so keep it backed up.</p>
+    <p>Details and who has what: <a href="perks.html">Perks</a>. Donating: <a href="supporters.html">Supporters</a>.</p>
+  </details>
+
+  <details class="faq">
+    <summary>How do I appear on Live now?</summary>
+    <p>If you stream on Twitch, you can be listed on <a href="live.html">Live now</a> while you're live. Nobody is listed unless they ask.</p>
+    <ol>
+      <li>Send the bot <code class="cmd">!twitch link yourchannel</code>.</li>
+      <li>Wait for an admin to approve it. The bot messages you when they do.</li>
+      <li>Send <code class="cmd">!twitch show</code>.</li>
+    </ol>
+    <p>Send <code class="cmd">!twitch hide</code> to come off the list. Either way, your name gets a <strong>[LIVE]</strong> tag in TeamSpeak while you stream.
+      Changes can take 15 minutes or so to show on this site. Use TeamSpeak on more than one device? Link each one.</p>
+  </details>
+
+  <details class="faq">
+    <summary>How do I back up my TeamSpeak identity, and why should I?</summary>
+    <p>Your identity is how TeamSpeak recognises you. It's a file on your computer, not your nickname.
+      Your perks, admin and channel roles are all tied to it. Reinstall, switch computer or lose it, and they're gone. Back it up now:</p>
+    <div class="v" data-v="ts3">
+      <p class="v-label">TeamSpeak 3</p>
+      <ol>
+        <li>Open <em>Tools → Identities</em> (or press Ctrl+I).</li>
+        <li>Select your identity, click <em>Export</em>, and save the file somewhere safe, like a cloud drive or USB stick.</li>
+        <li>To restore it later: <em>Tools → Identities → Import</em>, and pick that file.</li>
+      </ol>
+    </div>
+    <div class="v" data-v="ts6">
+      <p class="v-label">TeamSpeak 6</p>
+      <ol>
+        <li>Open <em>Settings → Identities</em>.</li>
+        <li>Choose your identity (usually <em>Default</em>), click <em>Export</em> at the top right, and save the file somewhere safe.</li>
+        <li>To restore it later: <em>Settings → Identities → Import</em>, and pick that file.</li>
+      </ol>
+      <p>Moving over from TeamSpeak 3? TeamSpeak 6 can
+        <a href="https://support.teamspeak.com/hc/en-us/articles/360019524677-How-to-import-bookmarks-and-identities-from-TS3-to-TeamSpeak-6" target="_blank" rel="noopener noreferrer">import your TeamSpeak 3 identity</a>, so you keep everything.</p>
+    </div>
+    <p><strong>Never share that file.</strong> Anyone who has it can use the server as you, perks and admin included.</p>
+  </details>
+</main>
+
+<footer id="site-footer"></footer>
+</body>
+</html>

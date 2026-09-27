@@ -1,0 +1,2 @@
+# Data files: the bot writes LF line endings. Keep them byte-for-byte.
+*.json text eol=lf

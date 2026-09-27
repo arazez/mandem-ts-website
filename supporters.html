@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supporters | Mandem Server</title>
+<meta name="description" content="Help keep Mandem Server's TeamSpeak online. Donations go toward yearly hosting costs and upkeep.">
+<meta property="og:title" content="Supporters | Mandem Server">
+<meta property="og:description" content="Help keep Mandem Server's TeamSpeak online. Donations go toward yearly hosting costs and upkeep.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎧</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<script type="module" src="assets/layout.js"></script>
+<script type="module" src="assets/supporters.js"></script>
+</head>
+<body data-page="supporters">
+<nav id="site-nav"></nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="server-tag">Supporters</span>
+    <h1>Keep the server running</h1>
+    <p class="subtitle">
+      Help keep <code class="addr">ts.arazez.com</code> online for another year.
+      Covers hosting, backups and security updates. No profit: 100% of
+      donations go to server costs.
+    </p>
+
+    <!-- Status banner: filled in by assets/supporters.js -->
+    <div id="statusBanner" class="banner" role="status" aria-live="polite">
+      <p class="banner-title" id="bannerTitle">Checking donation window…</p>
+      <p class="countdown" id="bannerCountdown"></p>
+    </div>
+
+    <div class="progress-wrap hero-progress" id="heroProgress" hidden>
+      <div class="progress-label">
+        <span><span class="raised"></span> raised of <span class="goal-amt"></span> goal</span>
+      </div>
+      <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-label="Donation progress toward yearly goal">
+        <div class="progress-fill" style="width:0%"></div>
+      </div>
+      <p class="updated-note"></p>
+    </div>
+
+    <!-- Payment buttons: only inserted while donations are open -->
+    <div class="btn-row" id="paymentButtons" hidden></div>
+
+    <p class="perk-note" id="perkNote" hidden></p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- Only shown while donations are open -->
+  <section aria-labelledby="perks-heading" id="perksSection" hidden>
+    <h2 id="perks-heading">What you get</h2>
+    <div class="card">
+      <div class="perk-rate" id="perkRate"></div>
+      <div class="perk-unlocks" id="perkUnlocks"></div>
+      <p class="perks-foot">Perks stack: the unlocks come on top of your banner and modal weeks.
+        <a href="perks.html">More about perks</a></p>
+    </div>
+  </section>
+
+  <section aria-labelledby="thanks-heading">
+    <h2 id="thanks-heading">Thank you 🧡</h2>
+    <div class="card" id="thanksCard">
+      <p id="thanksIntro">Massive thanks to everyone who's chipped in to keep the server running.</p>
+      <ul class="donors" id="donorList"></ul>
+      <p class="updated-note" id="perksLeftUpdated"></p>
+      <p class="perks-foot"><a href="perks.html">See what each perk does and who has what</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer id="site-footer"></footer>
+</body>
+</html>

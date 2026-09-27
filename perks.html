@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perks | Mandem Server</title>
+<meta name="description" content="Supporter perks on Mandem Server's TeamSpeak: banner, modal and mute. What they are, how to earn them and who has what.">
+<meta property="og:title" content="Perks | Mandem Server">
+<meta property="og:description" content="Supporter perks on Mandem Server's TeamSpeak: banner, modal and mute.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎧</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<script type="module" src="assets/layout.js"></script>
+<script type="module" src="assets/perks.js"></script>
+</head>
+<body data-page="perks">
+<nav id="site-nav"></nav>
+
+<div class="wrap page-head">
+  <h1>Perks</h1>
+  <p class="lead">Supporters who chip in toward the server's yearly costs get perks on the server.
+    Here's what each one does, how to earn it, and who has what right now.</p>
+</div>
+
+<main class="wrap page">
+
+  <section>
+    <a class="callout" href="supporters.html"><strong>Want perks?</strong> Every donation helps keep the server online. Go to Supporters →</a>
+  </section>
+
+  <section aria-labelledby="what-heading">
+    <h2 id="what-heading">What each perk does</h2>
+    <div class="perk-cards">
+      <div class="card perk-card">
+        <h3>🖼️ Banner</h3>
+        <p>The image shown on the right in the channel details page, visible to everyone on the server, with an optional link people can click. You choose it for a week.</p>
+        <p class="small muted">Send <code class="cmd">!banner start</code> to the bot, then
+          <code class="cmd">!banner set &lt;picture address&gt; [link]</code>. The picture has to be on Postimages, ImgBB, Catbox or Gyazo,
+          so nobody can see who viewed it.</p>
+      </div>
+      <div class="card perk-card">
+        <h3>💬 Modal</h3>
+        <p>The pop-up message everyone sees when they connect. You write it for a week: up to 500 characters, links are fine, pictures aren't.</p>
+        <p class="small muted">Send <code class="cmd">!modal start</code>, then <code class="cmd">!modal set &lt;your message&gt;</code>.</p>
+      </div>
+      <div class="card perk-card">
+        <h3>🔇 Mute</h3>
+        <p>Silence anyone on the server for 1 hour. It lifts by itself.</p>
+        <p class="small muted">Send <code class="cmd">!mute &lt;name&gt;</code>. Used between October and March, it comes back on 1 April.
+          Used between April and September, it's gone until the next October. Leftover mutes clear every 1 October.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="earn-heading">
+    <h2 id="earn-heading">How you earn them</h2>
+    <div class="card" id="earnCard">
+      <p class="muted">Loading…</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="who-heading">
+    <h2 id="who-heading">Who has what right now</h2>
+    <div class="card" id="whoCard">
+      <p class="muted">Loading…</p>
+    </div>
+    <p class="small muted">In TeamSpeak, <code class="cmd">!perks</code> shows the same list and
+      <code class="cmd">!control status</code> shows who holds the banner and modal right now.
+      Changes can take 15 minutes or so to show up here.</p>
+  </section>
+
+</main>
+
+<footer id="site-footer"></footer>
+</body>
+</html>

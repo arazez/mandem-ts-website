@@ -1,0 +1,11 @@
+# Read-only check of the data files on every push. Never commits or edits.
+name: Check data files
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: node tools/validate-data.mjs

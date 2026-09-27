@@ -14,23 +14,23 @@ Static site for the Mandem TeamSpeak server. Repo arazez/mandem-ts-website (rena
 | Task | File |
 |---|---|
 | Bot data contract | `docs/SITE-DATA.md` |
-| Pages (all one page for now) | `index.html` |
-| Totals, donors, thresholds, window | `donations.json` |
-| Perks per person | `perks.json` |
-| Player commands source | bot's docs/COMMANDS.md |
-| Bot's validation rules | bot's src/data/files.ts |
-| Docs word budget, hidden characters | `tools/check-docs.mjs` |
+| Pages (one per navbar item) | root .html files; each page's script in `assets/` |
+| Navbar, footer, adding a page | `assets/layout.js` |
+| Reading any data file (the only place) | `assets/data.js` |
+| UK time, date-only dates, donation window | `assets/time.js` |
+| Data file check (also run by GitHub on push) | `tools/validate-data.mjs` |
+| Docs budget, hidden characters | `tools/check-docs.mjs` |
 
 ## Gotchas
-- Tool quirk: backslash-u escapes typed into Write/Edit/Bash become real, often invisible characters; heredocs eat backslashes. Build such characters with String.fromCharCode in a small node script, then scan the repo for control and zero-width characters.
+- Tool quirk: typed backslash-u escapes become real, often invisible characters, and heredocs eat backslashes. Build such characters with String.fromCharCode in node, then run `tools/check-docs.mjs` (it scans for them).
 - Data files: never move, rename or reformat them (2-space JSON, final newline). The bot validates strictly and stops donation, perk and mute commands if one breaks. Contract: `docs/SITE-DATA.md`.
 - Names come from chat: insert as text, never as HTML.
 - Never show per-person donation amounts, even in comments or commit messages.
 - No secrets, no TeamSpeak unique IDs. identities.json never belongs in this repo.
 - Don't: add endpoints, forms, webhooks, or Actions that write data files.
+- Don't: add React or a build step (owner's ruling: the site only shows data). Revisit if it needs real interactivity.
 
 ## State
-- Milestone: Phase 1 (low-token setup) awaiting the owner's approval.
-- Next: Phase 2, the multi-page site; the domain move is its last step.
+- Milestone: Phase 2, all seven pages built and checked; domain move left.
+- The live site isn't publicised yet, so working on it directly is fine (still ask before each push).
 - Open: how to keep the Commands page in step with the bot's guide.
-- Open: launch timing, since the donation window opens 1 October (expires 2026-11-01).

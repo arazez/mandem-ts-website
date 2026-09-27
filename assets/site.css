@@ -1,0 +1,855 @@
+/* Shared styles for every page. Colours are the tokens on :root. */
+:root {
+  --bg: #0e0f12;
+  --bg-alt: #16181d;
+  --bg-card: #1c1f26;
+  --border: #2a2e37;
+  --text: #eef0f3;
+  --text-dim: #a9aeb8;
+  --orange: #ff7a1a;
+  --orange-hover: #ff8f3d;
+  --orange-dim: #ff7a1a33;
+  --green: #3ddc84;
+  --focus: #ffb35c;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Rubik', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--orange); }
+
+img { max-width: 100%; }
+
+.wrap {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* Focus visibility */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+header.hero {
+  background:
+    radial-gradient(circle at 20% -10%, var(--orange-dim), transparent 55%),
+    linear-gradient(180deg, var(--bg-alt), var(--bg));
+  border-bottom: 1px solid var(--border);
+  padding: 3rem 0 2.5rem;
+  text-align: center;
+}
+
+.server-tag {
+  display: inline-block;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--orange);
+  background: var(--orange-dim);
+  border: 1px solid var(--orange);
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: clamp(1.9rem, 5vw, 2.8rem);
+  margin: 0 0 0.5rem;
+  font-weight: 800;
+}
+
+.subtitle {
+  color: var(--text-dim);
+  font-size: 1.05rem;
+  margin: 0 auto 1.75rem;
+  max-width: 46ch;
+}
+
+code.addr {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.95em;
+  color: var(--orange);
+}
+
+/* Status banner */
+.banner {
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin: 0 auto 1.75rem;
+  max-width: 560px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+}
+
+.banner.open {
+  border-color: var(--green);
+  background: #3ddc8414;
+}
+
+.banner.closed {
+  border-color: var(--border);
+}
+
+.banner-title {
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+}
+
+.banner.open .banner-title { color: var(--green); }
+
+.banner.goal {
+  border-color: #ffd166;
+  background: #ffd16614;
+}
+
+.banner.goal .banner-title { color: #ffd166; }
+
+.countdown {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.95rem;
+  color: var(--text-dim);
+  margin: 0;
+}
+
+.countdown strong { color: var(--text); }
+
+.perk-note {
+  color: var(--text-dim);
+  font-size: 1rem;
+  margin: 1.25rem auto 1.75rem;
+  max-width: 46ch;
+}
+
+.perk-note strong { color: var(--orange); }
+
+/* Buttons */
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1.6rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.12s ease, border-color 0.12s ease;
+  min-width: 220px;
+}
+
+.btn:hover { transform: translateY(-2px); }
+
+/* Brand-accurate colours: Revolut black, PayPal blue, Monzo coral */
+.btn-revolut {
+  background: #000000;
+  color: #fff;
+  border-color: #3a3d44;
+}
+.btn-revolut:hover { background: #1a1a1a; border-color: #5a5e66; }
+
+.btn-paypal {
+  background: #0070ba;
+  color: #fff;
+}
+.btn-paypal:hover { background: #009cde; }
+
+.btn-monzo {
+  background: #ff3d68;
+  color: #fff;
+}
+.btn-monzo:hover { background: #ff6288; }
+
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+}
+.btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+
+main.wrap { padding-top: 3rem; padding-bottom: 1rem; }
+
+section {
+  margin-bottom: 2.75rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin: 0 0 0.9rem;
+  border-left: 4px solid var(--orange);
+  padding-left: 0.7rem;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+}
+
+.progress-wrap {
+  margin-bottom: 1.1rem;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.progress-label .raised { color: var(--orange); }
+
+.progress-bar {
+  height: 12px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--orange), var(--orange-hover));
+  border-radius: 999px 0 0 999px;
+  transition: width 0.4s ease;
+}
+
+.hero-progress {
+  max-width: 560px;
+  margin: 0 auto 1.5rem;
+}
+
+.hero-progress .progress-label { justify-content: center; }
+.hero-progress .updated-note { text-align: center; }
+
+.updated-note {
+  margin: 0.6rem 0 0;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.donors {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
+  gap: 0.6rem;
+}
+
+.donors li {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.95rem;
+}
+
+.donors li .amt {
+  color: var(--green);
+  font-size: 0.85rem;
+  display: block;
+}
+
+/* Perks: per-£1 rate strip + threshold unlock cards */
+.perk-rate {
+  background: var(--orange-dim);
+  border: 1px solid var(--orange);
+  border-radius: 12px;
+  padding: 1.1rem 1.25rem;
+}
+
+.perk-rate-lead {
+  margin: 0 0 0.75rem;
+  font-weight: 800;
+  font-size: 1.15rem;
+}
+
+.perk-rate-lead .rate-amt { color: var(--orange); }
+
+ul.perk-rate-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+ul.perk-rate-list li {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.perk-icon {
+  font-size: 1.4rem;
+  line-height: 1.3;
+  flex-shrink: 0;
+}
+
+/* Tooltips anchor to this, so they can't run off the right edge mid-line */
+.perk-rate-text {
+  position: relative;
+  display: block;
+  min-width: 0;
+}
+
+.perk-rate-text strong { font-weight: 600; }
+
+.perk-rules-head {
+  margin: 1rem 0 0.4rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--orange-dim);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+ul.perk-rules {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+}
+
+ul.perk-rules li {
+  display: flex;
+  gap: 0.5rem;
+}
+
+ul.perk-rules li::before {
+  content: "✓";
+  color: var(--green);
+  flex-shrink: 0;
+}
+
+.perk-unlocks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr));
+  gap: 0.9rem;
+  margin-top: 1rem;
+}
+
+.unlock-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.15rem;
+}
+
+.unlock-amount {
+  display: block;
+  color: var(--orange);
+  font-size: 1.7rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.unlock-title {
+  display: block;
+  margin-top: 0.3rem;
+  font-weight: 600;
+}
+
+.unlock-detail {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+/* Hover / focus / tap explainer */
+.help {
+  display: inline-block;
+  margin-top: 0.2rem;
+}
+
+.help-trigger {
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--orange);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: help;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+
+.help-trigger:hover { color: var(--orange-hover); }
+
+.help-tip {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10;
+  margin-top: 0.4rem;
+  width: min(18rem, calc(100vw - 5.5rem));
+  background: var(--bg);
+  border: 1px solid var(--orange);
+  border-radius: 8px;
+  padding: 0.7rem 0.85rem;
+  box-shadow: 0 8px 24px #000a;
+  font-size: 0.85rem;
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+/* Bridges the gap so the tip doesn't vanish while the pointer crosses it */
+.help-tip::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: -0.5rem;
+  height: 0.5rem;
+}
+
+.help:hover .help-tip,
+.help-trigger:focus-visible + .help-tip,
+.help.open .help-tip { display: block; }
+
+.perks-foot {
+  margin: 0.9rem 0 0;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+/* Remaining-perk pills inside a donor card */
+.pl-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+
+.pl-chip {
+  font-size: 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.1rem 0.6rem;
+}
+
+.pl-chip.weeks {
+  border-color: var(--orange);
+  background: var(--orange-dim);
+}
+
+.pl-chip.ready {
+  border-color: var(--green);
+  background: #3ddc8414;
+  color: var(--green);
+}
+
+.pl-chip.wait { color: var(--text-dim); }
+
+.pl-none {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.updated-note:empty { display: none; }
+
+.contact-section {
+  text-align: center;
+}
+
+.contact-lead {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  margin: 0 0 0.75rem;
+}
+
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.contact-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  text-decoration: none;
+}
+
+a.contact-chip:hover {
+  border-color: var(--orange);
+  color: var(--text);
+}
+
+.contact-chip strong { color: var(--text); }
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem 0;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+footer code.addr { margin: 0 0.15rem; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 480px) {
+  .btn { width: 100%; }
+  h1 { font-size: 1.7rem; }
+}
+
+/* Site navbar (built by assets/layout.js) */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--border);
+}
+
+.site-nav .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1rem;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  max-width: 1000px;
+}
+
+.nav-brand {
+  font-weight: 800;
+  color: var(--text);
+  text-decoration: none;
+  margin-right: auto;
+}
+
+.nav-brand span { color: var(--orange); }
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  display: block;
+  padding: 0.3rem 0.55rem;
+  border-radius: 6px;
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.92rem;
+}
+
+.nav-links a:hover { color: var(--text); background: var(--bg-card); }
+
+.nav-links a[aria-current="page"] {
+  color: var(--orange);
+  background: var(--orange-dim);
+}
+
+/* Heading block for pages without the big hero */
+.page-head {
+  padding-top: 2.25rem;
+  padding-bottom: 0.5rem;
+}
+
+.page-head h1 { margin-bottom: 0.35rem; }
+
+.page-head .lead {
+  color: var(--text-dim);
+  margin: 0;
+  max-width: 60ch;
+}
+
+main.wrap.page { padding-top: 1.5rem; }
+
+/* Friendly status messages: couldn't load, coming soon, nobody live */
+.notice {
+  background: var(--bg-card);
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  padding: 1.1rem 1.25rem;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.notice strong {
+  display: block;
+  color: var(--text);
+  font-size: 1.05rem;
+  margin-bottom: 0.2rem;
+}
+
+.callout {
+  display: block;
+  border: 1px solid var(--green);
+  background: #3ddc8414;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.callout strong { color: var(--green); }
+a.callout:hover { background: #3ddc8422; }
+
+.steps {
+  margin: 0;
+  padding-left: 1.3rem;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.muted { color: var(--text-dim); }
+.small { font-size: 0.85rem; }
+
+code.cmd {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 0.05rem 0.4rem;
+  font-size: 0.9em;
+  color: var(--orange);
+  overflow-wrap: anywhere;
+}
+
+/* Tables: leaderboards, who has which perks */
+.table-scroll { overflow-x: auto; }
+
+table.data {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+table.data th,
+table.data td {
+  text-align: left;
+  padding: 0.55rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+table.data th {
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+table.data td.num,
+table.data th.num { text-align: right; }
+
+table.data tr:last-child td { border-bottom: 0; }
+
+.rank { color: var(--orange); font-weight: 800; width: 2.5rem; }
+
+.board-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+  gap: 1.25rem;
+}
+
+.board-grid h2 { font-size: 1.25rem; }
+
+/* Live now */
+.live-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(230px, 100%), 1fr));
+  gap: 0.8rem;
+}
+
+.live-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+}
+
+.live-dot {
+  display: inline-block;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: #ff4d4d;
+  margin-right: 0.4rem;
+  box-shadow: 0 0 0 3px #ff4d4d33;
+}
+
+.live-name { font-weight: 600; font-size: 1.05rem; }
+.live-since { display: block; font-size: 0.85rem; color: var(--text-dim); margin: 0.2rem 0 0.7rem; }
+
+.twitch-link {
+  display: inline-block;
+  background: #9146ff;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+}
+
+.twitch-link:hover { background: #a970ff; }
+
+/* Perk explainer cards */
+.perk-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+  gap: 0.9rem;
+}
+
+.perk-card h3 { margin: 0 0 0.4rem; font-size: 1.1rem; }
+.perk-card p { margin: 0 0 0.5rem; font-size: 0.95rem; }
+.perk-card p:last-child { margin-bottom: 0; }
+
+/* FAQ */
+details.faq {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 0.7rem;
+}
+
+details.faq summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+details.faq[open] summary { margin-bottom: 0.6rem; color: var(--orange); }
+details.faq p, details.faq ol, details.faq ul { margin: 0 0 0.6rem; }
+
+/* Commands */
+.cmd-group { margin-bottom: 2rem; }
+
+dl.cmd-list { margin: 0; }
+
+dl.cmd-list dt {
+  margin-top: 0.9rem;
+  font-weight: 600;
+}
+
+dl.cmd-list dt:first-child { margin-top: 0; }
+
+dl.cmd-list dd {
+  margin: 0.25rem 0 0;
+  color: var(--text-dim);
+}
+
+.site-footer .contact-links { margin: 0.75rem 0 1rem; }
+
+a.callout-plain {
+  display: block;
+  color: var(--text);
+  text-decoration: none;
+}
+
+a.callout-plain:hover { border-color: var(--orange); }
+
+/* Let grid children shrink so wide tables scroll inside their card */
+.board-grid > *,
+.perk-cards > * { min-width: 0; }
+
+/* FAQ: TeamSpeak 3 / 6 switch (assets/faq.js) */
+.version-switch {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.version-switch button {
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  cursor: pointer;
+}
+
+.version-switch button[aria-pressed="true"] {
+  color: var(--orange);
+  border-color: var(--orange);
+  background: var(--orange-dim);
+}
+
+.version-switch[hidden],
+.v[hidden] { display: none; }
+
+.v-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--orange);
+  font-weight: 600;
+}

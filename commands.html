@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commands | Mandem Server</title>
+<meta name="description" content="How to use the Mandem Server TeamSpeak bot: every command users can use.">
+<meta property="og:title" content="Commands | Mandem Server">
+<meta property="og:description" content="How to use the Mandem Server TeamSpeak bot: every command users can use.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎧</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<script type="module" src="assets/layout.js"></script>
+</head>
+<body data-page="commands">
+<nav id="site-nav"></nav>
+
+<div class="wrap page-head">
+  <h1>Commands</h1>
+  <p class="lead">What you can ask the bot to do. Type <code class="cmd">!bot</code> in the server or channel chat first: it messages you privately, and you send everything else in that private chat.</p>
+</div>
+
+<main class="wrap page">
+  <!-- Command list: written by the commands-page-writer agent from the bot's docs/COMMANDS.md -->
+  <div id="commands">
+
+    <section class="cmd-group">
+      <h2>Getting started</h2>
+      <div class="card">
+        <dl class="cmd-list">
+          <dt><code class="cmd">!bot</code></dt>
+          <dd>Wakes up the bot and opens a private chat with you. Type it in the server chat or your channel's chat — it's the only way to reach the bot, since it's hidden in the channel list.</dd>
+
+          <dt><code class="cmd">!help</code></dt>
+          <dd>Lists the commands you're able to use.</dd>
+
+          <dt><code class="cmd">!whoami</code></dt>
+          <dd>Shows whether your TeamSpeak account is linked to a supporter, and gives you your TeamSpeak ID to send to an admin if you need linking.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section class="cmd-group">
+      <h2>Perks</h2>
+      <div class="card">
+        <dl class="cmd-list">
+          <dt><code class="cmd">!perks</code></dt>
+          <dd>Shows everyone with a perk right now: how many banner and modal weeks they have left, and whether their mute is ready to use.<br><code class="cmd">!perks</code></dd>
+
+          <dt><code class="cmd">!perks &lt;name&gt;</code></dt>
+          <dd>Shows just one person's perks.<br><code class="cmd">!perks Alice</code></dd>
+
+          <dt><code class="cmd">!control status</code></dt>
+          <dd>Shows who currently holds the banner and the modal, and when each of their weeks ends.</dd>
+
+          <dt><code class="cmd">!banner start</code></dt>
+          <dd>Starts your week of banner control straight away. Needs the perk: see <a href="perks.html">Perks</a>.</dd>
+
+          <dt><code class="cmd">!banner set &lt;picture address&gt; [link]</code></dt>
+          <dd>Puts up your banner picture while you hold it, with an optional link people can click through to. Needs the perk: see <a href="perks.html">Perks</a>.<br><code class="cmd">!banner set https://i.postimg.cc/abc123/my-banner.png</code></dd>
+
+          <dt><code class="cmd">!modal start</code></dt>
+          <dd>Starts your week of modal control — the pop-up message everyone sees when they connect. Needs the perk: see <a href="perks.html">Perks</a>.</dd>
+
+          <dt><code class="cmd">!modal set &lt;text&gt;</code></dt>
+          <dd>Sets the pop-up message while you hold it.<br><code class="cmd">!modal set GG everyone, see you at the LAN on Saturday!</code></dd>
+
+          <dt><code class="cmd">!mute &lt;name&gt;</code></dt>
+          <dd>Silences someone online for 1 hour; it lifts on its own after that. Needs the perk: see <a href="perks.html">Perks</a>.<br><code class="cmd">!mute Bob</code></dd>
+        </dl>
+      </div>
+    </section>
+
+    <section class="cmd-group">
+      <h2>Twitch</h2>
+      <div class="card">
+        <dl class="cmd-list">
+          <dt><code class="cmd">!twitch link &lt;your channel&gt;</code></dt>
+          <dd>Asks to link your Twitch channel, so your name shows [LIVE] while you're streaming. An admin has to approve it first.<br><code class="cmd">!twitch link yourname</code></dd>
+
+          <dt><code class="cmd">!twitch</code></dt>
+          <dd>Shows your current link and whether it's been approved yet.</dd>
+
+          <dt><code class="cmd">!twitch unlink</code></dt>
+          <dd>Removes your link, and takes off [LIVE] straight away if you're streaming.</dd>
+
+          <dt><code class="cmd">!twitch show</code></dt>
+          <dd>Lists you on the site's <a href="live.html">Live now</a> page while you're streaming, with a link to your channel.</dd>
+
+          <dt><code class="cmd">!twitch hide</code></dt>
+          <dd>Takes you off the <a href="live.html">Live now</a> page again. Your [LIVE] tag in TeamSpeak works the same either way.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section class="cmd-group">
+      <h2>Locking a channel</h2>
+      <div class="card">
+        <dl class="cmd-list">
+          <dt><code class="cmd">!lock</code></dt>
+          <dd>Locks the channel you're in so nobody else can come in, and stops anyone from poking, moving or messaging the people inside first. Use it in a private lobby or your community channel when you want to play without being disturbed.</dd>
+
+          <dt><code class="cmd">!unlock</code> / <code class="cmd">!unlock &lt;channel&gt;</code></dt>
+          <dd>Ends the lock. Use it in the channel itself, or name the channel from anywhere on the server.<br><code class="cmd">!unlock private lobby 2</code></dd>
+
+          <dt><code class="cmd">!rejoin</code></dt>
+          <dd>Moves you back into your locked channel if you stepped out on purpose. You have 10 minutes before you lose your place.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section class="cmd-group">
+      <h2>Coinflip</h2>
+      <div class="card">
+        <dl class="cmd-list">
+          <dt><code class="cmd">!coinflip</code></dt>
+          <dd>Flips a coin and posts the result in your channel for everyone to see.</dd>
+
+          <dt><code class="cmd">!coinflip heads</code> / <code class="cmd">!coinflip tails</code></dt>
+          <dd>Calls it before the flip, so the bot can say whether you won.<br><code class="cmd">!coinflip heads</code></dd>
+        </dl>
+      </div>
+    </section>
+
+    <section class="cmd-group">
+      <h2>Trivia</h2>
+      <div class="card">
+        <dl class="cmd-list">
+          <dt><code class="cmd">!trivia</code></dt>
+          <dd>Starts a 10-question game in the channel you're in, or joins one already running there. Everyone else in the channel gets 30 seconds to join before it starts.</dd>
+
+          <dt><code class="cmd">!trivia join</code></dt>
+          <dd>Joins the running game — you can join late and start from the next question. Once you're in, answer each question by typing just the letter of your choice (A to D), like <code class="cmd">b</code>, in your private chat with the bot. You get 20 seconds per question.</dd>
+
+          <dt><code class="cmd">!trivia leave</code></dt>
+          <dd>Leaves the game. Your points so far still count, and the others play on.</dd>
+
+          <dt><code class="cmd">!trivia top</code></dt>
+          <dd>Shows the all-time top 10 on the <a href="leaderboards.html">Leaderboards</a> page.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section class="cmd-group">
+      <h2>Uno</h2>
+      <div class="card">
+        <dl class="cmd-list">
+          <dt><code class="cmd">!uno</code></dt>
+          <dd>Opens an Uno game for 2 to 10 people in the channel you're in, or joins one already open there.</dd>
+
+          <dt><code class="cmd">!uno join</code></dt>
+          <dd>Joins the open game before it starts. Nobody can join once it's under way.</dd>
+
+          <dt><code class="cmd">!uno start</code></dt>
+          <dd>Starts the game once everyone's in — only the person who opened it can do this. On your turn, type the card to play it, like <code class="cmd">red5</code> or <code class="cmd">r5</code> (colours: r, y, g, b), or <code class="cmd">wild blue</code> for a Wild.</dd>
+
+          <dt><code class="cmd">!draw</code></dt>
+          <dd>Draws a card on your turn. Play it if it can go, or keep it with <code class="cmd">!pass</code>.</dd>
+
+          <dt><code class="cmd">!pass</code></dt>
+          <dd>Keeps the card you just drew without playing it.</dd>
+
+          <dt><code class="cmd">!hand</code></dt>
+          <dd>Shows your cards and the table again.</dd>
+
+          <dt><code class="cmd">!uno quit</code></dt>
+          <dd>Leaves the game. It counts as a loss, but your cards still count toward whoever wins.</dd>
+
+          <dt><code class="cmd">!uno top</code></dt>
+          <dd>Shows the all-time leaderboard — games won and lost, and win rate — on the <a href="leaderboards.html">Leaderboards</a> page.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section class="cmd-group">
+      <h2>For community channel leaders</h2>
+      <div class="card">
+        <p class="muted">Only for a community channel's Community Leader or Channel Admin. Run these from inside your channel.</p>
+        <dl class="cmd-list">
+          <dt><code class="cmd">!role add &lt;name&gt; &lt;member|admin|leader&gt;</code></dt>
+          <dd>Makes someone a Member or Channel Admin of your channel, and lets them in. Only the server owner can make someone a Community Leader. Example: <code class="cmd">!role add Bob member</code></dd>
+
+          <dt><code class="cmd">!role remove &lt;name&gt;</code></dt>
+          <dd>Takes someone's role in your channel away, so they're a guest again.</dd>
+
+          <dt><code class="cmd">!pull &lt;name&gt;</code></dt>
+          <dd>Brings someone into your channel from wherever they are on the server (except AFK). A Community Leader in their own channel can't be pulled out.</dd>
+        </dl>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer id="site-footer"></footer>
+</body>
+</html>
