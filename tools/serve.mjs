@@ -1,7 +1,7 @@
 // Local preview server, no installs needed: node tools/serve.mjs [port]
 // Then open e.g. http://localhost:8000/supporters?preview=open
 // Like GitHub Pages, /supporters serves supporters.html.
-// (?preview=open|closed|goal and ?demo=perks only work on localhost).
+// (?preview=open|closed|goal and ?demo=perks|live|live1 only work on localhost).
 import { createServer } from "node:http";
 import { createReadStream, existsSync, statSync } from "node:fs";
 import { join, extname, resolve, sep } from "node:path";

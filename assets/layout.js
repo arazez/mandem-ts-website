@@ -7,6 +7,7 @@
 import { el, link } from "./ui.js";
 import "./copy.js";
 import "./konami.js";
+import { showLiveAlert } from "./live-alert.js";
 
 const PAGES = [
   { id: "home", href: "/", label: "Home" },
@@ -34,6 +35,7 @@ if (nav) {
   });
   list.id = "nav-links";
   nav.replaceChildren(el("div", "wrap", brand, list, themeToggle(), menuButton(nav)));
+  showLiveAlert(nav, current);
 }
 
 // Phones: the links fold into a menu behind a burger button (see site.css).

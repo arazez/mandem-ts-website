@@ -121,16 +121,42 @@ export function loadLeaderboards() {
 
 // live.json (proposed) → { updatedAt, live: [{ name, twitch, since }] }.
 // twitch is null unless it's a safe login (letters, digits, underscores).
+// Safety net: the bot only rewrites live.json when something changes, so if it
+// stops mid-stream a streamer could look live forever. Anyone who went live
+// over 12 hours ago is left out (owner's ruling; see docs/SITE-DATA.md).
+// Loaded once per page: the navbar and the Live now page share it.
+const STALE_MS = 12 * 60 * 60 * 1000;
+
+// ?demo=live (local only) shows three made-up streamers; ?demo=live1 shows one.
+function demoLive() {
+  const since = new Date(Date.now() - 45 * 60000).toISOString();
+  const all = [
+    { name: "ExampleStreamer", twitch: "examplestreamer", since },
+    { name: "AnotherUser", twitch: "anotheruser", since },
+    { name: "ThirdUser", twitch: "thirduser", since }
+  ];
+  return { updatedAt: since, live: queryParam("demo") === "live1" ? all.slice(0, 1) : all };
+}
+
+function cleanLive(l) {
+  if (!Array.isArray(l.live)) return null;
+  const now = Date.now();
+  return {
+    updatedAt: parseUtc(l.updatedAt),
+    live: l.live.filter((s) => isObj(s) && isName(s.name)).map((s) => ({
+      name: s.name,
+      twitch: typeof s.twitch === "string" && /^[A-Za-z0-9_]+$/.test(s.twitch) ? s.twitch : null,
+      since: parseUtc(s.since)
+    })).filter((s) => !s.since || now - s.since < STALE_MS)
+  };
+}
+
+let livePromise = null;
 export function loadLive() {
-  return load("live.json", (l) => {
-    if (!Array.isArray(l.live)) return null;
-    return {
-      updatedAt: parseUtc(l.updatedAt),
-      live: l.live.filter((s) => isObj(s) && isName(s.name)).map((s) => ({
-        name: s.name,
-        twitch: typeof s.twitch === "string" && /^[A-Za-z0-9_]+$/.test(s.twitch) ? s.twitch : null,
-        since: parseUtc(s.since)
-      }))
-    };
-  });
+  if (!livePromise) {
+    livePromise = /^live1?$/.test(queryParam("demo") || "")
+      ? Promise.resolve({ status: "ok", data: cleanLive(demoLive()) })
+      : load("live.json", cleanLive);
+  }
+  return livePromise;
 }

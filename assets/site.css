@@ -765,6 +765,87 @@ table.data tr:last-child td { border-bottom: 0; }
 
 .twitch-link:hover { background: #a970ff; }
 
+/* Someone is live (assets/live-alert.js): red "recording" dot on the navbar
+   and a slim strip under it */
+.rec-dot {
+  display: inline-block;
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: #ff4d4d;
+  animation: rec-pulse 1.6s ease-in-out infinite;
+}
+
+.nav-links a.is-live .rec-dot { margin-left: 0.4rem; vertical-align: 0.1em; }
+
+@keyframes rec-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 #ff4d4d88; opacity: 1; }
+  50% { box-shadow: 0 0 0 4px #ff4d4d00; opacity: 0.55; }
+}
+
+/* Phones: the links hide behind the burger, so the burger gets the dot */
+.site-nav.has-live .nav-menu-btn { position: relative; }
+.site-nav.has-live:not(.open) .nav-menu-btn::after {
+  content: "";
+  position: absolute;
+  top: -0.2rem;
+  right: -0.2rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: #ff4d4d;
+  border: 2px solid var(--bg-alt);
+}
+
+.live-alert {
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+
+.live-alert .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.7rem;
+  max-width: 1000px;
+  padding-top: 0.45rem;
+  padding-bottom: 0.45rem;
+}
+
+.live-alert-text { color: var(--text-dim); overflow-wrap: anywhere; }
+.live-alert-text strong { color: var(--text); }
+
+.live-alert-cta {
+  background: #9146ff;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.82rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+}
+
+.live-alert-cta:hover { background: #a970ff; }
+
+.live-alert-close {
+  margin-left: auto;
+  font: inherit;
+  color: var(--text-dim);
+  background: none;
+  border: 0;
+  padding: 0.2rem 0.4rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.live-alert-close:hover { color: var(--text); background: var(--bg-card); }
+
+@media (prefers-reduced-motion: reduce) {
+  .rec-dot { animation: none; }
+}
+
 /* Perk explainer cards */
 .perk-cards {
   display: grid;
