@@ -4,6 +4,7 @@
 // To add a page: add it to PAGES below.
 
 import { el, link } from "./ui.js";
+import "./copy.js";
 
 const PAGES = [
   { id: "home", href: "index.html", label: "Home" },
@@ -12,6 +13,7 @@ const PAGES = [
   { id: "perks", href: "perks.html", label: "Perks" },
   { id: "live", href: "live.html", label: "Live now" },
   { id: "leaderboards", href: "leaderboards.html", label: "Leaderboards" },
+  { id: "rules", href: "rules.html", label: "Rules" },
   { id: "faq", href: "faq.html", label: "FAQ" }
 ];
 
