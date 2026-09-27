@@ -1071,3 +1071,69 @@ code.cmd.copyable:focus-visible {
 }
 
 #game:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+
+/* Easter egg: Lémön mode (assets/konami.js) */
+:root.lemon-mode {
+  --orange: #ffd21f;
+  --orange-hover: #ffe066;
+  --orange-dim: #ffd21f33;
+  --focus: #ffe066;
+}
+
+:root.lemon-mode[data-theme="light"] {
+  --orange: #9a7400;
+  --orange-hover: #7d5e00;
+  --orange-dim: #ffd21f40;
+  --focus: #9a7400;
+}
+
+.lemon-banner {
+  position: fixed;
+  top: 5rem;
+  left: 50%;
+  z-index: 70;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  max-width: calc(100vw - 2rem);
+  padding: 1rem 1.6rem;
+  text-align: center;
+  color: #1a1400;
+  background: linear-gradient(135deg, #fff3a0, #ffd21f 55%, #ffb800);
+  border-radius: 16px;
+  box-shadow: 0 0 0 3px #fff8, 0 0 40px #ffd21faa, 0 12px 40px #0008;
+  cursor: pointer;
+  animation: lemon-drop-in 0.6s cubic-bezier(0.2, 1.4, 0.4, 1) both, lemon-glow 1.2s ease-in-out 0.6s infinite alternate;
+}
+
+.lemon-banner strong { font-size: clamp(0.95rem, 4.4vw, 1.7rem); font-weight: 800; letter-spacing: 0.03em; white-space: nowrap; }
+
+@media (max-width: 480px) {
+  .lemon-banner { padding: 0.8rem 1rem; }
+}
+.lemon-banner span { font-size: 0.95rem; opacity: 0.8; }
+.lemon-banner.leaving { transition: opacity 0.6s, transform 0.6s; opacity: 0; transform: translate(-50%, -1rem); }
+
+@keyframes lemon-drop-in {
+  from { opacity: 0; transform: translate(-50%, -3rem) scale(0.6); }
+  to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+
+@keyframes lemon-glow {
+  to { box-shadow: 0 0 0 3px #fffc, 0 0 70px #ffd21fee, 0 12px 40px #0008; }
+}
+
+.lemon-rain {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 60;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lemon-banner { animation: none; }
+}

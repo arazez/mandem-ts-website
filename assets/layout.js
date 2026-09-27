@@ -6,6 +6,7 @@
 
 import { el, link } from "./ui.js";
 import "./copy.js";
+import "./konami.js";
 
 const PAGES = [
   { id: "home", href: "/", label: "Home" },
