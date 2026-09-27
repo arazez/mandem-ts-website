@@ -1022,3 +1022,52 @@ code.cmd.copyable:focus-visible {
   opacity: 1;
   transform: translate(-50%, 0);
 }
+
+/* Burger menu (assets/layout.js): phones only */
+.nav-menu-btn {
+  display: none;
+  font: inherit;
+  font-size: 1.2rem;
+  line-height: 1;
+  width: 2.4rem;
+  height: 2.2rem;
+  color: var(--text);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.nav-menu-btn:hover { border-color: var(--orange); }
+
+@media (max-width: 760px) {
+  .nav-menu-btn { display: inline-flex; align-items: center; justify-content: center; }
+  .site-nav .wrap { gap: 0.5rem; }
+
+  .site-nav .nav-links {
+    display: none;
+    order: 3;
+    width: 100%;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding: 0.4rem 0 0.2rem;
+    border-top: 1px solid var(--border);
+    margin-top: 0.3rem;
+  }
+
+  .site-nav.open .nav-links { display: flex; }
+  .site-nav .nav-links a { padding: 0.6rem 0.5rem; font-size: 1rem; }
+}
+
+/* 404 mini-game (assets/game.js) */
+.game-box { max-width: 640px; }
+
+#game {
+  display: block;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  touch-action: none;
+  cursor: pointer;
+}
+
+#game:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }

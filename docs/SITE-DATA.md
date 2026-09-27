@@ -44,7 +44,7 @@ HARD for all:
 ### live.json (PROPOSED, bot only)
 - updatedAt: UTC time.
 - live: array of { name, twitch, since }. twitch = lower-case login; since = went-live UTC time.
-- Holds only streamers who opted in (!twitch show); the site shows everyone in it.
+- Holds only streamers who opted in (!twitch show); the site shows everyone in it, except anyone whose `since` is over 12 hours ago (owner's ruling: a stopgap in case the bot stops mid-stream).
 - Link to https://twitch.tv/<twitch> only if the login is letters, digits and underscores; otherwise show the name unlinked.
 - Empty list = nobody live; say so in a friendly way.
 

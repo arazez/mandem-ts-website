@@ -3,12 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Leaderboards | Mandem Server</title>
-<meta name="description" content="All-time trivia and Uno top 10s on Mandem Server's TeamSpeak.">
-<meta property="og:title" content="Leaderboards | Mandem Server">
-<meta property="og:description" content="All-time trivia and Uno top 10s on Mandem Server's TeamSpeak.">
+<title>Page not found | Mandem Server</title>
+<meta name="description" content="This page doesn't exist. Play Lemon Drop instead.">
+<meta property="og:title" content="Page not found | Mandem Server">
+<meta property="og:description" content="This page doesn't exist. Play Lemon Drop instead.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://mandem.arazez.com/leaderboards">
 <meta property="og:site_name" content="Mandem Server">
 <meta property="og:image" content="https://mandem.arazez.com/assets/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -20,24 +19,25 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css">
-<script src="assets/theme.js"></script>
-<script type="module" src="assets/layout.js"></script>
-<script type="module" src="assets/leaderboards.js"></script>
+<link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/theme.js"></script>
+<script type="module" src="/assets/layout.js"></script>
+<script type="module" src="/assets/game.js"></script>
 </head>
-<body data-page="leaderboards">
+<body data-page="404">
 <nav id="site-nav"></nav>
 
 <div class="wrap page-head">
-  <h1>Leaderboards</h1>
-  <p class="lead">All-time top 10s from the games you can play with the bot. In TeamSpeak,
-    <code class="cmd">!trivia top</code> and <code class="cmd">!uno top</code> show the same.</p>
+  <h1>404: this page got squeezed 🍋</h1>
+  <p class="lead">We couldn't find that page. Try the <a href="/">home page</a> or the menu above, or stay and catch some lemons.</p>
 </div>
 
 <main class="wrap page">
-  <section>
-    <div id="boards"><p class="muted">Loading…</p></div>
-    <p class="updated-note" id="boardsUpdated"></p>
+  <section aria-label="Lemon Drop mini-game">
+    <div class="game-box">
+      <canvas id="game" tabindex="0" aria-label="Lemon Drop: catch the falling lemons in the basket and dodge the bombs. Press Space to start, arrow keys to move."></canvas>
+    </div>
+    <p class="small muted">Move with the arrow keys (or A and D), your mouse, or your finger. Missed lemons and caught bombs cost a life.</p>
   </section>
 </main>
 

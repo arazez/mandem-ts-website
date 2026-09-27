@@ -16,7 +16,9 @@ createServer((req, res) => {
   let file = resolve(join(root, path));
   if (!existsSync(file) && existsSync(file + ".html")) file += ".html";
   if (!file.startsWith(root + sep) || !existsSync(file) || !statSync(file).isFile()) {
-    res.writeHead(404).end("Not found");
+    // Like GitHub Pages: unknown addresses get 404.html with a 404 status.
+    res.writeHead(404, { "Content-Type": types[".html"] });
+    createReadStream(join(root, "404.html")).pipe(res);
     return;
   }
   res.writeHead(200, { "Content-Type": types[extname(file)] || "application/octet-stream", "Cache-Control": "no-store" });
