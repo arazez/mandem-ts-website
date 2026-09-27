@@ -14,7 +14,8 @@ function renderEarn(d) {
     el("p", "perk-rules-head", "How weeks work"),
     el("ul", "perk-rules",
       el("li", null, "Your week starts when you send the start command, not when you donate."),
-      el("li", null, "Once it starts, nobody can interrupt it. It can't be paused: it runs the full week, then ends."),
+      el("li", null, "Once it starts, nobody can interrupt it, and you can't pause it: it runs the full week, then ends."),
+      el("li", null, "The one exception: an important service modal from the owner can interrupt your modal. Your week pauses while it's up and carries on once it's gone, so you lose no time."),
       el("li", null, "One person holds the banner (or modal) at a time. If it's taken, the bot tells you when it's free."),
       el("li", null, "Banner and modal are separate, so you can use each one on its own.")
     ),

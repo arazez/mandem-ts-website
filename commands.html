@@ -13,18 +13,24 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
+<script src="assets/theme.js"></script>
 <script type="module" src="assets/layout.js"></script>
+<script type="module" src="assets/commands.js"></script>
 </head>
 <body data-page="commands">
 <nav id="site-nav"></nav>
 
-<div class="wrap page-head">
+<div class="wrap wide page-head">
   <h1>Commands</h1>
   <p class="lead">What you can ask the bot to do. Type <code class="cmd">!bot</code> in the server or channel chat first: it messages you privately, and you send everything else in that private chat.</p>
 </div>
 
-<main class="wrap page">
+<main class="wrap wide page docs">
+  <!-- Side index: built by assets/commands.js from the headings and commands below -->
+  <aside class="toc" id="toc" aria-label="On this page"></aside>
+
   <!-- Command list: written by the commands-page-writer agent from the bot's docs/COMMANDS.md -->
+  <!-- commands-source sha256=6eaa0afcc0d65192718f1cb20c130e0e3798e03a44b9c9254092145c321937b2 -->
   <div id="commands">
 
     <section class="cmd-group">
@@ -48,10 +54,10 @@
       <div class="card">
         <dl class="cmd-list">
           <dt><code class="cmd">!perks</code></dt>
-          <dd>Shows everyone with a perk right now: how many banner and modal weeks they have left, and whether their mute is ready to use.<br><code class="cmd">!perks</code></dd>
+          <dd>Shows everyone with a perk right now: how many banner and modal weeks they have left, and whether their mute is ready to use.</dd>
 
           <dt><code class="cmd">!perks &lt;name&gt;</code></dt>
-          <dd>Shows just one person's perks.<br><code class="cmd">!perks Alice</code></dd>
+          <dd>Shows just one person's perks, for example yours.</dd>
 
           <dt><code class="cmd">!control status</code></dt>
           <dd>Shows who currently holds the banner and the modal, and when each of their weeks ends.</dd>
@@ -60,16 +66,16 @@
           <dd>Starts your week of banner control straight away. Needs the perk: see <a href="perks.html">Perks</a>.</dd>
 
           <dt><code class="cmd">!banner set &lt;picture address&gt; [link]</code></dt>
-          <dd>Puts up your banner picture while you hold it, with an optional link people can click through to. Needs the perk: see <a href="perks.html">Perks</a>.<br><code class="cmd">!banner set https://i.postimg.cc/abc123/my-banner.png</code></dd>
+          <dd>Puts up your banner picture while you hold it, with an optional link people can click through to. Needs the perk: see <a href="perks.html">Perks</a>.<br><span class="cmd-example">Example: <code class="cmd">!banner set https://i.postimg.cc/abc123/my-banner.png</code></span></dd>
 
           <dt><code class="cmd">!modal start</code></dt>
-          <dd>Starts your week of modal control — the pop-up message everyone sees when they connect. Needs the perk: see <a href="perks.html">Perks</a>.</dd>
+          <dd>Starts your week of modal control — the pop-up message everyone sees when they connect. Needs the perk: see <a href="perks.html">Perks</a>. Heads up: an important service modal from the owner can interrupt it. Your week pauses while it's up and picks up where it left off once it's gone, so you lose no time.</dd>
 
           <dt><code class="cmd">!modal set &lt;text&gt;</code></dt>
-          <dd>Sets the pop-up message while you hold it.<br><code class="cmd">!modal set GG everyone, see you at the LAN on Saturday!</code></dd>
+          <dd>Sets the pop-up message while you hold it: up to 200 characters. Links are fine, pictures aren't.<br><span class="cmd-example">Example: <code class="cmd">!modal set GG everyone, see you at the LAN on Saturday!</code></span></dd>
 
           <dt><code class="cmd">!mute &lt;name&gt;</code></dt>
-          <dd>Silences someone online for 1 hour; it lifts on its own after that. Needs the perk: see <a href="perks.html">Perks</a>.<br><code class="cmd">!mute Bob</code></dd>
+          <dd>Silences someone online for 1 hour; it lifts on its own after that. Needs the perk: see <a href="perks.html">Perks</a>.</dd>
         </dl>
       </div>
     </section>
@@ -79,7 +85,7 @@
       <div class="card">
         <dl class="cmd-list">
           <dt><code class="cmd">!twitch link &lt;your channel&gt;</code></dt>
-          <dd>Asks to link your Twitch channel, so your name shows [LIVE] while you're streaming. An admin has to approve it first.<br><code class="cmd">!twitch link yourname</code></dd>
+          <dd>Asks to link your Twitch channel, so your name shows [LIVE] while you're streaming. Send just your channel name. An admin has to approve it first.</dd>
 
           <dt><code class="cmd">!twitch</code></dt>
           <dd>Shows your current link and whether it's been approved yet.</dd>
@@ -104,7 +110,7 @@
           <dd>Locks the channel you're in so nobody else can come in, and stops anyone from poking, moving or messaging the people inside first. Use it in a private lobby or your community channel when you want to play without being disturbed.</dd>
 
           <dt><code class="cmd">!unlock</code> / <code class="cmd">!unlock &lt;channel&gt;</code></dt>
-          <dd>Ends the lock. Use it in the channel itself, or name the channel from anywhere on the server.<br><code class="cmd">!unlock private lobby 2</code></dd>
+          <dd>Ends the lock. Use it in the channel itself, or name the channel from anywhere on the server.</dd>
 
           <dt><code class="cmd">!rejoin</code></dt>
           <dd>Moves you back into your locked channel if you stepped out on purpose. You have 10 minutes before you lose your place.</dd>
@@ -120,7 +126,7 @@
           <dd>Flips a coin and posts the result in your channel for everyone to see.</dd>
 
           <dt><code class="cmd">!coinflip heads</code> / <code class="cmd">!coinflip tails</code></dt>
-          <dd>Calls it before the flip, so the bot can say whether you won.<br><code class="cmd">!coinflip heads</code></dd>
+          <dd>Calls it before the flip, so the bot can say whether you won.</dd>
         </dl>
       </div>
     </section>
@@ -139,7 +145,7 @@
           <dd>Leaves the game. Your points so far still count, and the others play on.</dd>
 
           <dt><code class="cmd">!trivia top</code></dt>
-          <dd>Shows the all-time top 10 on the <a href="leaderboards.html">Leaderboards</a> page.</dd>
+          <dd>Shows the all-time top 10 in chat. It's also on the <a href="leaderboards.html">Leaderboards</a> page.</dd>
         </dl>
       </div>
     </section>
@@ -170,7 +176,7 @@
           <dd>Leaves the game. It counts as a loss, but your cards still count toward whoever wins.</dd>
 
           <dt><code class="cmd">!uno top</code></dt>
-          <dd>Shows the all-time leaderboard — games won and lost, and win rate — on the <a href="leaderboards.html">Leaderboards</a> page.</dd>
+          <dd>Shows the all-time top 10 in chat, with games won and lost and win rate. It's also on the <a href="leaderboards.html">Leaderboards</a> page.</dd>
         </dl>
       </div>
     </section>

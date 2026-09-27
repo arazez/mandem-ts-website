@@ -137,10 +137,10 @@ function renderPerks(d) {
     ["🖼️", "1 week of control over the TeamSpeak banner photo", "What's the banner?",
       "The banner is the image shown on the right in the channel details page, visible to everyone on the server. You pick the photo."],
     ["💬", "1 week of control over the TeamSpeak modal", "What's a modal?",
-      "A modal is the pop-up message box that appears in the middle of everyone's screen when they connect to the server. They have to dismiss it before carrying on. You choose what it says."]
+      "A modal is the pop-up message box that appears in the middle of everyone's screen when they connect to the server. They have to dismiss it before carrying on. You choose what it says, up to 200 characters."]
   ];
   const rules = [
-    "Once your week starts, nobody can interrupt it.",
+    "Once your week starts, nobody can interrupt it. The one exception: an important service modal from the owner can interrupt your modal. Your week pauses while it's up and carries on once it's gone, so you lose no time.",
     "It can't be paused or resumed: it runs for the full week, then ends.",
     "Banner and modal are separate, so you can use each one on its own."
   ];

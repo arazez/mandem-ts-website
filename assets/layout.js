@@ -28,7 +28,29 @@ if (nav) {
     if (p.id === current) a.setAttribute("aria-current", "page");
     list.append(el("li", null, a));
   });
-  nav.replaceChildren(el("div", "wrap", brand, list));
+  nav.replaceChildren(el("div", "wrap", brand, list, themeToggle()));
+}
+
+// Light/dark switch. The choice is saved in this browser (assets/theme.js
+// applies it on the next page before it draws).
+function themeToggle() {
+  const root = document.documentElement;
+  const current = () => (root.getAttribute("data-theme") === "light" ? "light" : "dark");
+  const button = el("button", "theme-toggle");
+  button.type = "button";
+  const label = () => {
+    const next = current() === "light" ? "dark" : "light";
+    button.textContent = next === "light" ? "☀️ Light" : "🌙 Dark";
+    button.setAttribute("aria-label", "Switch to " + next + " mode");
+  };
+  button.addEventListener("click", () => {
+    const next = current() === "light" ? "dark" : "light";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("theme", next); } catch (err) { /* not remembered, that's fine */ }
+    label();
+  });
+  label();
+  return button;
 }
 
 const footer = document.getElementById("site-footer");

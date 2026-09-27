@@ -11,6 +11,13 @@
   --orange-dim: #ff7a1a33;
   --green: #3ddc84;
   --focus: #ffb35c;
+  --green-dim: #3ddc8414;
+  --green-hover: #3ddc8422;
+  --gold: #ffd166;
+  --gold-dim: #ffd16614;
+  --shadow: #000a;
+  --divider: #ffffff0d;
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -100,7 +107,7 @@ code.addr {
 
 .banner.open {
   border-color: var(--green);
-  background: #3ddc8414;
+  background: var(--green-dim);
 }
 
 .banner.closed {
@@ -115,11 +122,11 @@ code.addr {
 .banner.open .banner-title { color: var(--green); }
 
 .banner.goal {
-  border-color: #ffd166;
-  background: #ffd16614;
+  border-color: var(--gold);
+  background: var(--gold-dim);
 }
 
-.banner.goal .banner-title { color: #ffd166; }
+.banner.goal .banner-title { color: var(--gold); }
 
 .countdown {
   font-variant-numeric: tabular-nums;
@@ -432,7 +439,7 @@ ul.perk-rules li::before {
   border: 1px solid var(--orange);
   border-radius: 8px;
   padding: 0.7rem 0.85rem;
-  box-shadow: 0 8px 24px #000a;
+  box-shadow: 0 8px 24px var(--shadow);
   font-size: 0.85rem;
   font-weight: 400;
   line-height: 1.45;
@@ -480,7 +487,7 @@ ul.perk-rules li::before {
 
 .pl-chip.ready {
   border-color: var(--green);
-  background: #3ddc8414;
+  background: var(--green-dim);
   color: var(--green);
 }
 
@@ -646,7 +653,7 @@ main.wrap.page { padding-top: 1.5rem; }
 .callout {
   display: block;
   border: 1px solid var(--green);
-  background: #3ddc8414;
+  background: var(--green-dim);
   border-radius: 12px;
   padding: 1rem 1.25rem;
   color: var(--text);
@@ -654,7 +661,7 @@ main.wrap.page { padding-top: 1.5rem; }
 }
 
 .callout strong { color: var(--green); }
-a.callout:hover { background: #3ddc8422; }
+a.callout:hover { background: var(--green-hover); }
 
 .steps {
   margin: 0;
@@ -852,4 +859,129 @@ a.callout-plain:hover { border-color: var(--orange); }
   text-transform: uppercase;
   color: var(--orange);
   font-weight: 600;
+}
+
+/* Light mode: only when the navbar toggle picks it (html[data-theme], set by
+   assets/theme.js). The site always starts dark: owner's choice. */
+:root[data-theme="light"] {
+  --bg: #f4f5f7;
+  --bg-alt: #ffffff;
+  --bg-card: #ffffff;
+  --border: #d9dde3;
+  --text: #15171c;
+  --text-dim: #555b66;
+  --orange: #c05200;
+  --orange-hover: #a54600;
+  --orange-dim: #ff7a1a1f;
+  --green: #177a43;
+  --focus: #c05200;
+  --green-dim: #1a9e5514;
+  --green-hover: #1a9e5524;
+  --gold: #8a5a00;
+  --gold-dim: #ffc4331f;
+  --shadow: #0003;
+  --divider: #0000000f;
+  color-scheme: light;
+}
+
+.theme-toggle {
+  font: inherit;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+  cursor: pointer;
+}
+
+.theme-toggle:hover { color: var(--text); border-color: var(--orange); }
+
+/* Commands: a faint line between each command and the next */
+dl.cmd-list dt:not(:first-child) {
+  border-top: 1px solid var(--divider);
+  padding-top: 0.9rem;
+}
+
+dl.cmd-list dd { padding-bottom: 0.2rem; }
+
+.cmd-example {
+  display: inline-block;
+  margin-top: 0.3rem;
+  font-size: 0.85rem;
+}
+
+/* Wider layout for the Commands page, with the side index */
+.wrap.wide { max-width: 1000px; }
+
+main.docs {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+#commands [id] { scroll-margin-top: 5rem; }
+
+.toc {
+  position: sticky;
+  top: 4.5rem;
+  max-height: calc(100vh - 5.5rem);
+  overflow-y: auto;
+  font-size: 0.88rem;
+}
+
+.toc summary {
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+}
+
+.toc ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.toc-list > li { margin-bottom: 0.6rem; }
+
+.toc-list > li > a {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.toc-sub {
+  border-left: 1px solid var(--border);
+  margin: 0.25rem 0 0 0.2rem !important;
+  padding-left: 0.7rem !important;
+}
+
+.toc a {
+  display: block;
+  padding: 0.12rem 0;
+  color: var(--text-dim);
+  text-decoration: none;
+}
+
+.toc a:hover,
+.toc a[aria-current] { color: var(--orange); }
+
+@media (max-width: 859px) {
+  main.docs { grid-template-columns: 1fr; gap: 1rem; }
+
+  .toc {
+    position: static;
+    max-height: none;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
+  }
+
+  .toc summary { margin-bottom: 0; }
+  .toc details[open] summary { margin-bottom: 0.6rem; }
 }

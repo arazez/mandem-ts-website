@@ -1,10 +1,19 @@
 // Checks the agent-facing docs. Run: node tools/check-docs.mjs
 // Fails when CLAUDE.md is over budget, an "(expires YYYY-MM-DD)" date has
-// passed, a file named in backticks is missing, or any tracked text file
-// holds control or zero-width characters. Never edits anything.
-import { readFileSync, existsSync, readdirSync, statSync } from "node:fs";
+// passed, a file named in backticks is missing, any tracked text file holds
+// control or zero-width characters, or commands.html is out of date with the
+// bot's command guide. Never edits anything, except:
+//   --stamp  record the bot guide's current fingerprint in commands.html
+//            (run after the commands-page-writer agent rebuilds the page)
+//   --hook   for the SessionStart hook: print problems as a reminder, always exit 0
+import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from "node:fs";
 import { execSync } from "node:child_process";
-import { join } from "node:path";
+import { createHash } from "node:crypto";
+import { join, resolve, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+
+process.chdir(resolve(dirname(fileURLToPath(import.meta.url)), ".."));
+const HOOK = process.argv.includes("--hook");
 
 const WORD_BUDGET = 400; // raise only after pruning
 const problems = [];
@@ -65,8 +74,27 @@ for (const file of tracked) {
   });
 }
 
-if (problems.length) {
-  console.log(problems.join("\n"));
-  process.exit(1);
+// Commands page vs the bot's guide. Read only; skipped where the bot repo
+// isn't checked out next to this one (such as on GitHub).
+const BOT_GUIDE = "../gunsmoke-ts-bot/docs/COMMANDS.md";
+const MARK = /<!-- commands-source sha256=([0-9a-f]*) -->/;
+if (existsSync(BOT_GUIDE) && existsSync("commands.html")) {
+  const guide = readFileSync(BOT_GUIDE, "utf8").replace(/\r\n/g, "\n");
+  const hash = createHash("sha256").update(guide).digest("hex");
+  const page = readFileSync("commands.html", "utf8");
+  if (process.argv.includes("--stamp")) {
+    const tag = `<!-- commands-source sha256=${hash} -->`;
+    const anchor = '<div id="commands">';
+    writeFileSync("commands.html", MARK.test(page) ? page.replace(MARK, tag) : page.replace(anchor, `${tag}\n  ${anchor}`));
+    console.log("commands.html stamped with the bot guide's fingerprint");
+  } else if ((MARK.exec(page) || [])[1] !== hash) {
+    problems.push("commands.html is out of date: the bot's docs/COMMANDS.md has changed. " +
+      "Tell the owner, rebuild it with the commands-page-writer agent, then run node tools/check-docs.mjs --stamp");
+  }
 }
-console.log("check-docs: ok");
+
+if (problems.length) {
+  console.log((HOOK ? "Reminder from tools/check-docs.mjs:\n" : "") + problems.join("\n"));
+  process.exit(HOOK ? 0 : 1);
+}
+if (!HOOK) console.log("check-docs: ok");
