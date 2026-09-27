@@ -6,7 +6,7 @@
   "adminMinimum": 3,
   "muteMinimum": 5,
   "maxPerPerson": 5,
-  "lastUpdated": "2026-09-19",
+  "lastUpdated": "2026-09-27",
   "donors": [
     {
       "name": "arazez",
@@ -48,5 +48,10 @@
       "name": "CheapMarlin",
       "level": "Admin"
     }
-  ]
+  ],
+  "window": {
+    "month": 10,
+    "day": 1,
+    "days": 31
+  }
 }
