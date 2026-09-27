@@ -38,7 +38,7 @@
   <aside class="toc" id="toc" aria-label="On this page"></aside>
 
   <!-- Command list: written by the commands-page-writer agent from the bot's docs/COMMANDS.md -->
-  <!-- commands-source sha256=a0c4c891ecfda3fca1361e783a7a2f3a2a23e3d49b55a80550c2980fcb671816 -->
+  <!-- commands-source sha256=ec346284331ae6d37d3f13f24bcec2dfa0781c21d47aa9d8ac6839995b7b0552 -->
   <div id="commands">
 
     <section class="cmd-group">
@@ -74,13 +74,13 @@
           <dd>Shows who currently holds the banner and the modal, and when each of their weeks ends.</dd>
 
           <dt><code class="cmd">!banner start</code></dt>
-          <dd>Starts your week of banner control straight away. Needs the perk: see <a href="perks">Perks</a>.</dd>
+          <dd>Starts your week of banner control straight away. Needs the perk: see <a href="perks">Perks</a>. Only one person can hold it at a time — if someone else already has it, you're told when their week ends so you know when to try again. You'll get a message when you're down to your last 24 hours, and again when your week ends.</dd>
 
           <dt><code class="cmd">!banner set &lt;picture address&gt; [link]</code></dt>
-          <dd>Puts up your banner picture while you hold it, with an optional link people can click through to. Needs the perk: see <a href="perks">Perks</a>.<br><span class="cmd-example">Example: <code class="cmd">!banner set https://i.postimg.cc/abc123/my-banner.png</code></span></dd>
+          <dd>Puts up your banner picture while you hold it, with an optional link people can click through to. Needs the perk: see <a href="perks">Perks</a>. Upload your picture first to one of a few sites that don't leak the IP address of everyone who views it — Postimages, ImgBB, Catbox or Gyazo — then use its direct picture link (ending in .png, .jpg or .gif). Imgur doesn't work here, since it blocks UK visitors.<br><span class="cmd-example">Example: <code class="cmd">!banner set https://i.postimg.cc/abc123/my-banner.png</code></span></dd>
 
           <dt><code class="cmd">!modal start</code></dt>
-          <dd>Starts your week of modal control — the pop-up message everyone sees when they connect. Needs the perk: see <a href="perks">Perks</a>. Heads up: an important service modal from the owner can interrupt it. Your week pauses while it's up and picks up where it left off once it's gone, so you lose no time.</dd>
+          <dd>Starts your week of modal control — the pop-up message everyone sees when they connect. Needs the perk: see <a href="perks">Perks</a>. Only one person can hold it at a time — if someone else already has it, you're told when their week ends so you know when to try again. You'll get a message when you're down to your last 24 hours, and again when your week ends. Heads up: an important service modal from the owner can interrupt it. Your week pauses while it's up and picks up where it left off once it's gone, so you lose no time.</dd>
 
           <dt><code class="cmd">!modal set &lt;text&gt;</code></dt>
           <dd>Sets the pop-up message while you hold it: up to 200 characters. Links are fine, pictures aren't.<br><span class="cmd-example">Example: <code class="cmd">!modal set Manchester United is better than Liverpool!</code></span></dd>
@@ -96,7 +96,7 @@
       <div class="card">
         <dl class="cmd-list">
           <dt><code class="cmd">!twitch link &lt;your channel&gt;</code></dt>
-          <dd>Asks to link your Twitch channel, so your name shows [LIVE] while you're streaming. Send just your channel name. An admin has to approve it first.</dd>
+          <dd>Asks to link your Twitch channel, so your name shows [LIVE] while you're streaming. Send just your channel name. An admin has to approve it first. If you use TeamSpeak on more than one device, link each one separately — every device needs its own link.</dd>
 
           <dt><code class="cmd">!twitch</code></dt>
           <dd>Shows your current link and whether it's been approved yet.</dd>
@@ -105,7 +105,7 @@
           <dd>Removes your link, and takes off [LIVE] straight away if you're streaming.</dd>
 
           <dt><code class="cmd">!twitch show</code></dt>
-          <dd>Lists you on the site's <a href="live">Live now</a> page while you're streaming, with a link to your channel.</dd>
+          <dd>Lists you on the site's <a href="live">Live now</a> page while you're streaming, with a link to your channel and when you went live. Can take about 10 minutes to catch up after you go live or stop.</dd>
 
           <dt><code class="cmd">!twitch hide</code></dt>
           <dd>Takes you off the <a href="live">Live now</a> page again. Your [LIVE] tag in TeamSpeak works the same either way.</dd>
@@ -116,15 +116,16 @@
     <section class="cmd-group">
       <h2>Locking a channel</h2>
       <div class="card">
+        <p class="muted">For a private lobby or your community channel, when you want to play without being disturbed. A locked channel shows [LOCKED] in its name and gets a hidden password so nobody else can walk in; anyone who somehow gets in is moved straight back out.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!lock</code></dt>
-          <dd>Locks the channel you're in so nobody else can come in, and stops anyone from poking, moving or messaging the people inside first. Use it in a private lobby or your community channel when you want to play without being disturbed.</dd>
+          <dd>Locks the channel you're in and protects everyone inside at that moment: nobody can poke them, message them first, move them, kick them or ban them (they can still reply if someone messages them first). Everyone except Associates can use it; in a community channel only its Leader or Channel Admin can lock it. It's refused in Entrance Hall, AFK, the public lobbies and spacers, if you're on your own in there, or if the channel already has its own password.</dd>
 
           <dt><code class="cmd">!unlock</code> / <code class="cmd">!unlock &lt;channel&gt;</code></dt>
-          <dd>Ends the lock. Use it in the channel itself, or name the channel from anywhere on the server.</dd>
+          <dd>Ends the lock: the name and password go back to normal. Use it in the channel itself, or name the channel to end its lock from anywhere on the server. You can unlock a lock you started; in a community channel, its Leaders can end any lock there.<br><span class="cmd-example">Example: <code class="cmd">!unlock private lobby 2</code></span></dd>
 
           <dt><code class="cmd">!rejoin</code></dt>
-          <dd>Moves you back into your locked channel if you stepped out on purpose. You have 10 minutes before you lose your place.</dd>
+          <dd>Moves you back into your locked channel if you stepped out on purpose (a dropped connection is put back automatically once you reconnect). You have 10 minutes before you lose your place. If whoever locked the channel isn't back within that time, the lock ends for everyone.</dd>
         </dl>
       </div>
     </section>
@@ -132,6 +133,7 @@
     <section class="cmd-group">
       <h2>Coinflip</h2>
       <div class="card">
+        <p class="muted">The result always posts in your channel's chat, whether you typed it there or in your private chat with the bot. Once every 10 seconds per person, and you can't play from a locked channel.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!coinflip</code></dt>
           <dd>Flips a coin and posts the result in your channel for everyone to see.</dd>
@@ -145,6 +147,7 @@
     <section class="cmd-group">
       <h2>Trivia</h2>
       <div class="card">
+        <p class="muted">Played in your private chat with the bot, so only the people playing see it. You can't start or join a game from a locked channel, and a game where only one person answered doesn't count on the leaderboard.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!trivia</code></dt>
           <dd>Starts a 10-question game in the channel you're in, or joins one already running there. Everyone else in the channel gets 30 seconds to join before it starts.</dd>
@@ -164,6 +167,7 @@
     <section class="cmd-group">
       <h2>Uno</h2>
       <div class="card">
+        <p class="muted">Played in your private chat with the bot, for 2 to 10 people. You can't start or join a game from a locked channel.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!uno</code></dt>
           <dd>Opens an Uno game for 2 to 10 people in the channel you're in, or joins one already open there.</dd>
@@ -195,16 +199,16 @@
     <section class="cmd-group">
       <h2>For community channel leaders</h2>
       <div class="card">
-        <p class="muted">Only for a community channel's Community Leader or Channel Admin. Run these from inside your channel.</p>
+        <p class="muted">Only for a community channel's Community Leader or Channel Admin. Run these from inside your channel. Leaders can also end a lock in their channel that someone else started, with <code class="cmd">!unlock &lt;channel&gt;</code>.</p>
         <dl class="cmd-list">
-          <dt><code class="cmd">!role add &lt;name&gt; &lt;member|admin|leader&gt;</code></dt>
-          <dd>Makes someone a Member or Channel Admin of your channel, and lets them in. Only the server owner can make someone a Community Leader. Example: <code class="cmd">!role add Bob member</code></dd>
+          <dt><code class="cmd">!role add &lt;name&gt; &lt;member|admin&gt;</code></dt>
+          <dd>Makes someone a Member or Channel Admin of your channel, and lets them in. Only the server owner can make someone a Community Leader.<br><span class="cmd-example">Example: <code class="cmd">!role add Bob member</code></span></dd>
 
           <dt><code class="cmd">!role remove &lt;name&gt;</code></dt>
           <dd>Takes someone's role in your channel away, so they're a guest again.</dd>
 
           <dt><code class="cmd">!pull &lt;name&gt;</code></dt>
-          <dd>Brings someone into your channel from wherever they are on the server (except AFK). A Community Leader in their own channel can't be pulled out.</dd>
+          <dd>Brings someone into your channel from wherever they are on the server (except AFK). It won't pull anyone into a locked channel — unlock it first. A Community Leader in their own channel can't be pulled out.</dd>
         </dl>
       </div>
     </section>

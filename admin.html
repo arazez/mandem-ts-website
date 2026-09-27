@@ -52,7 +52,7 @@
 
   <!-- Command list: written by the commands-page-writer agent from the bot's docs/COMMANDS.md.
        Each command's <dd> starts with a "who" row of role pills; assets/admin.js filters by them. -->
-  <!-- commands-source sha256=a0c4c891ecfda3fca1361e783a7a2f3a2a23e3d49b55a80550c2980fcb671816 -->
+  <!-- commands-source sha256=ec346284331ae6d37d3f13f24bcec2dfa0781c21d47aa9d8ac6839995b7b0552 -->
   <div id="commands">
 
     <div class="notice role-empty" hidden>
@@ -63,9 +63,10 @@
     <section class="cmd-group">
       <h2>Help</h2>
       <div class="card">
+        <p class="muted" data-ranks="owner super-admin">When you send <code class="cmd">!help</code>, you also get a link straight to this guide, already narrowed down to your rank's commands.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!helplistadmin</code></dt>
-          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Lists the admin commands in chat, one line each. <code class="cmd">!help</code> points you to it.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Lists the admin commands in chat, one line each, and links to this full guide. <code class="cmd">!help</code> points you to it too. The page isn't in the site's menu, but nothing on it lets anyone use a command their rank doesn't already have.</dd>
         </dl>
       </div>
     </section>
@@ -75,7 +76,7 @@
       <div class="card">
         <dl class="cmd-list">
           <dt><code class="cmd">!donation add &lt;name&gt; &lt;pounds&gt; [date]</code></dt>
-          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Records a donation in whole pounds, up to the per-person limit for this donation window, and gives out what it earns: 1 banner week and 1 modal week per £1, plus the mute once that person's donations in the window reach the mute minimum. The date is optional (today if left out), written day first, and must fall inside the donation window and not in the future. Refused once the goal is reached, unless that's switched off. Put names with spaces in quotes. The reply gives the donation's number, in case it needs voiding.<br><span class="cmd-example">Example date: <code class="cmd">05/10/2026</code></span></dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Records a donation in whole pounds, up to the per-person limit for this donation window, and gives out what it earns: 1 banner week and 1 modal week per £1, plus the mute once that person's donations in the window reach the mute minimum. The date is optional (today if left out), written day first, and must fall inside the donation window and not in the future. Refused once the goal is reached, unless that's switched off. Put names with spaces in quotes. If the name's new, the reply says so. It also gives the donation's number, in case it needs voiding.<br><span class="cmd-example">Example date: <code class="cmd">05/10/2026</code></span></dd>
 
           <dt><code class="cmd">!donation void &lt;number&gt;</code></dt>
           <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Reverses a donation by its number. Takes back the weeks it added, never below zero and not weeks already started. Takes back its mute only if it's unused and the person's window total drops below the mute minimum. Lowers the total raised. A donation can only be voided once.</dd>
