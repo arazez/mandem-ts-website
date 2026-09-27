@@ -52,7 +52,7 @@
 
   <!-- Command list: written by the commands-page-writer agent from the bot's docs/COMMANDS.md.
        Each command's <dd> starts with a "who" row of role pills; assets/admin.js filters by them. -->
-  <!-- commands-source sha256=ec346284331ae6d37d3f13f24bcec2dfa0781c21d47aa9d8ac6839995b7b0552 -->
+  <!-- commands-source sha256=54865bf7bb3f5fe20082d044d80e41ccdd211788924ed6f06265fb1a26315b71 -->
   <div id="commands">
 
     <div class="notice role-empty" hidden>
@@ -190,6 +190,19 @@
         </dl>
         <p class="muted" data-ranks="owner super-admin">Nobody can poke, message, move, kick or ban the users inside a lock, the owner's account included; only YATQA logged in as serveradmin can.</p>
         <p class="muted" data-ranks="owner">The owner can walk into a locked channel without joining the lock. If the owner drags someone into a locked channel who doesn't belong there, the bot moves them out again.</p>
+      </div>
+    </section>
+
+    <section class="cmd-group">
+      <h2>Jail</h2>
+      <div class="card">
+        <dl class="cmd-list">
+          <dt><code class="cmd">!jailhashi</code> / <code class="cmd">!jailhashi &lt;minutes&gt;</code></dt>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span> <span class="role-pill role-super-admin" data-rank="super-admin">Super Admin</span></div>Moves hashithefourth into THE BUNKER, where he can't talk, for 3 minutes, or for 1 to 10 minutes if you give a number. He's told who jailed him, and the owner is told when a Super Admin does it. If he leaves the bunker or is dragged out, the bot moves him straight back — <code class="cmd">!pull</code>, <code class="cmd">!rejoin</code> and <code class="cmd">!lock</code> won't get him out either. The clock only runs while he's online: he goes back in when he reconnects, and an hour offline in one go counts as served. When his time is up, he goes back to the channel he was in — if that channel has since been locked or deleted, he stays in the bunker, free to leave. Jailing him again while he's inside adds time, up to 10 minutes in all. There are 30 minutes a week, shared by everyone who can use this, resetting Monday at midnight UK time. Each reply says how many minutes are left; if less is left than you asked for, he gets what's left. It's refused if he's offline, or in a locked channel.</dd>
+
+          <dt><code class="cmd">!freehashi</code></dt>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span> <span class="role-pill role-super-admin" data-rank="super-admin">Super Admin</span></div>Lets him out early, back to the channel he was in. The whole minutes he didn't serve go back into the week's 30.</dd>
+        </dl>
       </div>
     </section>
 
