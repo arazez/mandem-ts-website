@@ -1,18 +1,5 @@
 {
-  "updatedAt": "2026-09-27T18:46:18Z",
+  "updatedAt": "2026-09-27T18:46:48Z",
   "trivia": [],
-  "uno": [
-    {
-      "name": "parceldeliverer",
-      "points": 88,
-      "won": 1,
-      "lost": 2
-    },
-    {
-      "name": "arazez1",
-      "points": 47,
-      "won": 1,
-      "lost": 0
-    }
-  ]
+  "uno": []
 }
