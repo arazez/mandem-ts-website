@@ -1,6 +1,6 @@
 # mandem-ts-website
 
-Static site for the Mandem TeamSpeak server. Repo arazez/mandem-ts-website (renamed from ts-arazez-donations; never recreate the old name). GitHub Pages publishes `main` (root, no build) to donate.arazez.com, moving to mandem.arazez.com.
+Static site for the Mandem TeamSpeak server. Repo arazez/mandem-ts-website (renamed from ts-arazez-donations; never recreate the old name). GitHub Pages publishes `main` (root, no build) to https://mandem.arazez.com. DNS is at Namecheap.
 
 ## Rules
 - Talk to the owner in plain, non-technical language. Raise unclear or risky items one at a time.
@@ -27,10 +27,10 @@ Static site for the Mandem TeamSpeak server. Repo arazez/mandem-ts-website (rena
 - Names come from chat: insert as text, not HTML.
 - Never show per-person donation amounts, even in comments or commits.
 - No secrets (the server password included), no TeamSpeak unique IDs. identities.json never belongs in this repo.
+- Don't: recreate a donate.arazez.com DNS record (owner deleted it on purpose); one pointing at GitHub lets strangers claim it.
 - Don't: add endpoints, forms, webhooks, or Actions that write data files.
 - Don't: add React or a build step (owner's ruling: the site only shows data). Revisit if it needs real interactivity.
 
 ## State
-- Milestone: Phase 2, all seven pages built and checked; domain move left.
-- The live site isn't publicised yet, so working on it directly is fine.
+- Milestone: Phase 2 done; site live at mandem.arazez.com.
 - Open: modal limit. Site says 200 characters, bot guide says 500; owner checking.
