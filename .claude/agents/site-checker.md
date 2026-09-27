@@ -14,7 +14,7 @@ Read docs/SITE-DATA.md first. Then check:
 3. Names from data files are inserted with textContent or equivalent escaping, never via innerHTML, insertAdjacentHTML, document.write or string-built HTML.
 4. No page, comment or text shows or works out a per-person donation amount. Totals, perk weeks and levels are fine.
 5. No date-only string is passed to new Date(...) or Date.parse. Times display in Europe/London with dot clock times (14.00).
-6. Links: every local href/src points to a file that exists; external links answer curl -sI with a 2xx or 3xx status.
+6. Links: every local href/src points to a file that exists (page links have no ".html": href="perks" means perks.html, "./" means index.html); external links answer curl -sI with a 2xx or 3xx status.
 7. Nothing in the repo (outside .git) mentions donate.arazez.com or ts-arazez-donations, except CLAUDE.md's note about the rename and anything the task tells you is expected.
 8. No file contains control or zero-width characters (other than tab, newline, carriage return).
 

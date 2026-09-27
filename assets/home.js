@@ -11,7 +11,7 @@ try {
     const { state, win } = donationStatus(res.data);
     const box = document.getElementById("donationCallout");
     const callout = el("a", "callout");
-    callout.href = "supporters.html";
+    callout.href = "supporters";
     if (state === "open") {
       fill(callout, el("strong", null, "Donations are open until " + formatDateOnly(lastOpenDay(win)) + "."),
         " Help keep the server online for another year, and get perks for it. Go to Supporters →");

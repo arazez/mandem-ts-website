@@ -19,7 +19,7 @@ function renderEarn(d) {
       el("li", null, "One person holds the banner (or modal) at a time. If it's taken, the bot tells you when it's free."),
       el("li", null, "Banner and modal are separate, so you can use each one on its own.")
     ),
-    el("p", "perks-foot", "Donations open once a year. ", link("supporters.html", null, "See Supporters for when."))
+    el("p", "perks-foot", "Donations open once a year. ", link("supporters", null, "See Supporters for when."))
   );
 }
 

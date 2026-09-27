@@ -20,6 +20,7 @@ Rules:
 - No duplicate commands: never repeat the command itself as an example. Add an example only when it shows something the syntax line doesn't (a picture address, message text), as <span class="cmd-example">Example: <code class="cmd">...</code></span>.
 - Owner's rulings that override the bot's guide: a modal is up to 200 characters; wherever the modal is described, say an important service modal from the owner can interrupt it, pausing the holder's week, which picks up where it left off once the service modal is gone.
 - The side index is built by assets/commands.js from each section's <h2> and <dt>. Keep that structure; don't write an index by hand.
+- Link to other pages without ".html" (href="perks", "live", "leaderboards"), like the rest of the site.
 - Never show per-person donation amounts or TeamSpeak unique IDs.
 - Write command names and examples as fixed page text. No script should build them from data.
 - Don't type backslash-u escapes; write the real characters.

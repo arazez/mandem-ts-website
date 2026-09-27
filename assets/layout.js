@@ -7,14 +7,14 @@ import { el, link } from "./ui.js";
 import "./copy.js";
 
 const PAGES = [
-  { id: "home", href: "index.html", label: "Home" },
-  { id: "commands", href: "commands.html", label: "Commands" },
-  { id: "supporters", href: "supporters.html", label: "Supporters" },
-  { id: "perks", href: "perks.html", label: "Perks" },
-  { id: "live", href: "live.html", label: "Live now" },
-  { id: "leaderboards", href: "leaderboards.html", label: "Leaderboards" },
-  { id: "rules", href: "rules.html", label: "Rules" },
-  { id: "faq", href: "faq.html", label: "FAQ" }
+  { id: "home", href: "./", label: "Home" },
+  { id: "commands", href: "commands", label: "Commands" },
+  { id: "supporters", href: "supporters", label: "Supporters" },
+  { id: "perks", href: "perks", label: "Perks" },
+  { id: "live", href: "live", label: "Live now" },
+  { id: "leaderboards", href: "leaderboards", label: "Leaderboards" },
+  { id: "rules", href: "rules", label: "Rules" },
+  { id: "faq", href: "faq", label: "FAQ" }
 ];
 
 const current = document.body.dataset.page;
@@ -23,7 +23,7 @@ const nav = document.getElementById("site-nav");
 if (nav) {
   nav.className = "site-nav";
   nav.setAttribute("aria-label", "Main");
-  const brand = link("index.html", "nav-brand", "🎧 Mandem ", el("span", null, "Server"));
+  const brand = link("./", "nav-brand", "🎧 Mandem ", el("span", null, "Server"));
   const list = el("ul", "nav-links");
   PAGES.forEach((p) => {
     const a = link(p.href, null, p.label);
