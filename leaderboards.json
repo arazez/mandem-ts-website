@@ -1,5 +1,12 @@
 {
-  "updatedAt": "2026-09-27T18:46:48Z",
+  "updatedAt": "2026-09-27T23:38:13Z",
   "trivia": [],
-  "uno": []
+  "uno": [
+    {
+      "name": "arazez",
+      "points": 231,
+      "won": 1,
+      "lost": 0
+    }
+  ]
 }
