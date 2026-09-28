@@ -38,7 +38,7 @@
   <aside class="toc" id="toc" aria-label="On this page"></aside>
 
   <!-- Command list: written by the commands-page-writer agent from the bot's docs/COMMANDS.md -->
-  <!-- commands-source sha256=f7431621e567225543ad8490c2eda50c788748e583143578adf29edfe3b5abd4 -->
+  <!-- commands-source sha256=f11122be6c67b1058cbb34e77368f7798f852902bf599052386edca6f7195fa8 -->
   <div id="commands">
 
     <section class="cmd-group">
@@ -168,7 +168,7 @@
     <section class="cmd-group">
       <h2>Uno</h2>
       <div class="card">
-        <p class="muted">Played in your private chat with the bot, for 2 to 10 people. You can't start or join a game from a locked channel.</p>
+        <p class="muted">Played in your private chat with the bot, for 2 to 10 people. You can't start or join a game from a locked channel. After each move you'll see the top card, whose turn it is, how many cards everyone holds, and your own hand; when it's your turn, the message ends with <code class="cmd">&gt;&gt;&gt; YOUR TURN &lt;&lt;&lt;</code> on its own line so you know to go.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!uno</code></dt>
           <dd>Opens an Uno game for 2 to 10 people in the channel you're in, or joins one already open there.</dd>
@@ -200,7 +200,7 @@
     <section class="cmd-group">
       <h2>For community channel leaders</h2>
       <div class="card">
-        <p class="muted">Only for a community channel's Community Leader or Channel Admin. Run these from inside your channel. Leaders can also end a lock in their channel that someone else started, with <code class="cmd">!unlock &lt;channel&gt;</code>.</p>
+        <p class="muted">Only for a community channel's Community Leader or Channel Admin. Run these from inside your channel. Leaders can also end a lock in their channel that someone else started, with <code class="cmd">!unlock &lt;channel&gt;</code>. If nobody online matches the name you give to <code class="cmd">!role</code>, the bot searches everyone who's ever used the server by the name they last used, and tells you when they were last on so you can check it's the right person. If more than one matches, give their TeamSpeak unique ID instead — get yours with <code class="cmd">!whoami</code> — to pick the exact account.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!role add &lt;name&gt; &lt;member|admin&gt;</code></dt>
           <dd>Makes someone a Member or Channel Admin of your channel, and lets them in. Only the server owner can make someone a Community Leader.<br><span class="cmd-example">Example: <code class="cmd">!role add Bob member</code></span></dd>
