@@ -29,9 +29,9 @@ try {
   } else {
     const { trivia, uno, updatedAt } = res.data;
     fill(boards, el("div", "board-grid",
-      table("🧠 Trivia", [["#", "rank"], ["User", null], ["Points", "num"]],
+      table("🧠 Trivia", [["#", "rank"], ["User", "name"], ["Points", "num"]],
         trivia.map((r, i) => [String(i + 1), r.name, String(r.points)])),
-      table("🃏 Uno", [["#", "rank"], ["User", null], ["Points", "num"], ["Won", "num"], ["Lost", "num"], ["Win rate", "num"]],
+      table("🃏 Uno", [["#", "rank"], ["User", "name"], ["Points", "num"], ["Won", "num"], ["Lost", "num"], ["Win rate", "num"]],
         uno.map((r, i) => [String(i + 1), r.name, String(r.points), String(r.won), String(r.lost), winRate(r.won, r.lost)]))
     ));
     if (updatedAt) document.getElementById("boardsUpdated").textContent = "Updated " + formatUkMoment(updatedAt) + ".";

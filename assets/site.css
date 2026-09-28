@@ -714,6 +714,20 @@ table.data tr:last-child td { border-bottom: 0; }
 
 .rank { color: var(--orange); font-weight: 800; width: 2.5rem; }
 
+/* Long names wrap instead of pushing the table into a sideways scroll;
+   short ones stay whole */
+table.data td.name { overflow-wrap: anywhere; min-width: 7em; }
+
+/* Phones: tighter leaderboard cards so all Uno columns fit */
+@media (max-width: 480px) {
+  .board-grid .card { padding: 1rem 0.75rem; }
+  .board-grid table.data th,
+  .board-grid table.data td { padding: 0.5rem 0.25rem; }
+  .board-grid table.data th { font-size: 0.7rem; letter-spacing: 0.03em; }
+  .board-grid .rank { width: 1.5rem; }
+  .board-grid table.data td.name { min-width: 4em; }
+}
+
 .board-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
