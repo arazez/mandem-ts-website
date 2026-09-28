@@ -29,7 +29,8 @@ Static site for the Mandem TeamSpeak server. Repo arazez/mandem-ts-website (rena
 - No secrets (the server password included), no TeamSpeak unique IDs. identities.json never belongs in this repo.
 - Don't: recreate a donate.arazez.com DNS record (owner deleted it on purpose); one pointing at GitHub lets strangers claim it.
 - Don't: add endpoints, forms, webhooks, or Actions that write data files.
+- Non-site files: `_config.yml` exclude list.
 - Don't: add React or a build step (owner's ruling: the site only shows data). Revisit if it needs real interactivity.
 
 ## State
-- Milestone: Phase 2 done; site live at mandem.arazez.com.
+- Phase 2 done; live.

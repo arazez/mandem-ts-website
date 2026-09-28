@@ -1,0 +1,10 @@
+# GitHub Pages settings. The site has no build step: pages are published as-is.
+# Files visitors don't need are left off the website. Add any new notes,
+# scripts or tool folders here. Hidden files (.claude, .github) are left off
+# automatically.
+exclude:
+  - CLAUDE.md
+  - README.md
+  - docs/
+  - tools/
+  - update-donations.sh
