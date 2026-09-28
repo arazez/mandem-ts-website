@@ -3,7 +3,22 @@
 import { loadDonations } from "./data.js";
 import { el, fill } from "./ui.js";
 import { donationStatus, lastOpenDay } from "./donation-state.js";
-import { formatDateOnly } from "./time.js";
+import { formatDateOnly, ukToday } from "./time.js";
+
+// Temporary corner card linking to the bot tour. Shows until the end of its
+// last day (UK time); closing it hides it for good on that device.
+const TOUR_LAST_DAY = "2026-10-31";
+const TOUR_KEY = "tourCardClosed";
+const tourCard = document.getElementById("tourCard");
+let tourClosed = false;
+try { tourClosed = localStorage.getItem(TOUR_KEY) === "1"; } catch (err) { /* storage blocked: show it */ }
+if (!tourClosed && ukToday() <= TOUR_LAST_DAY) {
+  tourCard.hidden = false;
+  tourCard.querySelector(".tour-card-close").addEventListener("click", () => {
+    tourCard.hidden = true;
+    try { localStorage.setItem(TOUR_KEY, "1"); } catch (err) { /* not remembered, that's fine */ }
+  });
+}
 
 try {
   const res = await loadDonations();

@@ -14,7 +14,7 @@ Static site for the Mandem TeamSpeak server. Repo arazez/mandem-ts-website (rena
 | Task | File |
 |---|---|
 | Bot data contract | `docs/SITE-DATA.md` |
-| Pages (one per navbar item, plus unlisted `admin.html`: never link it) | root .html files; each page's script in `assets/` |
+| Pages (one per navbar item, plus unlisted `admin.html`: never link it; `tour.html`: bot slideshow, linked by home.js corner card) | root .html files; each page's script in `assets/` |
 | Navbar, footer, adding a page | `assets/layout.js` |
 | Reading any data file (the only place) | `assets/data.js` |
 | UK time, date-only dates, donation window | `assets/time.js` |

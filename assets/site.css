@@ -1268,3 +1268,64 @@ code.cmd.copyable:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .lemon-banner { animation: none; }
 }
+
+/* Home page corner card for the bot tour (shown by assets/home.js until its end date) */
+.tour-card {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 40;
+  width: 13.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--orange);
+  border-radius: 14px;
+  box-shadow: 0 12px 32px -8px var(--shadow);
+  animation: tour-card-in 0.4s ease-out;
+}
+
+.tour-card-link {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1rem 1.1rem 1.05rem;
+  color: var(--text);
+  text-decoration: none;
+  border-radius: 14px;
+}
+
+.tour-card-link:hover { background: var(--orange-dim); }
+.tour-card-icon { font-size: 1.8rem; line-height: 1; }
+.tour-card-link strong { color: var(--orange); padding-right: 1.5rem; }
+.tour-card-text { color: var(--text-dim); font-size: 0.88rem; line-height: 1.4; }
+.tour-card-go { color: var(--orange); font-weight: 600; font-size: 0.92rem; }
+
+.tour-card-close {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-dim);
+  font: inherit;
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.tour-card-close:hover { color: var(--text); background: var(--divider); }
+
+@keyframes tour-card-in {
+  from { opacity: 0; transform: translateY(1rem); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 480px) {
+  .tour-card { right: 1rem; bottom: 1rem; width: 11.5rem; }
+  .tour-card-text { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tour-card { animation: none; }
+}

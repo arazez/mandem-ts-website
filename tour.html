@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bot Tour | Mandem Server</title>
+<!-- Standalone presentation (no navbar), linked from the home page's corner card.
+     Exported from a Claude artifact, then edited: staff section removed, wording fixed. -->
+<meta name="description" content="A guided tour of Gunsmoke [BOT], the Mandem Server TeamSpeak bot: donor perks, locks, Twitch tags, games and more.">
+<meta property="og:title" content="Bot Tour | Mandem Server">
+<meta property="og:description" content="A guided tour of Gunsmoke [BOT], the Mandem Server TeamSpeak bot: donor perks, locks, Twitch tags, games and more.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mandem.arazez.com/tour">
+<meta property="og:site_name" content="Mandem Server">
+<meta property="og:image" content="https://mandem.arazez.com/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#13171c">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎧</text></svg>">
+<style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+  :root {
+    color-scheme: dark;
+    --ground: #13171c;
+    --ground-2: #181d23;
+    --panel: #1d232a;
+    --panel-edge: #2f3842;
+    --bone: #e9e4d8;
+    --muted: #98a1a9;
+    --dim: #5d6770;
+    --brass: #d6a841;
+    --brass-soft: #d6a84126;
+    --sage: #86bfae;
+    --uno-r: #d8483f;
+    --uno-y: #e6b52e;
+    --uno-g: #3f9f5a;
+    --uno-b: #3170c2;
+    --win: #6cc08a;
+    --lose: #e0675d;
+    --display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+    --body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  }
+  html, body { height: 100%; }
+  body {
+    background: var(--ground);
+    color: var(--bone);
+    font-family: var(--body);
+    overflow: hidden;
+  }
+
+  /* ---------- ambient smoke (fixed, behind the canvas) ---------- */
+  .smoke { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+  .smoke i {
+    position: absolute; width: 70vmax; height: 70vmax; border-radius: 50%;
+    background: radial-gradient(closest-side, #8b97a31a, transparent 70%);
+    filter: blur(20px);
+    animation: drift 70s ease-in-out infinite alternate;
+  }
+  .smoke i:nth-child(1) { left: -20vmax; top: -25vmax; }
+  .smoke i:nth-child(2) { right: -25vmax; bottom: -30vmax; animation-duration: 90s; animation-delay: -30s; }
+  .smoke i:nth-child(3) { left: 30vw; top: 40vh; width: 45vmax; height: 45vmax; animation-duration: 110s; background: radial-gradient(closest-side, #d6a8410d, transparent 70%); }
+  @keyframes drift {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(8vmax, 5vmax) scale(1.15); }
+  }
+
+  /* ---------- stage and camera ---------- */
+  .stage { position: fixed; inset: 0; overflow: hidden; cursor: default; }
+  .world { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+  .grid {
+    position: absolute; left: -7000px; top: -5000px; width: 14000px; height: 10000px;
+    background-image: radial-gradient(circle, #2a323b 1.6px, transparent 2px);
+    background-size: 64px 64px;
+    pointer-events: none;
+  }
+  .trails { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
+  .trails path { fill: none; stroke: #d6a84130; stroke-width: 6; stroke-dasharray: 2 22; stroke-linecap: round; }
+
+  .frame {
+    position: absolute; left: 0; top: 0;
+    width: 1600px; height: 900px;
+    font-size: 32px; line-height: 1.4;
+    box-sizing: border-box;
+    transform-origin: 50% 50%;
+    cursor: zoom-in;
+  }
+  .frame.is-current { cursor: default; }
+
+  /* hub frames: open viewfinder corners, no fill */
+  .hub { padding: 64px 80px; }
+  .hub::before, .hub::after {
+    content: ""; position: absolute; width: 120px; height: 120px; border: 6px solid var(--brass); pointer-events: none;
+  }
+  .hub::before { left: 0; top: 0; border-right: 0; border-bottom: 0; }
+  .hub::after { right: 0; bottom: 0; border-left: 0; border-top: 0; }
+
+  /* leaf frames: solid panels */
+  .leaf {
+    font-size: 36px;
+    background: var(--panel);
+    border: 3px solid var(--panel-edge);
+    border-radius: 18px;
+    padding: 72px 88px;
+    display: flex; flex-direction: column; gap: 0.7em;
+    box-shadow: 0 40px 80px -30px #000a;
+  }
+  .leaf:hover { border-color: #4a5561; }
+  .frame.is-current.leaf { border-color: var(--brass); }
+
+  .eyebrow {
+    font-family: var(--mono); font-size: 0.72em; letter-spacing: 0.04em;
+    color: var(--brass); text-transform: none;
+  }
+  .hub h2 {
+    font-family: var(--display); font-weight: 900; text-transform: uppercase;
+    font-size: 4.4em; line-height: 0.9; letter-spacing: 0.005em; margin: 0.12em 0 0.18em;
+    text-wrap: balance;
+  }
+  .hub .lede { font-size: 1.12em; color: var(--muted); max-width: 30em; margin: 0; text-wrap: pretty; }
+  .leaf h3 {
+    font-family: var(--display); font-weight: 800; text-transform: uppercase;
+    font-size: 2.9em; line-height: 0.95; margin: 0; letter-spacing: 0.01em; text-wrap: balance;
+  }
+  .leaf p { margin: 0; max-width: 42em; text-wrap: pretty; }
+  .leaf .note { color: var(--muted); font-size: 0.86em; }
+  .leaf ul { margin: 0; padding-left: 1.1em; display: grid; gap: 0.3em; }
+  .leaf li::marker { color: var(--brass); }
+  code, .cmd {
+    font-family: var(--mono); font-size: 0.88em; color: var(--brass);
+    background: var(--brass-soft); padding: 0.05em 0.35em; border-radius: 6px; white-space: nowrap;
+  }
+  .row { display: flex; gap: 1.2em; align-items: flex-start; flex-wrap: wrap; }
+  .grow { flex: 1 1 14em; display: grid; gap: 0.6em; align-content: start; }
+
+  /* TeamSpeak-style chat log */
+  .chat {
+    font-family: var(--mono); font-size: 0.72em; line-height: 1.55;
+    background: #0f1317; border: 2px solid var(--panel-edge); border-radius: 10px;
+    padding: 0.9em 1.1em; display: grid; gap: 0.15em; flex: 1 1 18em;
+  }
+  .chat .ts { color: var(--dim); }
+  .chat .you { color: var(--sage); }
+  .chat .bot { color: var(--brass); }
+  .chat .w { color: var(--win); } .chat .l { color: var(--lose); }
+
+  /* TeamSpeak-style channel tree */
+  .tree {
+    font-family: var(--body); font-size: 0.8em; line-height: 1.7;
+    background: #0f1317; border: 2px solid var(--panel-edge); border-radius: 10px;
+    padding: 0.8em 1.1em; flex: 1 1 15em; display: grid;
+  }
+  .tree .ch { display: flex; align-items: center; gap: 0.5em; color: var(--bone); }
+  .tree .cl { display: flex; align-items: center; gap: 0.5em; padding-left: 1.6em; color: var(--muted); }
+  .tree .dot { width: 0.55em; height: 0.55em; border-radius: 50%; background: var(--win); flex: none; }
+  .tree .tag { color: var(--lose); font-weight: 700; }
+  .tree .lockt { color: var(--brass); font-weight: 700; }
+  .tree svg { width: 0.9em; height: 0.9em; flex: none; }
+
+  /* big figures */
+  .figs { display: flex; gap: 1.4em; flex-wrap: wrap; }
+  .fig { display: grid; gap: 0.1em; }
+  .fig b { font-family: var(--display); font-weight: 900; font-size: 3.4em; line-height: 0.9; color: var(--brass); font-variant-numeric: tabular-nums; }
+  .fig span { color: var(--muted); font-size: 0.82em; max-width: 11em; }
+
+  /* uno cards */
+  .cards { display: flex; gap: 0.35em; flex-wrap: wrap; }
+  .card {
+    width: 2.2em; height: 3.1em; border-radius: 0.3em; display: grid; place-items: center;
+    font-family: var(--display); font-weight: 900; font-size: 1.1em; color: #fff;
+    border: 0.12em solid #fff3; box-shadow: 0 0.2em 0.5em #0006;
+  }
+  .card.r { background: var(--uno-r); } .card.y { background: var(--uno-y); color: #231a00; }
+  .card.g { background: var(--uno-g); } .card.b { background: var(--uno-b); }
+  .card.w { background: conic-gradient(var(--uno-r) 0 25%, var(--uno-y) 0 50%, var(--uno-g) 0 75%, var(--uno-b) 0); text-shadow: 0 0 0.3em #000; }
+
+  /* title + end frames */
+  .title-frame { display: flex; flex-direction: column; justify-content: center; padding: 80px 110px; gap: 0.5em; }
+  .title-frame::before, .title-frame::after { width: 200px; height: 200px; border-width: 8px; }
+  .title-frame h1 {
+    font-family: var(--display); font-weight: 900; text-transform: uppercase;
+    font-size: 6.2em; line-height: 0.86; margin: 0; letter-spacing: 0.005em; text-wrap: balance;
+  }
+  .title-frame h1 em { font-style: normal; color: var(--brass); }
+  .title-frame .lede { font-size: 1.2em; color: var(--muted); max-width: 28em; margin: 0; }
+  .title-frame .start { font-family: var(--mono); font-size: 0.7em; color: var(--dim); margin-top: 0.8em; }
+  .end-frame .huge { font-family: var(--mono); font-weight: 600; font-size: 7em; color: var(--brass); line-height: 1; }
+
+  /* ---------- controls ---------- */
+  .controls {
+    position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
+    display: flex; align-items: center; gap: 6px;
+    background: #0f1317e6; border: 1px solid var(--panel-edge); border-radius: 999px;
+    padding: 6px; backdrop-filter: blur(6px);
+    font-size: 14px; z-index: 5;
+  }
+  .controls button {
+    appearance: none; border: 0; background: transparent; color: var(--bone);
+    font: 600 14px/1 var(--body); height: 36px; min-width: 36px; padding: 0 12px; border-radius: 999px; cursor: pointer;
+  }
+  .controls button:hover { background: #ffffff12; }
+  .controls button:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+  .controls .where { min-width: 190px; text-align: center; color: var(--muted); font-variant-numeric: tabular-nums; padding: 0 6px; }
+  .controls .where b { color: var(--bone); font-weight: 700; }
+  .keys { position: fixed; right: 18px; bottom: calc(26px + env(safe-area-inset-bottom, 0px)); color: var(--dim); font: 12px var(--mono); z-index: 5; }
+  .progress { position: fixed; left: 0; top: env(safe-area-inset-top, 0px); height: 3px; background: var(--brass); width: 0; transition: width .4s ease; z-index: 5; }
+
+  /* ---------- linear mode for narrow screens ---------- */
+  body.linear { overflow: auto; }
+  .linear .stage { position: static; overflow: visible; }
+  .linear .world { position: static; transform: none !important; padding: 16px 16px 40px; display: grid; gap: 14px; }
+  .linear .grid, .linear .trails, .linear .controls, .linear .keys, .linear .progress { display: none; }
+  .linear .frame {
+    position: static; transform: none !important; width: auto; height: auto; font-size: 15px; cursor: default;
+  }
+  .linear .hub { padding: 28px 22px 10px; margin-top: 18px; }
+  .linear .hub::before, .linear .hub::after { width: 40px; height: 40px; border-width: 3px; }
+  .linear .leaf { padding: 22px 20px; border-radius: 12px; border-width: 1px; box-shadow: none; }
+  .linear .title-frame { padding: 40px 24px; }
+  .linear .title-frame .start { display: none; }
+  .linear .end-frame .huge { font-size: 4em; }
+  .linear .chat, .linear .tree { flex-basis: 100%; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .smoke i { animation: none; }
+    .progress { transition: none; }
+  }
+
+  /* ---------- way back to the main site ---------- */
+  .home-link {
+    position: fixed; left: 18px; top: calc(14px + env(safe-area-inset-top, 0px)); z-index: 6;
+    background: #0f1317e6; border: 1px solid var(--panel-edge); border-radius: 999px;
+    padding: 8px 14px; color: var(--bone); font: 600 14px/1 var(--body); text-decoration: none;
+    backdrop-filter: blur(6px);
+  }
+  .home-link:hover { border-color: var(--brass); }
+  .home-link:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+  .linear .home-link { position: static; display: inline-block; margin: 16px 16px 0; }
+</style>
+</head>
+<body>
+
+<a class="home-link" href="/">&larr; Back to the site</a>
+<div class="smoke" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="progress" id="progress"></div>
+<main class="stage" id="stage" aria-live="polite">
+  <div class="world" id="world">
+    <div class="grid" aria-hidden="true"></div>
+    <svg class="trails" id="trails" aria-hidden="true"></svg>
+  </div>
+</main>
+<nav class="controls" id="controls" aria-label="Presentation controls">
+  <button id="prev" type="button" aria-label="Previous">&larr;</button>
+  <div class="where" id="where"></div>
+  <button id="next" type="button" aria-label="Next">&rarr;</button>
+  <button id="map" type="button">Map</button>
+</nav>
+<div class="keys" aria-hidden="true">&larr; &rarr; move &middot; M map</div>
+
+<script>
+(() => {
+  const lock = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="7" width="10" height="8" rx="1.5" fill="#d6a841"/><path d="M5 7V5a3 3 0 0 1 6 0v2" fill="none" stroke="#d6a841" stroke-width="1.8"/></svg>';
+  const ts = (t) => `<span class="ts">&lt;${t}&gt;</span>`;
+
+  // Each hub is a 1600x900 frame placed on the world; its children sit inside it, smaller.
+  const hubs = [
+    {
+      id: 'meet', x: 2700, y: -1500, r: -4,
+      eyebrow: '!bot · !help · !helplist · !whoami',
+      title: 'Say hello first',
+      lede: 'You won\'t find the bot in the channel list, because TeamSpeak hides bots like it. You talk to it through chat instead.',
+      children: [
+        { title: 'Type !bot', html: `
+          <p>Type <code>!bot</code> in the server chat or your channel's chat. The bot opens a private chat with you, and every other command goes there.</p>
+          <div class="chat">
+            <div>${ts('21:14:02')} <span class="you">Alice</span>: !bot</div>
+            <div>${ts('21:14:03')} <span class="bot">Gunsmoke [BOT]</span>: Hi Alice! This is a private chat with the bot. Send your commands here, and send !help to see what you can use.</div>
+          </div>
+          <p class="note">If the bot restarts or you reconnect, send <code>!bot</code> again for a fresh chat.</p>` },
+        { title: 'Lost? Ask it', html: `
+          <ul>
+            <li><code>!help</code> sends a link to the Commands page on the website, where every command is explained.</li>
+            <li><code>!helplist</code> lists every command, one line each.</li>
+            <li>Capitals don't matter: <code>!Uno JOIN</code> works just as well.</li>
+          </ul>` },
+        { title: 'Who am I?', html: `
+          <p><code>!whoami</code> shows your TeamSpeak ID and whether it's linked to a supporter.</p>
+          <p>If you donated and your perks don't work, send what it says to the Owner. They link your ID and you're sorted.</p>
+          <p class="note">Each computer or phone has its own ID, so one person can have several linked.</p>` },
+      ],
+    },
+    {
+      id: 'support', x: 4300, y: 800, r: 3,
+      eyebrow: 'October donations · !perks · !modal · !banner · !mute',
+      title: 'Donors take the controls',
+      lede: 'Donations open every October, 1st to 31st. Each £1 buys a week in charge of something everyone on the server sees.',
+      children: [
+        { title: 'What £1 gets you', html: `
+          <div class="figs">
+            <div class="fig"><b>1 week</b><span>of the banner, per £1</span></div>
+            <div class="fig"><b>1 week</b><span>of the pop-up message, per £1</span></div>
+            <div class="fig"><b>£5</b><span>in October also earns one mute</span></div>
+          </div>
+          <p class="note">Up to £5 each per October, and the limit starts again every October. The banner and the pop-up run separately, so you can use them at different times.</p>` },
+        { title: 'The pop-up', html: `
+          <p>The pop-up is the message everyone sees when they connect.</p>
+          <ul>
+            <li><code>!modal start</code> starts your week straight away.</li>
+            <li><code>!modal set GG everyone, see you Saturday!</code> puts your message up. Up to 200 characters, and Shift+Enter makes a new line.</li>
+            <li>One person at a time. Anyone else is told when your week ends.</li>
+          </ul>
+          <p class="note">The bot warns you when less than a day is left. No pictures in the pop-up: whoever hosts a picture could see everyone's IP address.</p>` },
+        { title: 'The banner', html: `
+          <p>The banner is the picture at the top of the server, with a link people can click.</p>
+          <p><code>!banner start</code>, then <code>!banner set &lt;picture&gt; [link]</code></p>
+          <p>Upload the picture to <b>Postimages</b>, <b>ImgBB</b>, <b>Catbox</b> or <b>Gyazo</b> first. These sites work in the UK and don't show uploaders who viewed a picture.</p>
+          <p class="note">The link can go anywhere starting with https://, like your Twitch channel.</p>` },
+        { title: 'The mute', html: `
+          <p><code>!mute Bob</code> silences Bob for one hour, everywhere on the server.</p>
+          <ul>
+            <li>Nobody can lift it early. Not staff, not even the owner.</li>
+            <li>Anyone can be muted, the owner included.</li>
+            <li>Bob gets a message telling him why and for how long.</li>
+          </ul>
+          <p class="note">Used between October and March, it comes back on 1 April. Used later, it's gone until next October.</p>` },
+        { title: 'Who has what', html: `
+          <ul>
+            <li><code>!perks</code> shows everyone's weeks left and whether their mute is ready.</li>
+            <li><code>!perks Alice</code> shows just Alice.</li>
+            <li><code>!control status</code> shows who has the pop-up and the banner right now, and when each week ends.</li>
+          </ul>` },
+      ],
+    },
+    {
+      id: 'community', x: 2500, y: 3300, r: -2,
+      eyebrow: '!role · !pull',
+      title: 'Run your own channel',
+      lede: 'Community channels now have proper roles, handed out by the people who run them. No more asking staff.',
+      children: [
+        { title: 'Roles in one go', html: `
+          <p>Stand in your community channel and type:</p>
+          <div class="chat">
+            <div><span class="you">!role add Bob member</span></div>
+            <div><span class="you">!role add Bob admin</span></div>
+            <div><span class="you">!role remove Bob</span></div>
+          </div>
+          <p class="note">It gives the badge and the right to get in together, so a new member never ends up locked outside their own channel.</p>` },
+        { title: 'Community Leader', html: `
+          <p>The top role in a community channel, above Channel Admin.</p>
+          <ul>
+            <li>Can do everything a Channel Admin can, and unlock any lock in their channel.</li>
+            <li>Only the owner can make someone a Leader or take it away.</li>
+            <li>Nobody but the owner can pull a Leader out of their own channel.</li>
+          </ul>` },
+        { title: '!pull', html: `
+          <p><code>!pull Bob</code> brings Bob into your channel from wherever he is on the server (except AFK).</p>
+          <p>Leaders and Channel Admins can use it for their own channel. TeamSpeak can't limit this to one channel by itself, so the bot does the moving after checking you're allowed.</p>` },
+      ],
+    },
+    {
+      id: 'lock', x: -600, y: 3500, r: 3,
+      eyebrow: '!lock · !unlock · !rejoin',
+      title: 'Lock the door',
+      lede: 'Playing something and don\'t want company? Lock the channel and nobody can get in or bother you.',
+      children: [
+        { title: 'What a lock does', html: `
+          <div class="row">
+            <div class="grow">
+              <p>Nobody else can come in, and nobody can poke, message, move, kick or ban the people inside. That includes staff.</p>
+              <p class="note">The bot holds its own messages to you until the lock ends.</p>
+            </div>
+            <div class="tree">
+              <div class="ch">${lock}<span><span class="lockt">[LOCKED]</span> Private Lobby #1</span></div>
+              <div class="cl"><span class="dot"></span>Alice</div>
+              <div class="cl"><span class="dot"></span>Bob</div>
+              <div class="ch" style="color:var(--muted)">Private Lobby #2</div>
+            </div>
+          </div>` },
+        { title: 'Who can lock', html: `
+          <ul>
+            <li>Every rank except Associate can lock a private lobby.</li>
+            <li>A community channel's Leader and Channel Admins can lock that channel.</li>
+            <li>You need at least one other person with you.</li>
+            <li>Not in Entrance Hall, AFK or the public lobbies.</li>
+          </ul>` },
+        { title: 'Stepping out', html: `
+          <p>The lock keeps your place for 10 minutes.</p>
+          <ul>
+            <li>Connection dropped? The bot puts you back when you reconnect.</li>
+            <li>Left on purpose? Send <code>!rejoin</code>.</li>
+          </ul>
+          <p class="note">If the person who locked it doesn't come back in time, the lock ends. An empty locked channel unlocks itself after 2 minutes.</p>` },
+        { title: '!unlock', html: `
+          <p><code>!unlock</code> ends the lock on the channel you're in.</p>
+          <p><code>!unlock private lobby 2</code> works from anywhere. Part of the name is enough.</p>
+          <p class="note">Only the person who locked it, the channel's Leaders, Super Admins and the owner can unlock.</p>` },
+      ],
+    },
+    {
+      id: 'twitch', x: -2600, y: 1400, r: -3,
+      eyebrow: '!twitch',
+      title: '[LIVE] when you stream',
+      lede: 'Link your Twitch channel and your name gets a [LIVE] tag while you\'re on air. It comes off when you stop.',
+      children: [
+        { title: 'The tag', html: `
+          <div class="row">
+            <div class="grow">
+              <p>The bot checks Twitch once a minute, so the tag can take a minute to appear or go.</p>
+              <p class="note">Your nickname never changes. [LIVE] is a server tag shown in front of it, so you can rename yourself mid-stream.</p>
+            </div>
+            <div class="tree">
+              <div class="ch">Chill Lobby</div>
+              <div class="cl"><span class="dot"></span><span><span class="tag">[LIVE]</span> Alice</span></div>
+              <div class="cl"><span class="dot"></span>Bob</div>
+              <div class="cl"><span class="dot"></span>Charlie</div>
+            </div>
+          </div>` },
+        { title: 'Link it', html: `
+          <div class="chat">
+            <div><span class="you">!twitch link yourname</span></div>
+          </div>
+          <p>The Owner approves it first, so nobody can claim someone else's stream. The bot messages you when they do.</p>
+          <p class="note"><code>!twitch</code> shows your link. <code>!twitch unlink</code> removes it. Link each device you use TeamSpeak on.</p>` },
+        { title: 'Live now', html: `
+          <p><code>!twitch show</code> lists you on the website's <b>Live now</b> page while you stream, with a link to your channel.</p>
+          <p><code>!twitch hide</code> takes you off again.</p>
+          <p class="note">Nobody is listed unless they ask, because anyone on the internet can see the website.</p>` },
+      ],
+    },
+    {
+      id: 'games', x: -3100, y: -1500, r: 2,
+      eyebrow: '!coinflip · !trivia · !uno',
+      title: 'Game night',
+      lede: 'Three games, all-time leaderboards, and no way for anyone to rig the result. Admins included.',
+      children: [
+        { title: 'Coinflip', html: `
+          <p>Settle it out loud. <code>!coinflip heads</code> posts the result in your channel's chat for everyone there to see.</p>
+          <div class="chat">
+            <div>${ts('22:41:17')} <span class="you">Alice</span>: !coinflip heads</div>
+            <div>${ts('22:41:17')} <span class="bot">Gunsmoke [BOT]</span>: Alice called heads: it's tails. <span class="l">Alice loses.</span></div>
+          </div>
+          <p class="note">Once every 10 seconds each, so nobody floods the chat.</p>` },
+        { title: 'Trivia', html: `
+          <div class="figs">
+            <div class="fig"><b>10</b><span>questions a game</span></div>
+            <div class="fig"><b>4</b><span>answers, A to D</span></div>
+            <div class="fig"><b>20s</b><span>to answer each one</span></div>
+          </div>
+          <p><code>!trivia</code> starts a game and invites your channel. Answer by typing just the letter. The first right answer takes the point.</p>
+          <p class="note">You can join late. A game only counts on the leaderboard if at least two people answered.</p>` },
+        { title: 'Uno', html: `
+          <div class="cards" aria-label="Example cards">
+            <div class="card r">5</div><div class="card y">7</div><div class="card g">+2</div><div class="card b">&#8635;</div><div class="card w">W</div>
+          </div>
+          <p>2 to 10 users.<code>!uno</code> opens a game, <code>!uno join</code> joins it, and whoever opened it sends <code>!uno start</code>.</p>
+          <p>On your turn, just type the card: <code>red5</code>, <code>r5</code>, <code>bs</code> for a blue skip, <code>w blue</code> for a Wild. Or <code>!draw</code> and <code>!pass</code>.</p>
+          <p class="note">60 seconds a turn. The bot calls Uno for you at one card.</p>` },
+        { title: 'Leaderboards', html: `
+          <ul>
+            <li><code>!trivia top</code>: the all-time top 10.</li>
+            <li><code>!uno top</code>: points, games won and lost, and win rate.</li>
+            <li>The website's <b>Leaderboards</b> page shows the same, about 10 minutes behind.</li>
+          </ul>
+          <p class="note">Uno winners score the cards left in everyone else's hands: numbers at face value, 20 for action cards, 50 for Wilds.</p>` },
+        { title: 'Fair play', html: `
+          <ul>
+            <li>Nobody can stop a game for everyone else, not even an admin. Nobody can quit while ahead to lock in a lead.</li>
+            <li>Leave trivia and your points still count. The rest play on.</li>
+            <li>Quit Uno and your cards still count for the winner.</li>
+            <li>Miss 3 Uno turns in a row, or leave the server for a minute, and you're out.</li>
+          </ul>` },
+      ],
+    },
+    {
+      id: 'jail', x: -900, y: -3500, r: -3,
+      eyebrow: '!jailhashi · !freehashi',
+      title: 'The Bunker',
+      lede: 'One resident, and he knows who he is. The owner and Super Admins can send hashithefourth to THE BUNKER, where he can\'t talk.',
+      children: [
+        { title: 'The sentence', html: `
+          <div class="figs">
+            <div class="fig"><b>3 min</b><span>by default</span></div>
+            <div class="fig"><b>10 min</b><span>at most, per stretch</span></div>
+            <div class="fig"><b>30 min</b><span>a week in total, shared by everyone</span></div>
+          </div>
+          <p class="note">The week starts again every Monday at midnight. Each reply says how much is left.</p>` },
+        { title: 'No escape', html: `
+          <ul>
+            <li>Leave the bunker, or get dragged out, and the bot puts him straight back.</li>
+            <li>The clock only runs while he's online. Disconnecting just pauses it.</li>
+            <li>When his time is up, he goes back to the channel he was in.</li>
+          </ul>
+          <p class="note"><code>!freehashi</code> lets him out early, and the unserved minutes go back into the week.</p>` },
+      ],
+    },
+    {
+      id: 'site', x: 1100, y: -3600, r: 2,
+      eyebrow: 'mandem.arazez.com',
+      title: 'The website keeps up',
+      lede: 'The bot updates the website by itself. Changes show up there about 10 minutes later.',
+      children: [
+        { title: 'Commands', html: `
+          <p>Every user command, explained in plain English. <code>!help</code> links straight to it.</p>
+          <p class="note">mandem.arazez.com/commands</p>` },
+        { title: 'Donors', html: `
+          <p>The donor list and the total raised update as soon as a donation is recorded.</p>
+          <p class="note">The site never shows how much any one person gave.</p>` },
+        { title: 'Leaderboards & Live now', html: `
+          <p>Trivia and Uno leaderboards, and everyone streaming right now who asked to be listed.</p>` },
+      ],
+    },
+  ];
+
+  const titleFrame = { id: 'title', x: 0, y: 0, r: 0, scale: 1.45 };
+  const endFrame = { id: 'end', x: 3400, y: -3700, r: -2, scale: 1 };
+
+  const world = document.getElementById('world');
+  const trails = document.getElementById('trails');
+  const stage = document.getElementById('stage');
+  const steps = []; // {el, x, y, r, k, label, overview?}
+
+  const rad = (d) => d * Math.PI / 180;
+  function place(el, x, y, r, k) {
+    el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) rotate(${r}deg) scale(${k})`;
+  }
+  function makeFrame(cls, html) {
+    const el = document.createElement('section');
+    el.className = 'frame ' + cls;
+    el.innerHTML = html;
+    el.tabIndex = -1;
+    world.appendChild(el);
+    return el;
+  }
+
+  // Title
+  {
+    const el = makeFrame('hub title-frame', `
+      <div class="eyebrow">Server update · October 2026</div>
+      <h1>The server has <em>a bot</em> now</h1>
+      <p class="lede">Gunsmoke [BOT] runs donor perks, locks lobbies, tags streamers and hosts games. Here's everything it does.</p>
+      <div class="start">Press &rarr; or click to begin</div>`);
+    place(el, titleFrame.x, titleFrame.y, titleFrame.r, titleFrame.scale);
+    steps.push({ el, x: titleFrame.x, y: titleFrame.y, r: titleFrame.r, k: titleFrame.scale, label: 'Start' });
+  }
+  steps.push({ overview: true, label: 'The map' });
+
+  // Hubs and their children
+  const HUB_TOP = 330, AREA_H = 520, MARGIN = 80, GAP = 40;
+  let pathD = '';
+  for (const h of hubs) {
+    const k = h.scale || 1;
+    const hubEl = makeFrame('hub', `
+      <div class="eyebrow">${h.eyebrow}</div>
+      <h2>${h.title}</h2>
+      <p class="lede">${h.lede}</p>`);
+    place(hubEl, h.x, h.y, h.r, k);
+    steps.push({ el: hubEl, x: h.x, y: h.y, r: h.r, k, label: h.title });
+
+    const n = h.children.length;
+    const cols = n <= 3 ? n : Math.ceil(n / 2);
+    const rows = n <= 3 ? 1 : 2;
+    const cs = Math.min((1600 - 2 * MARGIN - GAP * (cols - 1)) / cols / 1600, (AREA_H - GAP * (rows - 1)) / rows / 900);
+    const cw = 1600 * cs, ch = 900 * cs;
+    h.children.forEach((c, i) => {
+      const row = rows === 1 ? 0 : (i < cols ? 0 : 1);
+      const inRow = rows === 1 ? n : (row === 0 ? cols : n - cols);
+      const col = row === 0 ? i : i - cols;
+      const rowW = inRow * cw + (inRow - 1) * GAP;
+      // local coords relative to hub centre (hub is 1600x900 at scale 1)
+      const lx = -rowW / 2 + cw / 2 + col * (cw + GAP);
+      const areaTop = HUB_TOP + (AREA_H - (rows * ch + (rows - 1) * GAP)) / 2;
+      const ly = -450 + areaTop + ch / 2 + row * (ch + GAP);
+      const cos = Math.cos(rad(h.r)), sin = Math.sin(rad(h.r));
+      const wx = h.x + k * (lx * cos - ly * sin);
+      const wy = h.y + k * (lx * sin + ly * cos);
+      const ck = cs * k;
+      const el = makeFrame('leaf', `<div class="eyebrow">${h.title}</div><h3>${c.title}</h3>${c.html}`);
+      place(el, wx, wy, h.r, ck);
+      steps.push({ el, x: wx, y: wy, r: h.r, k: ck, label: `${h.title} · ${c.title}` });
+    });
+  }
+
+  // End
+  {
+    const el = makeFrame('hub title-frame end-frame', `
+      <div class="eyebrow">Your turn</div>
+      <div class="huge">!bot</div>
+      <p class="lede">Type it in the server chat and the bot says hello. Every command is on the website's Commands page, and <code>!help</code> links to it.</p>`);
+    place(el, endFrame.x, endFrame.y, endFrame.r, endFrame.scale);
+    steps.push({ el, x: endFrame.x, y: endFrame.y, r: endFrame.r, k: endFrame.scale, label: 'Your turn' });
+  }
+
+  // Dotted trail through title, the hubs in order, then the end
+  {
+    const pts = [titleFrame, ...hubs, endFrame];
+    pathD = `M ${pts[0].x} ${pts[0].y}`;
+    for (let i = 1; i < pts.length; i++) {
+      const a = pts[i - 1], b = pts[i];
+      const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+      // bow each segment gently away from the centre
+      const ox = mx * 0.18, oy = my * 0.18;
+      pathD += ` Q ${mx + ox} ${my + oy} ${b.x} ${b.y}`;
+    }
+    trails.innerHTML = `<path d="${pathD}"/>`;
+  }
+
+  // World bounds for the overview
+  const bounds = (() => {
+    let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+    for (const s of steps) {
+      if (s.overview) continue;
+      const hw = 800 * s.k + 60, hh = 450 * s.k + 60;
+      x0 = Math.min(x0, s.x - hw); x1 = Math.max(x1, s.x + hw);
+      y0 = Math.min(y0, s.y - hh); y1 = Math.max(y1, s.y + hh);
+    }
+    return { x: (x0 + x1) / 2, y: (y0 + y1) / 2, w: x1 - x0, h: y1 - y0 };
+  })();
+
+  // ---------- camera ----------
+  let cam = { x: 0, y: 0, s: 1, r: 0 };
+  let current = 0;
+  let anim = null;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function viewport() { return { w: stage.clientWidth, h: stage.clientHeight - 70 }; }
+  function target(step) {
+    const v = viewport();
+    if (step.overview) {
+      const s = Math.min(v.w / bounds.w, v.h / bounds.h) * 0.96;
+      return { x: bounds.x, y: bounds.y, s, r: 0 };
+    }
+    const s = Math.min(v.w * 0.92 / (1600 * step.k), v.h * 0.9 / (900 * step.k));
+    return { x: step.x, y: step.y, s, r: step.r };
+  }
+  function apply(c) {
+    const v = viewport();
+    world.style.transform = `translate(${v.w / 2}px, ${v.h / 2 + 10}px) scale(${c.s}) rotate(${-c.r}deg) translate(${-c.x}px, ${-c.y}px)`;
+    cam = c;
+  }
+  const ease = (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+  function flyTo(to, instant) {
+    if (anim) cancelAnimationFrame(anim);
+    if (instant || reduce) { apply(to); return; }
+    const from = { ...cam };
+    const v = viewport();
+    const dist = Math.hypot(to.x - from.x, to.y - from.y);
+    const l0 = Math.log(from.s), l1 = Math.log(to.s);
+    // how far out to pull back mid-flight so both ends fit on screen
+    const needS = Math.min(v.w, v.h) * 0.9 / (dist + 900);
+    const bump = Math.min(0, Math.log(needS) - (l0 + l1) / 2);
+    const dur = Math.min(1700, 750 + dist * 0.12 + Math.abs(l1 - l0) * 120);
+    const t0 = performance.now();
+    const tick = (now) => {
+      const t = Math.min(1, (now - t0) / dur);
+      const u = ease(t);
+      apply({
+        x: from.x + (to.x - from.x) * u,
+        y: from.y + (to.y - from.y) * u,
+        r: from.r + (to.r - from.r) * u,
+        s: Math.exp(l0 + (l1 - l0) * u + bump * Math.sin(Math.PI * u)),
+      });
+      if (t < 1) anim = requestAnimationFrame(tick); else anim = null;
+    };
+    anim = requestAnimationFrame(tick);
+  }
+
+  const whereEl = document.getElementById('where');
+  const progress = document.getElementById('progress');
+  function go(i, instant) {
+    current = Math.max(0, Math.min(steps.length - 1, i));
+    const step = steps[current];
+    document.querySelectorAll('.frame.is-current').forEach((e) => e.classList.remove('is-current'));
+    if (step.el) step.el.classList.add('is-current');
+    whereEl.innerHTML = `<b>${step.label}</b> · ${current + 1}/${steps.length}`;
+    progress.style.width = (current / (steps.length - 1) * 100) + '%';
+    flyTo(target(step), instant);
+    try { history.replaceState(null, '', '#s' + (current + 1)); } catch (e) {}
+  }
+
+  document.getElementById('prev').addEventListener('click', () => go(current - 1));
+  document.getElementById('next').addEventListener('click', () => go(current + 1));
+  document.getElementById('map').addEventListener('click', () => go(1));
+
+  window.addEventListener('keydown', (e) => {
+    if (document.body.classList.contains('linear')) return;
+    if (e.target.closest && e.target.closest('button') && (e.key === ' ' || e.key === 'Enter')) return;
+    if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); go(current + 1); }
+    else if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); go(current - 1); }
+    else if (e.key === 'Home') go(0);
+    else if (e.key === 'End') go(steps.length - 1);
+    else if (e.key === 'm' || e.key === 'M' || e.key === 'Escape') go(1);
+  });
+
+  // Click a frame to zoom to it; click the current one to move on
+  stage.addEventListener('click', (e) => {
+    if (document.body.classList.contains('linear')) return;
+    const f = e.target.closest('.frame');
+    if (!f) return;
+    const idx = steps.findIndex((s) => s.el === f);
+    if (idx === current) go(current + 1); else if (idx >= 0) go(idx);
+  });
+
+  // Swipe on touch screens
+  let sx = null, sy = null;
+  stage.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+  stage.addEventListener('touchend', (e) => {
+    if (sx === null) return;
+    const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) go(current + (dx < 0 ? 1 : -1));
+    sx = null;
+  });
+
+  // Narrow screens read as a scrolling page instead of a canvas
+  function layout() {
+    const narrow = window.innerWidth < 720;
+    document.body.classList.toggle('linear', narrow);
+    for (const f of document.querySelectorAll('.leaf')) {
+      f.style.fontSize = '';
+      if (narrow) continue;
+      let size = 36;
+      while (f.scrollHeight > f.clientHeight + 1 && size > 24) { size -= 1; f.style.fontSize = size + 'px'; }
+    }
+    if (!narrow) go(current, true);
+  }
+  let rt;
+  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(layout, 120); });
+
+  const m = /^#s(\d+)$/.exec(location.hash);
+  if (m) current = Math.max(0, Math.min(steps.length - 1, parseInt(m[1], 10) - 1));
+  layout();
+  // fonts arriving late can change line breaks, so fit again once they're in
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+})();
+</script>
+
+</body></html>
