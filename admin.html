@@ -33,7 +33,7 @@
 
 <div class="wrap wide page-head">
   <h1>Admin commands</h1>
-  <p class="lead">Commands only some ranks can use. Each one shows the ranks that can use it; anyone else gets "You do not have permission". Type <code class="cmd">!bot</code> in the server or channel chat first, then send these in its private chat. Everyone's commands are on the <a href="commands">Commands</a> page. Tip: click any command to copy it.</p>
+  <p class="lead">Commands only some ranks can use. Each one shows the ranks that can use it; anyone else gets "You do not have permission". Type <code class="cmd">!bot</code> in the server or channel chat first, then send these in its private chat. Commands aren't case-sensitive, so it doesn't matter how you type them. Everyone's commands are on the <a href="commands">Commands</a> page. Tip: click any command to copy it.</p>
   <!-- The rank switch is wired up by assets/admin.js; without it, everything shows. -->
   <div class="version-switch" role="group" aria-label="Show commands for" hidden>
     <span class="muted small">Show commands for:</span>
@@ -52,7 +52,7 @@
 
   <!-- Command list: written by the commands-page-writer agent from the bot's docs/COMMANDS.md.
        Each command's <dd> starts with a "who" row of role pills; assets/admin.js filters by them. -->
-  <!-- commands-source sha256=54865bf7bb3f5fe20082d044d80e41ccdd211788924ed6f06265fb1a26315b71 -->
+  <!-- commands-source sha256=f7431621e567225543ad8490c2eda50c788748e583143578adf29edfe3b5abd4 -->
   <div id="commands">
 
     <div class="notice role-empty" hidden>
@@ -186,7 +186,7 @@
           <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Lists every locked channel: who locked it and when, who's in it, and who has stepped out.</dd>
 
           <dt><code class="cmd">!unlock &lt;channel&gt;</code></dt>
-          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span> <span class="role-pill role-super-admin" data-rank="super-admin">Super Admin</span></div>Ends any lock from anywhere on the server. That's how a Super Admin unlocks, since they can't walk into a locked channel. Part of the name is enough.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span> <span class="role-pill role-super-admin" data-rank="super-admin">Super Admin</span></div>Ends any lock from anywhere on the server. That's how a Super Admin unlocks, since they can't walk into a locked channel. Part of the name is enough, and if it matches more than one locked channel, the bot lists them instead of guessing.</dd>
         </dl>
         <p class="muted" data-ranks="owner super-admin">Nobody can poke, message, move, kick or ban the users inside a lock, the owner's account included; only YATQA logged in as serveradmin can.</p>
         <p class="muted" data-ranks="owner">The owner can walk into a locked channel without joining the lock. If the owner drags someone into a locked channel who doesn't belong there, the bot moves them out again.</p>
