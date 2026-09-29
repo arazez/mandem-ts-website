@@ -38,13 +38,13 @@
   <aside class="toc" id="toc" aria-label="On this page"></aside>
 
   <!-- Command list: written by the commands-page-writer agent from the bot's docs/COMMANDS.md -->
-  <!-- commands-source sha256=f11122be6c67b1058cbb34e77368f7798f852902bf599052386edca6f7195fa8 -->
+  <!-- commands-source sha256=9dc361d64c627e0a475750fcbd29ba7744dd9f1f1b76837d8917fc3961614daf -->
   <div id="commands">
 
     <section class="cmd-group">
       <h2>Getting started</h2>
       <div class="card">
-        <p class="muted">If the bot restarts, or you reconnect to the server, your private chat with it stops working — send <code class="cmd">!bot</code> again to open a new one. If a message from the bot turns up in a chat where your replies don't seem to go anywhere, close that chat tab and send <code class="cmd">!bot</code> again.</p>
+        <p class="muted">If the bot restarts, or you reconnect to the server, your private chat with it stops working — send <code class="cmd">!bot</code> again to open a new one. If a message from the bot turns up in a chat where your replies don't seem to go anywhere, close that chat tab and send <code class="cmd">!bot</code> again. In a public chat only <code class="cmd">!bot</code> and <code class="cmd">!coinflip</code> work, once every 10 seconds per person.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!bot</code></dt>
           <dd>Wakes up the bot and opens a private chat with you. Type it in the server chat or your channel's chat — it's the only way to reach the bot, since it's hidden in the channel list.</dd>
@@ -84,10 +84,10 @@
           <dd>Starts your week of modal control — the pop-up message everyone sees when they connect. Needs the perk: see <a href="perks">Perks</a>. Only one person can hold it at a time — if someone else already has it, you're told when their week ends so you know when to try again. You'll get a message when you're down to your last 24 hours, and again when your week ends. Heads up: an important service modal from the owner can interrupt it, and nobody can start a new week while it's up. Your week pauses while it's up and picks up where it left off once it's gone, so you lose no time.</dd>
 
           <dt><code class="cmd">!modal set &lt;text&gt;</code></dt>
-          <dd>Sets the pop-up message while you hold it: up to 200 characters. Links are fine, pictures aren't.<br><span class="cmd-example">Example: <code class="cmd">!modal set Manchester United is better than Liverpool!</code></span></dd>
+          <dd>Sets the pop-up message while you hold it: up to 200 characters, and each line break counts as 2. Links are fine but each counts 11 more than it looks; pictures aren't allowed. To start a new line, press Shift+Enter in the chat box. If it's too long, the bot says so and saves nothing. Heads up: an important service modal from the owner can interrupt yours, pausing your week, which picks up where it left off once the service modal is gone.<br><span class="cmd-example">Example: <code class="cmd">!modal set Manchester United is better than Liverpool!</code></span></dd>
 
           <dt><code class="cmd">!mute &lt;name&gt;</code></dt>
-          <dd>Silences someone online for 1 hour; it lifts on its own after that. Needs the perk: see <a href="perks">Perks</a>.</dd>
+          <dd>Silences someone online for 1 hour; it lifts on its own after that. Anyone can be muted, staff included, and nobody can lift it early. Needs the perk: see <a href="perks">Perks</a>.</dd>
         </dl>
       </div>
     </section>
@@ -97,7 +97,7 @@
       <div class="card">
         <dl class="cmd-list">
           <dt><code class="cmd">!twitch link &lt;your channel&gt;</code></dt>
-          <dd>Asks to link your Twitch channel, so your name shows [LIVE] while you're streaming. Send just your channel name. The Owner has to approve it first. Linking a different channel later replaces the old one and needs approving again. If you use TeamSpeak on more than one device, link each one separately — every device needs its own link.</dd>
+          <dd>Asks to link your Twitch channel, so your name shows [LIVE] while you're streaming. Send just your channel name, or its twitch.tv address. The Owner has to approve it first. Linking a different channel later replaces the old one and needs approving again. If you use TeamSpeak on more than one device, link each one separately — every device needs its own link.<br><span class="cmd-example">Example: <code class="cmd">!twitch link https://twitch.tv/yourname</code></span></dd>
 
           <dt><code class="cmd">!twitch</code></dt>
           <dd>Shows your current link and whether it's been approved yet.</dd>
@@ -120,7 +120,7 @@
         <p class="muted">For a private lobby or your community channel, when you want to play without being disturbed. A locked channel shows [LOCKED] in its name and gets a hidden password so nobody else can walk in; anyone who somehow gets in is moved straight back out. A lock also ends on its own once the channel has been empty for 2 minutes.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!lock</code></dt>
-          <dd>Locks the channel you're in and protects everyone inside at that moment: nobody can poke them, message them first, move them, kick them or ban them (they can still reply if someone messages them first). Everyone except Associates can use it; in a community channel only its Leader or Channel Admin can lock it. It's refused in Entrance Hall, AFK, the public lobbies and spacers, if you're on your own in there, or if the channel already has its own password.</dd>
+          <dd>Locks the channel you're in and protects everyone inside at that moment: nobody can poke them, message them first, move them, kick them or ban them (they can still reply if someone messages them first). Friend, Mandem, Lémön Crew and higher ranks can use it, but Associates can't; in a community channel only its Leader or Channel Admin can lock it. It's refused in Entrance Hall, AFK, the public lobbies and spacers, if you're on your own in there, or if the channel already has its own password.</dd>
 
           <dt><code class="cmd">!unlock</code> / <code class="cmd">!unlock &lt;channel&gt;</code></dt>
           <dd>Ends the lock: the name and password go back to normal. Use it in the channel itself, or name the channel to end its lock from anywhere on the server. You can unlock a lock you started; in a community channel, its Leaders can end any lock there. Part of the name is enough — capitals, spaces and symbols like # don't matter — and if it matches more than one locked channel, the bot lists them so you can be more specific.<br><span class="cmd-example">Example: <code class="cmd">!unlock private lobby 2</code></span></dd>
@@ -151,7 +151,13 @@
         <p class="muted">Played in your private chat with the bot, so only the people playing see it. You can't start or join a game from a locked channel, and a game where only one person answered doesn't count on the leaderboard.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!trivia</code></dt>
-          <dd>Starts a 10-question game in the channel you're in, or joins one already running there. Everyone else in the channel gets 30 seconds to join before it starts.</dd>
+          <dd>Starts a 10-question game of mixed topics in the channel you're in, or joins one already running there. Everyone else in the channel gets 30 seconds to join before it starts.</dd>
+
+          <dt><code class="cmd">!trivia &lt;topic&gt;</code></dt>
+          <dd>Starts a game on one topic instead. If a game is already running in your channel, you join it, and the bot tells you if it's on a different topic. Capitals and spaces don't matter.<br><span class="cmd-example">Example: <code class="cmd">!trivia football</code></span></dd>
+
+          <dt><code class="cmd">!trivia topics</code></dt>
+          <dd>Lists the topics: general, geography, history, science, games, movies, tv, anime, sport, football and basketball.</dd>
 
           <dt><code class="cmd">!trivia join</code></dt>
           <dd>Joins the running game — you can join late and start from the next question. Once you're in, answer each question by typing just the letter of your choice (A to D), like <code class="cmd">b</code>, in your private chat with the bot. You get 20 seconds per question.</dd>
@@ -177,7 +183,7 @@
           <dd>Joins the open game before it starts. Nobody can join once it's under way.</dd>
 
           <dt><code class="cmd">!uno start</code></dt>
-          <dd>Starts the game once everyone's in — only the person who opened it can do this (if they leave first, the next person in the game takes over as host). A game nobody starts closes after 10 minutes. On your turn, type the card to play it, like <code class="cmd">red5</code> or <code class="cmd">r5</code> (colours: r, y, g, b), or <code class="cmd">wild blue</code> for a Wild.</dd>
+          <dd>Starts the game once everyone's in — only the person who opened it can do this (if they leave first, the next person in the game takes over as host). A game nobody starts closes after 10 minutes. On your turn, type the card to play it, like <code class="cmd">red5</code> or <code class="cmd">r5</code> (colours: r, y, g, b), or <code class="cmd">wild blue</code> for a Wild. <code class="cmd">!p r5</code> and <code class="cmd">!play r5</code> work too. You have 60 seconds per turn: if time runs out you draw a card. Miss 3 turns in a row and you're out of the game.</dd>
 
           <dt><code class="cmd">!draw</code></dt>
           <dd>Draws a card on your turn. Play it if it can go, or keep it with <code class="cmd">!pass</code>.</dd>

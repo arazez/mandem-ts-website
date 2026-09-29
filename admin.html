@@ -52,7 +52,7 @@
 
   <!-- Command list: written by the commands-page-writer agent from the bot's docs/COMMANDS.md.
        Each command's <dd> starts with a "who" row of role pills; assets/admin.js filters by them. -->
-  <!-- commands-source sha256=f11122be6c67b1058cbb34e77368f7798f852902bf599052386edca6f7195fa8 -->
+  <!-- commands-source sha256=9dc361d64c627e0a475750fcbd29ba7744dd9f1f1b76837d8917fc3961614daf -->
   <div id="commands">
 
     <div class="notice role-empty" hidden>
@@ -76,7 +76,7 @@
       <div class="card">
         <dl class="cmd-list">
           <dt><code class="cmd">!donation add &lt;name&gt; &lt;pounds&gt; [date]</code></dt>
-          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Records a donation in whole pounds, up to the per-person limit for this donation window, and gives out what it earns: 1 banner week and 1 modal week per £1, plus the mute once that person's donations in the window reach the mute minimum. The date is optional (today if left out), written day first, and must fall inside the donation window and not in the future. Refused once the goal is reached, unless that's switched off. Put names with spaces in quotes. If the name's new, the reply says so. It also gives the donation's number, in case it needs voiding.<br><span class="cmd-example">Example date: <code class="cmd">05/10/2026</code></span></dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Records a donation in whole pounds, up to the per-person limit for this donation window, and gives out what it earns: 1 banner week and 1 modal week per £1, plus the mute once that person's donations in the window reach the mute minimum. The date is optional (today if left out), written day first (05/10/2026, 5/10/2026, 05-10-2026 or 05.10.2026; American order is refused), and must fall inside the donation window and not in the future. Refused once the goal is reached, unless that's switched off. Put names with spaces in quotes. If the name's new, the reply says so. It also gives the donation's number, in case it needs voiding.<br><span class="cmd-example">Example date: <code class="cmd">05/10/2026</code></span></dd>
 
           <dt><code class="cmd">!donation void &lt;number&gt;</code></dt>
           <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Reverses a donation by its number. Takes back the weeks it added, never below zero and not weeks already started. Takes back its mute only if it's unused and the person's window total drops below the mute minimum. Lowers the total raised. A donation can only be voided once.</dd>
@@ -151,6 +151,7 @@
       <h2>Modal and banner</h2>
       <div class="card">
         <p class="muted" data-ranks="owner">The owner never has to start a week, and the bot never refuses them because someone else holds the modal or banner.</p>
+        <p class="muted" data-ranks="owner">A modal is up to 200 characters; each line break counts as 2 and each link counts 11 more than it looks. Press Shift+Enter for a new line, in <code class="cmd">!modal default</code> and <code class="cmd">!modal service</code> too. Pictures aren't allowed. An important service modal from the owner can interrupt a user's modal, pausing their week, which picks up where it left off once the service modal is gone.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!modal default &lt;text&gt;</code> / <code class="cmd">!modal default off</code></dt>
           <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Sets your everyday modal, shown whenever nobody has a week running. If someone does, it waits and shows by itself when their week ends. <code>off</code> means no pop-up when nobody has a week.</dd>
@@ -165,7 +166,7 @@
           <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Takes the service modal down. The holder's message comes back and their week picks up where it left off.</dd>
 
           <dt><code class="cmd">!modal remove</code></dt>
-          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span> <span class="role-pill role-super-admin" data-rank="super-admin">Super Admin</span></div>Takes a rude modal off the server. No pop-up shows until the holder puts up a new one. Their week keeps running, and they're told it was removed for moderation reasons.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span> <span class="role-pill role-super-admin" data-rank="super-admin">Super Admin</span></div>Takes a rude modal off the server. No pop-up shows until the holder puts up a new one. Their week keeps running. They're told it was removed for moderation reasons, when their control ends, and that it may be taken away if it happens again.</dd>
 
           <dt><code class="cmd">!banner remove</code></dt>
           <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span> <span class="role-pill role-super-admin" data-rank="super-admin">Super Admin</span></div>Swaps a rude banner for the owner's everyday one. Their week keeps running, and they're told.</dd>
@@ -209,7 +210,7 @@
     <section class="cmd-group">
       <h2>Twitch</h2>
       <div class="card">
-        <p class="muted" data-ranks="owner">You get a message when someone asks to link a channel, if you're online.</p>
+        <p class="muted" data-ranks="owner">You get a message when someone asks to link a channel, if you're online. Only the bot puts people in the LIVE group: anyone added by hand is taken out again within a minute.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!twitch pending</code></dt>
           <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Lists links waiting for approval.</dd>
