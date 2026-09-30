@@ -1,12 +1,12 @@
 {
   "goal": 30,
-  "raised": 3,
+  "raised": 8,
   "currency": "GBP",
   "closeWhenGoalReached": true,
   "adminMinimum": 3,
   "muteMinimum": 5,
   "maxPerPerson": 5,
-  "lastUpdated": "2026-09-27",
+  "lastUpdated": "2026-10-01",
   "donors": [
     {
       "name": "arazez",
@@ -47,6 +47,9 @@
     {
       "name": "CheapMarlin",
       "level": "Admin"
+    },
+    {
+      "name": "mfk"
     }
   ],
   "window": {

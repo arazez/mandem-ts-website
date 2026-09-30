@@ -1,4 +1,10 @@
 {
-  "lastUpdated": "2026-09-21",
-  "perks": {}
+  "lastUpdated": "2026-10-01",
+  "perks": {
+    "mfk": {
+      "banner": 5,
+      "modal": 5,
+      "mute": true
+    }
+  }
 }
