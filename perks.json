@@ -29,6 +29,9 @@
       "banner": 5,
       "modal": 5,
       "mute": true
+    },
+    "arazez": {
+      "banner": 3
     }
   }
 }
