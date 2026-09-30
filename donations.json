@@ -1,6 +1,6 @@
 {
   "goal": 30,
-  "raised": 13,
+  "raised": 18,
   "currency": "GBP",
   "closeWhenGoalReached": true,
   "adminMinimum": 3,

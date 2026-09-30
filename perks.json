@@ -10,8 +10,9 @@
       "modal": 0
     },
     "hashithefourth": {
-      "banner": 0,
-      "modal": 0
+      "banner": 5,
+      "modal": 5,
+      "mute": true
     },
     "Rack": {
       "banner": 4,
