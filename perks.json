@@ -25,6 +25,11 @@
     "arazez": {
       "banner": 3,
       "modal": 3
+    },
+    "faux": {
+      "banner": 5,
+      "modal": 5,
+      "mute": true
     }
   }
 }
