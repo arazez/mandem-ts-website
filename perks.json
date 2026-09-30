@@ -18,6 +18,11 @@
       "modal": 5,
       "mute": true,
       "bannerUntil": "2026-10-07T23:11:33Z"
+    },
+    "Raadeh": {
+      "banner": 5,
+      "modal": 5,
+      "mute": true
     }
   }
 }

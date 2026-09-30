@@ -1,6 +1,6 @@
 {
   "goal": 30,
-  "raised": 8,
+  "raised": 13,
   "currency": "GBP",
   "closeWhenGoalReached": true,
   "adminMinimum": 3,
@@ -56,6 +56,9 @@
     },
     {
       "name": "Rack"
+    },
+    {
+      "name": "Raadeh"
     }
   ],
   "window": {
