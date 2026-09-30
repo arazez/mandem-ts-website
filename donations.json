@@ -17,7 +17,8 @@
       "level": "Admin"
     },
     {
-      "name": "Rack"
+      "name": "Rack",
+      "level": "Super Admin"
     },
     {
       "name": "Raadeh"
