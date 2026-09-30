@@ -31,7 +31,8 @@
       "mute": true
     },
     "arazez": {
-      "banner": 3
+      "banner": 3,
+      "modal": 3
     }
   }
 }
