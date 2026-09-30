@@ -182,6 +182,15 @@ function renderPerks(d) {
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeHelp(null); });
 }
 
+// Known levels in rank order (any case). Any other level text comes after
+// them, and no level at all comes last.
+const LEVEL_ORDER = ["owner", "super admin", "admin"];
+function levelRank(level) {
+  if (!level) return LEVEL_ORDER.length + 1;
+  const i = LEVEL_ORDER.indexOf(level.trim().toLowerCase());
+  return i === -1 ? LEVEL_ORDER.length : i;
+}
+
 // Supporter list. Each card also shows perks still to use, matched by name
 // (ignoring case) against perks.json. Names only in perks.json still get a
 // card, so nobody is silently hidden.
@@ -203,6 +212,8 @@ function renderDonors(d, perks) {
     return { name: donor.name, level: donor.level, perks: p };
   });
   byName.forEach((p) => cards.push({ name: p.name, level: null, perks: p }));
+  // Highest rank first; ties keep the file's order.
+  cards.sort((a, b) => levelRank(a.level) - levelRank(b.level));
 
   fill($("donorList"), ...cards.map((c) =>
     el("li", null, c.name,
