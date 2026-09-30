@@ -16,9 +16,10 @@
       "mute": true
     },
     "Rack": {
-      "banner": 5,
+      "banner": 4,
       "modal": 5,
-      "mute": true
+      "mute": true,
+      "bannerUntil": "2026-10-07T23:11:33Z"
     }
   }
 }
