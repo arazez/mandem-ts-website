@@ -1,9 +1,9 @@
 {
-  "updatedAt": "2026-10-01T03:02:30Z",
+  "updatedAt": "2026-10-01T05:09:16Z",
   "trivia": [
     {
       "name": "arazez",
-      "points": 14
+      "points": 23
     },
     {
       "name": "mfk",
@@ -12,6 +12,10 @@
     {
       "name": "ahmed",
       "points": 2
+    },
+    {
+      "name": "Fizzy",
+      "points": 1
     }
   ],
   "uno": [
