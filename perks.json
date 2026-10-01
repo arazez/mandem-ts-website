@@ -30,6 +30,10 @@
       "banner": 5,
       "modal": 5,
       "mute": true
+    },
+    "Fizzy": {
+      "banner": 2,
+      "modal": 2
     }
   }
 }

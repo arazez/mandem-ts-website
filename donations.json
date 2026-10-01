@@ -1,6 +1,6 @@
 {
   "goal": 30,
-  "raised": 28,
+  "raised": 30,
   "currency": "GBP",
   "closeWhenGoalReached": true,
   "adminMinimum": 3,
@@ -31,6 +31,9 @@
     {
       "name": "faux",
       "level": "Super Admin"
+    },
+    {
+      "name": "Fizzy"
     }
   ],
   "window": {
