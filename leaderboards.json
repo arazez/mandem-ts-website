@@ -1,6 +1,15 @@
 {
-  "updatedAt": "2026-09-27T23:38:13Z",
-  "trivia": [],
+  "updatedAt": "2026-10-01T00:00:43Z",
+  "trivia": [
+    {
+      "name": "arazez",
+      "points": 7
+    },
+    {
+      "name": "mfk",
+      "points": 1
+    }
+  ],
   "uno": [
     {
       "name": "arazez",
