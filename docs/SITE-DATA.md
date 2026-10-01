@@ -39,7 +39,8 @@ HARD for all:
 - updatedAt: UTC time.
 - trivia: ≤ 10 entries in rank order: { name, points }.
 - uno: ≤ 10 entries in rank order: { name, points, won, lost }. Win rate = won ÷ (won + lost) as a whole percent, "–" when both are 0.
-- Matches !trivia top and !uno top. Show in the given order; never re-sort.
+- chess (optional; older files lack it): ≤ 10 entries in rank order: { name, rating, won, drawn, lost }. Rating is a whole number (everyone starts at 1500).
+- Matches !trivia top, !uno top and !chess top. Show in the given order; never re-sort.
 
 ### live.json (PROPOSED, bot only)
 - updatedAt: UTC time.

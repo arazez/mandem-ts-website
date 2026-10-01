@@ -105,7 +105,8 @@ export function loadPerks() {
 }
 
 // leaderboards.json (proposed) → { updatedAt, trivia: [{ name, points }],
-//   uno: [{ name, points, won, lost }] }, in the file's order (already ranked).
+//   uno: [{ name, points, won, lost }], chess: [{ name, rating, won, drawn, lost }] },
+//   in the file's order (already ranked). Files from before chess have no chess list.
 export function loadLeaderboards() {
   return load("leaderboards.json", (l) => {
     const rows = (v) => (Array.isArray(v) ? v : []).filter((r) => isObj(r) && isName(r.name)).slice(0, 10);
@@ -114,6 +115,9 @@ export function loadLeaderboards() {
       trivia: rows(l.trivia).map((r) => ({ name: r.name, points: isNum(r.points) ? r.points : 0 })),
       uno: rows(l.uno).map((r) => ({
         name: r.name, points: isNum(r.points) ? r.points : 0, won: count(r.won), lost: count(r.lost)
+      })),
+      chess: rows(l.chess).map((r) => ({
+        name: r.name, rating: count(r.rating), won: count(r.won), drawn: count(r.drawn), lost: count(r.lost)
       }))
     };
   });

@@ -38,13 +38,13 @@
   <aside class="toc" id="toc" aria-label="On this page"></aside>
 
   <!-- Command list: written by the commands-page-writer agent from the bot's docs/COMMANDS.md -->
-  <!-- commands-source sha256=9dc361d64c627e0a475750fcbd29ba7744dd9f1f1b76837d8917fc3961614daf -->
+  <!-- commands-source sha256=acd5fc8169210789fc31c61bfb83c620d6505ca78bfb7be6cab060ded31882c9 -->
   <div id="commands">
 
     <section class="cmd-group">
       <h2>Getting started</h2>
       <div class="card">
-        <p class="muted">If the bot restarts, or you reconnect to the server, your private chat with it stops working — send <code class="cmd">!bot</code> again to open a new one. If a message from the bot turns up in a chat where your replies don't seem to go anywhere, close that chat tab and send <code class="cmd">!bot</code> again. In a public chat only <code class="cmd">!bot</code> and <code class="cmd">!coinflip</code> work, once every 10 seconds per person.</p>
+        <p class="muted">If the bot restarts, or you reconnect to the server, your private chat with it stops working — send <code class="cmd">!bot</code> again to open a new one. If a message from the bot turns up in a chat where your replies don't seem to go anywhere, close that chat tab and send <code class="cmd">!bot</code> again. In a public chat only <code class="cmd">!bot</code> and <code class="cmd">!coinflip</code> work, once every 10 seconds per person. In the bot's messages, commands you can type show in bold, so it's clear where they end.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!bot</code></dt>
           <dd>Wakes up the bot and opens a private chat with you. Type it in the server chat or your channel's chat — it's the only way to reach the bot, since it's hidden in the channel list.</dd>
@@ -151,19 +151,22 @@
         <p class="muted">Played in your private chat with the bot, so only the people playing see it. You can't start or join a game from a locked channel, and a game where only one person answered doesn't count on the leaderboard.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!trivia</code></dt>
-          <dd>Starts a 10-question game of mixed topics in the channel you're in, or joins one already running there. Everyone else in the channel gets 30 seconds to join before it starts.</dd>
+          <dd>Opens a 10-question game of mixed topics in the channel you're in, or joins one already running there. You're its host, and everyone else in the channel gets an invite to join.</dd>
 
           <dt><code class="cmd">!trivia &lt;topic&gt;</code></dt>
-          <dd>Starts a game on one topic instead. If a game is already running in your channel, you join it, and the bot tells you if it's on a different topic. Capitals and spaces don't matter.<br><span class="cmd-example">Example: <code class="cmd">!trivia football</code></span></dd>
+          <dd>Opens a game on one topic instead. If a game is already running in your channel, you join it, and the bot tells you if it's on a different topic. Capitals and spaces don't matter.<br><span class="cmd-example">Example: <code class="cmd">!trivia football</code></span></dd>
 
           <dt><code class="cmd">!trivia topics</code></dt>
           <dd>Lists the topics: general, geography, history, science, games, movies, tv, anime, sport, football and basketball.</dd>
 
           <dt><code class="cmd">!trivia join</code></dt>
-          <dd>Joins the running game — you can join late and start from the next question. Once you're in, answer each question by typing just the letter of your choice (A to D), like <code class="cmd">b</code>, in your private chat with the bot. You get 20 seconds per question.</dd>
+          <dd>Joins the game in your channel, and everyone already in is told. You can also join after it's started, and you start from the next question. Once it's going, answer each question by typing just the letter of your choice (A to D), like <code class="cmd">b</code>, in your private chat with the bot. You get 20 seconds per question.</dd>
+
+          <dt><code class="cmd">!trivia start</code></dt>
+          <dd>Starts the game once everyone's in, with no countdown: question 1 goes out straight away. Only the host (the person who opened it) can do this; if they leave first, the next person in takes over as host. A game nobody starts closes 1 minute after it's opened.</dd>
 
           <dt><code class="cmd">!trivia leave</code></dt>
-          <dd>Leaves the game. Your points so far still count, and the others play on.</dd>
+          <dd>Leaves the game. Before it starts, you're simply out. After that, your points so far still count, and the others play on.</dd>
 
           <dt><code class="cmd">!trivia top</code></dt>
           <dd>Shows the all-time top 10 in chat. It's also on the <a href="leaderboards">Leaderboards</a> page.</dd>
@@ -183,7 +186,7 @@
           <dd>Joins the open game before it starts. Nobody can join once it's under way.</dd>
 
           <dt><code class="cmd">!uno start</code></dt>
-          <dd>Starts the game once everyone's in — only the person who opened it can do this (if they leave first, the next person in the game takes over as host). A game nobody starts closes after 10 minutes. On your turn, type the card to play it, like <code class="cmd">red5</code> or <code class="cmd">r5</code> (colours: r, y, g, b), or <code class="cmd">wild blue</code> for a Wild. <code class="cmd">!p r5</code> and <code class="cmd">!play r5</code> work too. You have 60 seconds per turn: if time runs out you draw a card. Miss 3 turns in a row and you're out of the game.</dd>
+          <dd>Starts the game once everyone's in — only the person who opened it can do this (if they leave first, the next person in the game takes over as host). A game nobody starts closes 1 minute after it's opened. On your turn, type the card to play it, like <code class="cmd">red5</code> or <code class="cmd">r5</code> (colours: r, y, g, b), or <code class="cmd">wild blue</code> for a Wild. <code class="cmd">!p r5</code> and <code class="cmd">!play r5</code> work too. You have 60 seconds per turn: if time runs out you draw a card. Miss 3 turns in a row and you're out of the game.</dd>
 
           <dt><code class="cmd">!draw</code></dt>
           <dd>Draws a card on your turn. Play it if it can go, or keep it with <code class="cmd">!pass</code>.</dd>
@@ -199,6 +202,29 @@
 
           <dt><code class="cmd">!uno top</code></dt>
           <dd>Shows the all-time top 10 in chat, with games won and lost and win rate. It's also on the <a href="leaderboards">Leaderboards</a> page.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section class="cmd-group">
+      <h2>Chess</h2>
+      <div class="card">
+        <p class="muted">Play chess against someone else on the server, on <a href="https://lichess.org" target="_blank" rel="noopener noreferrer">Lichess</a>, a free chess website with no adverts. The bot sets the game up and sends each of you a link, and you play in your browser on a proper board with clocks. Neither of you needs a Lichess account. You can't play from a locked channel.</p>
+        <dl class="cmd-list">
+          <dt><code class="cmd">!chess &lt;name&gt;</code> / <code class="cmd">!chess &lt;name&gt; &lt;minutes&gt;</code></dt>
+          <dd>Challenges someone who's online. Each of you gets 10 minutes on the clock, or put the minutes after the name (1 to 60) for a quicker or longer game. Part of the name is enough. They have 1 minute to answer, or the challenge lapses and you're told. You can only have one challenge waiting at a time.</dd>
+
+          <dt><code class="cmd">!chess accept</code></dt>
+          <dd>Accepts a challenge sent to you. You each get a link for your colour, and white moves first. If you haven't both opened your links within an hour, the game is off. The first time two people play each other, the bot picks white at random; after that you take turns. When the game ends, the bot tells you both and updates your ratings, usually within a minute.</dd>
+
+          <dt><code class="cmd">!chess decline</code></dt>
+          <dd>Turns down a challenge sent to you.</dd>
+
+          <dt><code class="cmd">!chess cancel</code></dt>
+          <dd>Takes back your challenge before it's answered.</dd>
+
+          <dt><code class="cmd">!chess top</code></dt>
+          <dd>Shows the top 10 by rating in chat, with games won, drawn and lost. Everyone starts at 1500, and a win takes points from the loser: more for beating someone rated higher, fewer for someone rated lower. You're on it after your first game. It's also on the <a href="leaderboards">Leaderboards</a> page.</dd>
         </dl>
       </div>
     </section>

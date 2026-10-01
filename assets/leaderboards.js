@@ -1,4 +1,4 @@
-// Leaderboards page: trivia and Uno top 10s from leaderboards.json, shown in
+// Leaderboards page: trivia, Uno and chess top 10s from leaderboards.json, shown in
 // the file's order (the bot ranks them; never re-sort).
 import { loadLeaderboards } from "./data.js";
 import { el, fill, loadFailed, comingSoon } from "./ui.js";
@@ -23,16 +23,18 @@ function table(title, columns, rows) {
 try {
   const res = await loadLeaderboards();
   if (res.status === "missing") {
-    fill(boards, comingSoon("Trivia and Uno top 10s will show up here soon."));
+    fill(boards, comingSoon("Trivia, Uno and chess top 10s will show up here soon."));
   } else if (res.status !== "ok") {
     fill(boards, loadFailed());
   } else {
-    const { trivia, uno, updatedAt } = res.data;
+    const { trivia, uno, chess, updatedAt } = res.data;
     fill(boards, el("div", "board-grid",
       table("🧠 Trivia", [["#", "rank"], ["User", "name"], ["Points", "num"]],
         trivia.map((r, i) => [String(i + 1), r.name, String(r.points)])),
       table("🃏 Uno", [["#", "rank"], ["User", "name"], ["Points", "num"], ["Won", "num"], ["Lost", "num"], ["Win rate", "num"]],
-        uno.map((r, i) => [String(i + 1), r.name, String(r.points), String(r.won), String(r.lost), winRate(r.won, r.lost)]))
+        uno.map((r, i) => [String(i + 1), r.name, String(r.points), String(r.won), String(r.lost), winRate(r.won, r.lost)])),
+      table("♟️ Chess", [["#", "rank"], ["User", "name"], ["Rating", "num"], ["Won", "num"], ["Drawn", "num"], ["Lost", "num"]],
+        chess.map((r, i) => [String(i + 1), r.name, String(r.rating), String(r.won), String(r.drawn), String(r.lost)]))
     ));
     if (updatedAt) document.getElementById("boardsUpdated").textContent = "Updated " + formatUkMoment(updatedAt) + ".";
   }

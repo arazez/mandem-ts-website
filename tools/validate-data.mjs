@@ -135,6 +135,18 @@ if (lb) {
       need(f, ok, `${board}[${i}] is not a valid entry`);
     });
   }
+  // Chess came later: optional, so older files still pass.
+  if (lb.chess !== undefined) {
+    if (!Array.isArray(lb.chess)) problems.push(`${f}: chess must be an array`);
+    else {
+      need(f, lb.chess.length <= 10, "chess has more than 10 entries");
+      lb.chess.forEach((r, i) => {
+        const ok = isObj(r) && typeof r.name === "string" && r.name.length > 0 && isInt(r.rating, 0) &&
+          isInt(r.won, 0) && isInt(r.drawn, 0) && isInt(r.lost, 0);
+        need(f, ok, `chess[${i}] is not a valid entry`);
+      });
+    }
+  }
 }
 
 // --- live.json (proposed; optional until the bot creates it) ---

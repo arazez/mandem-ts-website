@@ -52,7 +52,7 @@
 
   <!-- Command list: written by the commands-page-writer agent from the bot's docs/COMMANDS.md.
        Each command's <dd> starts with a "who" row of role pills; assets/admin.js filters by them. -->
-  <!-- commands-source sha256=9dc361d64c627e0a475750fcbd29ba7744dd9f1f1b76837d8917fc3961614daf -->
+  <!-- commands-source sha256=acd5fc8169210789fc31c61bfb83c620d6505ca78bfb7be6cab060ded31882c9 -->
   <div id="commands">
 
     <div class="notice role-empty" hidden>
@@ -255,6 +255,16 @@
 
           <dt><code class="cmd">!uno void &lt;number&gt;</code></dt>
           <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Against cheating. A game still being played ends at once and nobody scores. A finished game stops counting, so the winner loses exactly the points it gave them.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section class="cmd-group">
+      <h2>Chess</h2>
+      <div class="card">
+        <dl class="cmd-list">
+          <dt><code class="cmd">!chess reset &lt;name&gt;</code> / <code class="cmd">!chess reset all</code></dt>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>The same as for trivia, for the chess leaderboard. Someone who's reset starts again at 1500 with their next game; the people they played keep their ratings.</dd>
         </dl>
       </div>
     </section>
