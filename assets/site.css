@@ -728,9 +728,11 @@ table.data td.name { overflow-wrap: anywhere; min-width: 7em; }
   .board-grid table.data td.name { min-width: 4em; }
 }
 
+/* Boards at least 460px wide, so at most two a row: the six-column Uno and
+   chess tables need that much to fit without a sideways scroll */
 .board-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(460px, 100%), 1fr));
   gap: 1.25rem;
 }
 
