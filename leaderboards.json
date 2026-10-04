@@ -1,24 +1,24 @@
 {
-  "updatedAt": "2026-10-04T16:35:15Z",
+  "updatedAt": "2026-10-04T16:37:15Z",
   "trivia": [
     {
       "name": "arazez",
-      "points": 26
+      "points": 31
+    },
+    {
+      "name": "ahmed",
+      "points": 11
     },
     {
       "name": "mfk",
       "points": 10
     },
     {
-      "name": "ahmed",
-      "points": 8
+      "name": "hashithefourth",
+      "points": 2
     },
     {
       "name": "Fizzy",
-      "points": 1
-    },
-    {
-      "name": "hashithefourth",
       "points": 1
     }
   ],
