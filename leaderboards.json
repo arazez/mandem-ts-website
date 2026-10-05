@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-05T20:05:52Z",
+  "updatedAt": "2026-10-05T20:25:53Z",
   "trivia": [
     {
       "name": "arazez",
@@ -32,6 +32,13 @@
   ],
   "chess": [
     {
+      "name": "arazez",
+      "rating": 1529,
+      "won": 4,
+      "drawn": 0,
+      "lost": 2
+    },
+    {
       "name": "t.u.r.k.s",
       "rating": 1516,
       "won": 1,
@@ -39,18 +46,11 @@
       "lost": 0
     },
     {
-      "name": "arazez",
-      "rating": 1515,
-      "won": 3,
-      "drawn": 0,
-      "lost": 2
-    },
-    {
       "name": "faux",
-      "rating": 1469,
+      "rating": 1455,
       "won": 1,
       "drawn": 0,
-      "lost": 3
+      "lost": 4
     }
   ]
 }
