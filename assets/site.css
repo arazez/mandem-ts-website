@@ -1411,7 +1411,9 @@ code.cmd.copyable:focus-visible {
 }
 .uno-message { margin: 0.9rem 0 0; font-weight: 600; }
 
-.uno-result { margin-bottom: 1rem; border-color: var(--gold); background: var(--gold-dim); }
+.uno-result { margin-bottom: 1rem; }
+.uno-result.won { border: 2px solid var(--gold); background: var(--gold-dim); }
+.uno-result.lost { border: 2px solid #e53935; background: #e5393514; }
 .uno-result p { margin: 0 0 0.4rem; }
 .uno-result p:last-child { margin-bottom: 0; }
 .uno-again { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
@@ -1475,7 +1477,7 @@ code.cmd.copyable:focus-visible {
 .btn:disabled { opacity: 0.45; cursor: default; transform: none; }
 .uno-quit { margin-left: auto; }
 
-.uno-picker { margin-top: 1rem; }
+.uno-picker { margin: 0 0 1rem; }
 .uno-picker p { margin: 0 0 0.5rem; }
 .uno-picker-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .uno-pick {

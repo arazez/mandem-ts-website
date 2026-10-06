@@ -297,7 +297,9 @@ function render() {
   if (unoBanner && Date.now() < unoBanner.until && !view.over) parts.push(el("div", "uno-banner", unoBanner.text));
 
   if (view.over && view.result) {
-    parts.push(el("div", "card uno-result",
+    // A gold outline for the winner, red for everyone else; plain when nobody won.
+    const outcome = view.outcome === "won" ? " won" : view.outcome === "lost" ? " lost" : "";
+    parts.push(el("div", "card uno-result" + outcome,
       ...view.result.map((line) => el("p", null, line)),
       playAgain()));
   }
@@ -367,11 +369,11 @@ function render() {
     });
     actions.append(draw, pass, quit);
 
-    const handCard = el("div", "card uno-hand-card", el("h2", null, "Your cards"), hand, actions,
+    // A Wild's colours go straight under the cards, where the eye already is.
+    const handCard = el("div", "card uno-hand-card", el("h2", null, "Your cards"), hand, picking ? colourPicker(picking) : null, actions,
       el("p", "muted small uno-keys", "Keys: D to draw, P to pass."));
     if (message) handCard.append(el("p", "uno-message", message));
     if (quitArmed) handCard.append(el("p", "muted small", "Quitting counts as giving up, and your cards still count for whoever wins."));
-    if (picking) handCard.append(colourPicker(picking));
     parts.push(handCard);
   } else if (message) {
     parts.push(el("p", "uno-message", message));
