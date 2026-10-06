@@ -38,7 +38,7 @@
   <aside class="toc" id="toc" aria-label="On this page"></aside>
 
   <!-- Command list: written by the commands-page-writer agent from the bot's docs/COMMANDS.md -->
-  <!-- commands-source sha256=2204545fddc61fd0d275afd501cfbbbb277473595ceb01cab3569e77192f75ce -->
+  <!-- commands-source sha256=dbeebf4a1a77c5d4c2a134198b487f9bb92302319b28e10df1e486266e34a411 -->
   <div id="commands">
 
     <section class="cmd-group">
@@ -177,28 +177,19 @@
     <section class="cmd-group">
       <h2>Uno</h2>
       <div class="card">
-        <p class="muted">Played in your private chat with the bot, for 2 to 10 people. You can't start or join a game from a locked channel. After each move you'll see the top card, whose turn it is, how many cards everyone holds, and your own hand; when it's your turn, the message ends with <code class="cmd">&gt;&gt;&gt; YOUR TURN &lt;&lt;&lt;</code> on its own line so you know to go.</p>
+        <p class="muted">For 2 to 10 people. You get a game together in TeamSpeak, then play it on a web page: when the game starts, the bot sends each of you your own link to it. On your page you see the top card, everyone's card counts, whose turn it is with a countdown, the last few moves and your own cards, and you click a card to play it. You can't start or join a game from a locked channel. Leaving TeamSpeak doesn't take you out of the game, but miss 3 turns in a row and you're out.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!uno</code></dt>
-          <dd>Opens an Uno game for 2 to 10 people in the channel you're in, or joins one already open there.</dd>
+          <dd>Opens an Uno game for 2 to 10 people in the channel you're in, or joins one already open there. Once your game has started, it sends you your link again.</dd>
 
           <dt><code class="cmd">!uno join</code></dt>
           <dd>Joins the open game before it starts. Nobody can join once it's under way.</dd>
 
           <dt><code class="cmd">!uno start</code></dt>
-          <dd>Starts the game once everyone's in — only the person who opened it can do this (if they leave first, the next person in the game takes over as host). A game nobody starts closes 1 minute after it's opened. On your turn, type the card to play it, like <code class="cmd">red5</code> or <code class="cmd">r5</code> (colours: r, y, g, b), or <code class="cmd">wild blue</code> for a Wild. <code class="cmd">!p r5</code> and <code class="cmd">!play r5</code> work too. You have 60 seconds per turn: if time runs out you draw a card. Miss 3 turns in a row and you're out of the game.</dd>
-
-          <dt><code class="cmd">!draw</code></dt>
-          <dd>Draws a card on your turn. Play it if it can go, or keep it with <code class="cmd">!pass</code>.</dd>
-
-          <dt><code class="cmd">!pass</code></dt>
-          <dd>Keeps the card you just drew without playing it.</dd>
-
-          <dt><code class="cmd">!hand</code></dt>
-          <dd>Shows your cards and the table again.</dd>
+          <dd>Starts the game once everyone's in — only the person who opened it can do this (if they leave first, the next person in the game takes over as host). A game nobody starts closes 1 minute after it's opened. Everyone then gets a link to their own page, mandem.arazez.com/uno. Keep it to yourself: anyone with your link can play your cards. You have 60 seconds per turn: if time runs out you draw a card.</dd>
 
           <dt><code class="cmd">!uno quit</code></dt>
-          <dd>Leaves the game. It counts as a loss, but your cards still count toward whoever wins.</dd>
+          <dd>Leaves the game, the same as the Quit button on your page. It counts as a loss, but your cards still count toward whoever wins.</dd>
 
           <dt><code class="cmd">!uno top</code></dt>
           <dd>Shows the all-time top 10 in chat, with games won and lost and win rate. It's also on the <a href="leaderboards">Leaderboards</a> page.</dd>
@@ -224,7 +215,7 @@
           <dd>Takes back your challenge before it's answered.</dd>
 
           <dt><code class="cmd">!chess top</code></dt>
-          <dd>Shows the top 10 by rating in chat, with games won, drawn and lost. Everyone starts at 1500, and a win takes points from the loser: more for beating someone rated higher, fewer for someone rated lower. You're on it after your first game. It's also on the <a href="leaderboards">Leaderboards</a> page.</dd>
+          <dd>Shows the top 10 by rating in chat, with games won, drawn and lost. Everyone starts at 800, like a beginner on chess.com, and a win takes points from the loser: more for beating someone rated higher, fewer for someone rated lower. You're on it after your first game. It's also on the <a href="leaderboards">Leaderboards</a> page.</dd>
         </dl>
       </div>
     </section>

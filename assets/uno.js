@@ -1,0 +1,290 @@
+// Uno page: one player's view of a game the bot runs. The bot sends each
+// player a link, mandem.arazez.com/uno#<token>; the token after # never
+// reaches GitHub. The page asks the bot for the table (waiting for the next
+// move each time) and sends moves, both with the token. All the rules live
+// in the bot: this page only shows what it's told and passes clicks on.
+// Owner's rulings: every card looks the same whether it can go or not
+// (no hints), and names are inserted as text, never HTML.
+// Local testing: ?api=http://localhost:39365/uno/api (the bot's
+// UNO_WEB_ORIGINS must then include this page's address).
+import { el, fill, notice, queryParam } from "./ui.js";
+
+const API = queryParam("api") || "https://breakfastchief.baron.usbx.me/uno/api";
+const TOKEN = /^#[A-Za-z0-9_-]{24}$/.test(window.location.hash) ? window.location.hash.slice(1) : null;
+const BASE_TITLE = "Uno | Mandem Server";
+
+const root = document.getElementById("uno");
+const title = document.getElementById("unoTitle");
+const lead = document.getElementById("unoLead");
+
+const COLOUR_NAMES = { red: "Red", yellow: "Yellow", green: "Green", blue: "Blue" };
+const SYMBOLS = { skip: "⊘", reverse: "⇄", "+2": "+2", wild: "★", "wild+4": "+4" };
+
+let view = null;        // the latest table from the bot
+let deadline = null;    // when the turn runs out, by this page's clock
+let busy = false;       // a move is on its way
+let picking = null;     // the wild waiting for a colour
+let message = "";       // the bot's answer to the last move
+let quitArmed = false;  // Quit pressed once: press again to confirm
+let lostTouch = false;  // the bot can't be reached right now
+
+function cardName(card) {
+  if (card.value === "wild") return "Wild";
+  if (card.value === "wild+4") return "Wild +4";
+  const value = { skip: "Skip", reverse: "Reverse" }[card.value] || card.value;
+  return COLOUR_NAMES[card.colour] + " " + value;
+}
+
+// A card face. The colour's name is printed on it too, so the colour never
+// carries meaning on its own.
+function cardFace(card, extraClass) {
+  const face = el("span", "uno-card " + (card.colour ? "uno-" + card.colour : "uno-wild") + (extraClass ? " " + extraClass : ""),
+    el("span", "uno-card-value", SYMBOLS[card.value] || card.value),
+    el("span", "uno-card-colour", card.colour ? COLOUR_NAMES[card.colour] : card.value === "wild" ? "Wild" : "Wild +4"));
+  face.setAttribute("aria-hidden", "true");
+  return face;
+}
+
+async function call(path, options = {}) {
+  const res = await fetch(API + path, {
+    ...options,
+    cache: "no-store",
+    headers: { Authorization: "Bearer " + TOKEN, ...(options.body ? { "Content-Type": "application/json" } : {}) },
+  });
+  if (res.status === 404) return { gone: true };
+  if (!res.ok) throw new Error("The bot answered " + res.status);
+  return res.json();
+}
+
+// Waits for each change in turn. A dropped connection tries again, more slowly
+// each time; a link the bot no longer knows ends it.
+async function follow() {
+  let failures = 0;
+  for (;;) {
+    try {
+      const answer = await call("/state" + (view ? "?since=" + view.version : ""));
+      if (answer.gone) return gone();
+      failures = 0;
+      lostTouch = false;
+      show(answer);
+    } catch {
+      failures += 1;
+      lostTouch = true;
+      render();
+      await new Promise((resolve) => setTimeout(resolve, Math.min(10_000, 1_000 * failures)));
+    }
+  }
+}
+
+function show(next) {
+  if (!view || next.version !== view.version) {
+    // A new turn or a new card: anything half done no longer applies.
+    if (view && !next.yourTurn) picking = null;
+    quitArmed = false;
+  }
+  view = next;
+  deadline = typeof next.turnLeftMs === "number" ? performance.now() + next.turnLeftMs : null;
+  render();
+}
+
+async function move(body) {
+  if (busy) return;
+  busy = true;
+  message = "";
+  render();
+  try {
+    const answer = await call("/move", { method: "POST", body: JSON.stringify(body) });
+    if (answer.gone) return gone();
+    message = answer.message || "";
+    picking = null;
+    if (answer.view) show(answer.view);
+  } catch {
+    message = "Couldn't reach the bot. Try again in a moment.";
+  } finally {
+    busy = false;
+    render();
+  }
+}
+
+function gone() {
+  // A game that has ended stays on screen; anything else gets the old-link note.
+  if (view && !view.locked && view.over) {
+    deadline = null;
+    render();
+    return;
+  }
+  title.textContent = "Uno";
+  lead.textContent = "";
+  document.title = BASE_TITLE;
+  fill(root, notice("This game is over, or the link is old", "Start a new game in TeamSpeak: type !uno in your channel."));
+}
+
+function secondsLeft() {
+  return deadline === null ? null : Math.max(0, Math.ceil((deadline - performance.now()) / 1000));
+}
+
+function countdownText() {
+  const left = secondsLeft();
+  if (left === null) return "";
+  const warn = left * 1000 <= view.warnMs;
+  if (!warn) return left + "s";
+  if (!view.yourTurn) return left + "s left";
+  return left + "s left, or " + (view.drawn ? "your turn ends" : "you draw a card");
+}
+
+function render() {
+  if (!view) return;
+  if (view.locked) {
+    title.textContent = "Uno game " + view.game;
+    lead.textContent = "";
+    document.title = BASE_TITLE;
+    fill(root, notice("You're in a locked channel", "Games are off while you're there. Your turns run out until you leave it, and miss 3 in a row and you're out."));
+    return;
+  }
+
+  const current = view.players.find((p) => p.turn);
+  title.textContent = "Uno game " + view.game;
+  lead.textContent = view.over ? "This game is over." : view.playing ? "Click a card to play it." : "You're out of this game, but you can still watch.";
+  document.title = (view.yourTurn ? "Your turn · " : "") + BASE_TITLE;
+
+  const parts = [];
+  if (lostTouch) parts.push(el("p", "uno-alert", "Lost touch with the bot. Trying again…"));
+
+  // Whose turn, and the clock.
+  const status = el("div", "uno-status" + (view.yourTurn ? " mine" : ""));
+  status.setAttribute("aria-live", "polite");
+  if (view.over) status.append(el("strong", null, "Game over"));
+  else if (current) {
+    status.append(el("strong", null, view.yourTurn ? "Your turn" : current.name + "'s turn"));
+    const clock = el("span", "uno-clock", countdownText());
+    clock.id = "unoClock";
+    status.append(clock);
+  }
+  parts.push(status);
+
+  if (view.over && view.result) {
+    parts.push(el("div", "card uno-result",
+      ...view.result.map((line) => el("p", null, line)),
+      el("p", "muted", "Fancy another? Type !uno in your channel in TeamSpeak.")));
+  }
+
+  if (view.playing && !view.over && view.missed > 0 && view.missed === view.dropAfter - 1) {
+    parts.push(el("p", "uno-alert", "You've missed " + view.missed + " turns in a row. Miss one more and you're out of the game."));
+  }
+
+  // The table: the top card and the colour in play, then everyone in seat order.
+  const colourNote = view.colour ? "Colour: " + COLOUR_NAMES[view.colour] : "Any colour";
+  const top = el("div", "uno-top", cardFace(view.top, "big"), el("div", "uno-top-info",
+    el("span", "muted small", "Top card"),
+    el("strong", null, cardName(view.top)),
+    el("span", "uno-colour-note" + (view.colour ? " uno-text-" + view.colour : ""), colourNote),
+    el("span", "muted small", view.direction === 1 ? "Play goes down the list ↓" : "Play goes up the list ↑")));
+  top.setAttribute("aria-label", "Top card: " + cardName(view.top) + ". " + colourNote + ".");
+  const players = el("ol", "uno-players", ...view.players.map((p) =>
+    el("li", (p.turn ? "turn" : "") + (p.you ? " you" : ""),
+      el("span", "uno-player-name", p.name + (p.you ? " (you)" : "")),
+      el("span", "uno-player-cards", p.cards + (p.cards === 1 ? " card · Uno!" : " cards")))));
+  parts.push(el("div", "card uno-table", top, players));
+
+  // Your hand, and what you can do.
+  if (view.playing && !view.over) {
+    const canAct = view.yourTurn && !busy;
+    let drawnMarked = false;
+    const hand = el("div", "uno-hand", ...view.hand.map((card) => {
+      const isDrawn = !drawnMarked && view.drawn && card.value === view.drawn.value && card.colour === view.drawn.colour;
+      if (isDrawn) drawnMarked = true;
+      const button = el("button", "uno-card-btn" + (isDrawn ? " drawn" : ""), cardFace(card), isDrawn ? el("span", "uno-drawn-tag", "Just drawn") : null);
+      button.type = "button";
+      button.disabled = !canAct;
+      button.setAttribute("aria-label", cardName(card) + (isDrawn ? ", just drawn" : ""));
+      button.addEventListener("click", () => {
+        if (card.value === "wild" || card.value === "wild+4") {
+          picking = card;
+          message = "";
+          render();
+        } else {
+          move({ action: "play", card });
+        }
+      });
+      return button;
+    }));
+
+    const actions = el("div", "uno-actions");
+    const draw = el("button", "btn btn-outline", "Draw");
+    draw.type = "button";
+    draw.disabled = !canAct || Boolean(view.drawn);
+    draw.addEventListener("click", () => move({ action: "draw" }));
+    const pass = el("button", "btn btn-outline", "Pass");
+    pass.type = "button";
+    pass.disabled = !canAct || !view.drawn;
+    pass.addEventListener("click", () => move({ action: "pass" }));
+    const quit = el("button", "btn btn-outline uno-quit", quitArmed ? "Press again to quit" : "Quit");
+    quit.type = "button";
+    quit.disabled = busy;
+    quit.addEventListener("click", () => {
+      if (!quitArmed) {
+        quitArmed = true;
+        render();
+        return;
+      }
+      quitArmed = false;
+      move({ action: "quit" });
+    });
+    actions.append(draw, pass, quit);
+
+    const handCard = el("div", "card uno-hand-card", el("h2", null, "Your cards"), hand, actions);
+    if (message) handCard.append(el("p", "uno-message", message));
+    if (quitArmed) handCard.append(el("p", "muted small", "Quitting counts as giving up, and your cards still count for whoever wins."));
+    if (picking) handCard.append(colourPicker(picking));
+    parts.push(handCard);
+  } else if (message) {
+    parts.push(el("p", "uno-message", message));
+  }
+
+  if (view.log.length) {
+    parts.push(el("section", "uno-log", el("h2", null, "Latest moves"),
+      el("ol", "card", ...view.log.slice().reverse().map((line) => el("li", null, line)))));
+  }
+
+  fill(root, ...parts);
+}
+
+function colourPicker(card) {
+  const box = el("div", "uno-picker", el("p", null, "Pick a colour for your " + cardName(card) + ":"));
+  const row = el("div", "uno-picker-row");
+  Object.entries(COLOUR_NAMES).forEach(([colour, name]) => {
+    const button = el("button", "uno-pick uno-" + colour, name);
+    button.type = "button";
+    button.disabled = busy;
+    button.addEventListener("click", () => move({ action: "play", card, choose: colour }));
+    row.append(button);
+  });
+  const cancel = el("button", "btn btn-outline", "Cancel");
+  cancel.type = "button";
+  cancel.addEventListener("click", () => {
+    picking = null;
+    render();
+  });
+  row.append(cancel);
+  box.append(row);
+  return box;
+}
+
+// The clock ticks on its own; everything else redraws only when something changes.
+setInterval(() => {
+  const clock = document.getElementById("unoClock");
+  if (!clock || !view || view.locked) return;
+  clock.textContent = countdownText();
+  const left = secondsLeft();
+  clock.classList.toggle("warn", left !== null && left * 1000 <= view.warnMs);
+}, 250);
+
+// A new game's link opened over this one changes only the part after #, which
+// doesn't reload the page by itself.
+window.addEventListener("hashchange", () => window.location.reload());
+
+if (!TOKEN) {
+  fill(root, notice("Open this page from your link", "Start a game in TeamSpeak with !uno. When it starts, the bot sends everyone their own link to this page."));
+} else {
+  follow();
+}

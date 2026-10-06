@@ -1345,3 +1345,156 @@ code.cmd.copyable:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .tour-card { animation: none; }
 }
+
+/* ---- Uno page (uno.html, assets/uno.js) ----
+   Card colours are mid shades that read on both themes; each card also
+   prints its colour's name, so colour never carries meaning alone. */
+.uno-red { --uno: #e53935; --uno-ink: #fff; }
+.uno-yellow { --uno: #f9b825; --uno-ink: #1c1600; }
+.uno-green { --uno: #43a047; --uno-ink: #fff; }
+.uno-blue { --uno: #1e88e5; --uno-ink: #fff; }
+.uno-wild { --uno: #23252b; --uno-ink: #fff; }
+.uno-text-red { color: #e53935; }
+.uno-text-yellow { color: #c98a00; }
+.uno-text-green { color: #2e8b32; }
+.uno-text-blue { color: #1e88e5; }
+
+.uno-card {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  width: 4.2rem;
+  height: 6rem;
+  border-radius: 10px;
+  background: var(--uno);
+  color: var(--uno-ink);
+  border: 3px solid #fff;
+  box-shadow: 0 2px 6px var(--shadow);
+  user-select: none;
+}
+.uno-card.uno-wild {
+  background: conic-gradient(#e53935 0 25%, #f9b825 0 50%, #43a047 0 75%, #1e88e5 0);
+}
+.uno-card.uno-wild .uno-card-value { background: #23252b; border-radius: 999px; padding: 0 0.45rem; }
+.uno-card-value { font-size: 1.6rem; font-weight: 800; line-height: 1.1; }
+.uno-card-colour { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+.uno-card.uno-wild .uno-card-colour { background: #23252b; border-radius: 4px; padding: 0 0.3rem; }
+.uno-card.big { width: 5.6rem; height: 8rem; }
+.uno-card.big .uno-card-value { font-size: 2.2rem; }
+
+.uno-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  padding: 0.8rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-card);
+  font-size: 1.15rem;
+}
+.uno-status.mine { border-color: var(--green); background: var(--green-dim); }
+.uno-status.mine strong { color: var(--green); }
+.uno-clock { font-variant-numeric: tabular-nums; color: var(--text-dim); }
+.uno-clock.warn { color: #e53935; font-weight: 600; }
+
+.uno-alert {
+  border: 1px solid #e53935;
+  border-radius: 10px;
+  padding: 0.6rem 0.9rem;
+  color: var(--text);
+  background: #e539351a;
+}
+.uno-message { margin: 0.9rem 0 0; font-weight: 600; }
+
+.uno-result { margin-bottom: 1rem; border-color: var(--gold); background: var(--gold-dim); }
+.uno-result p { margin: 0 0 0.4rem; }
+.uno-result p:last-child { margin-bottom: 0; }
+
+.uno-table {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.25rem;
+  align-items: start;
+  margin-bottom: 1rem;
+}
+.uno-top { display: flex; gap: 1rem; align-items: center; }
+.uno-top-info { display: flex; flex-direction: column; gap: 0.1rem; }
+.uno-colour-note { font-weight: 600; }
+.uno-players { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; }
+.uno-players li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.uno-players li.turn { border-color: var(--orange); background: var(--orange-dim); font-weight: 600; }
+.uno-players li.you .uno-player-name { color: var(--orange); }
+.uno-player-name { overflow-wrap: anywhere; }
+.uno-player-cards { color: var(--text-dim); white-space: nowrap; }
+
+.uno-hand-card { margin-bottom: 1rem; }
+.uno-hand { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1rem; }
+.uno-card-btn {
+  position: relative;
+  padding: 0;
+  border: 0;
+  background: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+.uno-card-btn:hover:not(:disabled) { transform: translateY(-6px); }
+.uno-card-btn:disabled { cursor: default; opacity: 0.8; }
+.uno-card-btn.drawn .uno-card { outline: 3px solid var(--orange); outline-offset: 2px; }
+.uno-drawn-tag {
+  position: absolute;
+  left: 50%;
+  bottom: -0.55rem;
+  transform: translateX(-50%);
+  font-size: 0.65rem;
+  font-weight: 600;
+  white-space: nowrap;
+  padding: 0 0.35rem;
+  border-radius: 4px;
+  background: var(--orange);
+  color: #fff;
+}
+.uno-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.uno-actions .btn, .uno-picker .btn { min-width: 0; padding: 0.6rem 1.2rem; font-size: 1rem; }
+.btn:disabled { opacity: 0.45; cursor: default; transform: none; }
+.uno-quit { margin-left: auto; }
+
+.uno-picker { margin-top: 1rem; }
+.uno-picker p { margin: 0 0 0.5rem; }
+.uno-picker-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.uno-pick {
+  font: inherit;
+  font-weight: 600;
+  padding: 0.6rem 1.1rem;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background: var(--uno);
+  color: var(--uno-ink);
+  cursor: pointer;
+}
+
+.uno-log ol { margin: 0; padding-left: 2.2rem; display: grid; gap: 0.3rem; }
+
+@media (max-width: 600px) {
+  .uno-table { grid-template-columns: 1fr; }
+  .uno-card { width: 3.6rem; height: 5.2rem; }
+  .uno-card-value { font-size: 1.35rem; }
+  .uno-quit { margin-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .uno-card-btn { transition: none; }
+  .uno-card-btn:hover:not(:disabled) { transform: none; }
+}
