@@ -1,6 +1,23 @@
 {
-  "updatedAt": "2026-10-06T23:34:57Z",
-  "trivia": [],
+  "updatedAt": "2026-10-06T23:38:27Z",
+  "trivia": [
+    {
+      "name": "arazez",
+      "points": 2
+    },
+    {
+      "name": "ahmed",
+      "points": 2
+    },
+    {
+      "name": "faux",
+      "points": 2
+    },
+    {
+      "name": "t.u.r.k.s",
+      "points": 2
+    }
+  ],
   "uno": [
     {
       "name": "arazez",
