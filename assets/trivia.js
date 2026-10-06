@@ -215,6 +215,7 @@ function secondsLeft() {
 function clockText() {
   const left = secondsLeft();
   if (left === null || !view || view.locked) return "";
+  if (view.phase === "ready") return "Question 1 in " + left + "s";
   if (view.phase === "between") return "Next question in " + left + "s";
   return left + "s";
 }
@@ -248,7 +249,10 @@ function render() {
   }
 
   title.textContent = gameTitle(view);
-  lead.textContent = view.over ? "This game is over." : view.playing ? "Click an answer, or press its number." : "You've left this game, but you can still watch.";
+  lead.textContent = view.over ? "This game is over."
+    : !view.playing ? "You've left this game, but you can still watch."
+    : view.phase === "ready" ? "Get ready: the first question is on its way."
+    : "Click an answer, or press its number.";
   if (!flashTimer) document.title = (canAnswer() ? "New question · " : "") + BASE_TITLE;
 
   const parts = [];
@@ -257,7 +261,7 @@ function render() {
   // The question number, and the clock.
   const status = el("div", "uno-status" + (canAnswer() ? " mine" : ""));
   status.setAttribute("aria-live", "polite");
-  status.append(el("strong", null, view.over ? "Game over" : "Question " + view.number + " of " + view.count));
+  status.append(el("strong", null, view.over ? "Game over" : view.phase === "ready" ? "Get ready" : "Question " + view.number + " of " + view.count));
   if (!view.over) {
     const clock = el("span", "uno-clock", clockText());
     clock.id = "triviaClock";
@@ -293,11 +297,18 @@ function render() {
     button.addEventListener("click", () => move({ action: "answer", choice: i }));
     return el("li", null, button);
   }));
-  const card = el("div", "card trivia-card",
-    el("p", "muted small trivia-category", view.category),
-    el("h2", "trivia-question", view.question),
-    bar,
-    answers);
+  // Before question 1 (owner ruling: time for everyone to open their page), a countdown instead.
+  const count = el("span", null, String(secondsLeft() ?? ""));
+  count.id = "triviaReady";
+  const card = view.phase === "ready"
+    ? el("div", "card trivia-card trivia-ready",
+      el("p", "trivia-ready-count", count),
+      el("p", "muted", "The first question comes up when this reaches 0, so everyone has time to open their page. " + view.count + " questions, " + Math.round(view.answerMs / 1000) + " seconds each."))
+    : el("div", "card trivia-card",
+      el("p", "muted small trivia-category", view.category),
+      el("h2", "trivia-question", view.question),
+      bar,
+      answers);
   const said = feedback();
   if (said) card.append(el("p", "uno-message", said));
   if (message) card.append(el("p", "uno-message", message));
@@ -317,7 +328,8 @@ function render() {
     card.append(el("div", "uno-actions trivia-actions", el("p", "muted small uno-keys", "Keys: 1, 2, 3 or 4 to answer."), leave));
     if (leaveArmed) card.append(el("p", "muted small", "Your points so far still count, and the others play on."));
   }
-  parts.push(card);
+  // A game everyone left before question 1 has no question to show.
+  if (view.number > 0 || !view.over) parts.push(card);
 
   // Everyone's score, highest first, with a tick for who has answered the open question.
   parts.push(el("section", "trivia-scores", el("h2", null, "Scores"),
@@ -377,6 +389,8 @@ function lobbyText() {
 
 // The clock and the bar tick on their own; everything else redraws only when something changes.
 setInterval(() => {
+  const ready = document.getElementById("triviaReady");
+  if (ready) ready.textContent = String(secondsLeft() ?? "");
   const lobbyClock = document.getElementById("triviaLobbyClock");
   if (lobbyClock) lobbyClock.textContent = lobbyText();
   const clock = document.getElementById("triviaClock");

@@ -1654,3 +1654,8 @@ code.cmd.copyable:focus-visible {
   .trivia-answer, .trivia-bar span { transition: none; }
   .trivia-answer:hover:not(:disabled) { transform: none; }
 }
+
+/* Trivia: the countdown before question 1, while everyone opens their page. */
+.trivia-ready { text-align: center; }
+.trivia-ready-count { margin: 0.5rem 0; font-size: 4rem; font-weight: 800; line-height: 1; color: var(--orange); font-variant-numeric: tabular-nums; }
+.trivia-ready p.muted { margin: 0 auto; max-width: 32rem; }
