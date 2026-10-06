@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-10-06T06:39:24Z",
+  "updatedAt": "2026-10-06T08:08:49Z",
   "trivia": [
+    {
+      "name": "arazez",
+      "points": 43
+    },
     {
       "name": "ahmed",
       "points": 41
-    },
-    {
-      "name": "arazez",
-      "points": 38
     },
     {
       "name": "mfk",
@@ -20,6 +20,10 @@
     {
       "name": "t.u.r.k.s",
       "points": 5
+    },
+    {
+      "name": "smokey",
+      "points": 3
     },
     {
       "name": "hashithefourth",
