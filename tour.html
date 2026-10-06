@@ -380,7 +380,7 @@
           </div>` },
         { title: 'Who can lock', html: `
           <ul>
-            <li>Every rank except Associate can lock a private lobby.</li>
+            <li>Friend, Mandem, Lémön Crew and staff can lock a private lobby or community channel. Associates and Guests can't.</li>
             <li>A community channel's Leader and Channel Admins can lock that channel.</li>
             <li>You need at least one other person with you.</li>
             <li>Not in Entrance Hall, AFK or the public lobbies.</li>
@@ -431,9 +431,9 @@
     },
     {
       id: 'games', x: -3100, y: -1500, r: 2,
-      eyebrow: '!coinflip · !trivia · !uno',
+      eyebrow: '!coinflip · !trivia · !uno · !chess',
       title: 'Game night',
-      lede: 'Three games, all-time leaderboards, and no way for anyone to rig the result. Admins included.',
+      lede: 'Four games, all-time leaderboards, and no way for anyone to rig the result. Admins included.',
       children: [
         { title: 'Coinflip', html: `
           <p>Settle it out loud. <code>!coinflip heads</code> posts the result in your channel's chat for everyone there to see.</p>
@@ -445,22 +445,26 @@
         { title: 'Trivia', html: `
           <div class="figs">
             <div class="fig"><b>10</b><span>questions a game</span></div>
-            <div class="fig"><b>4</b><span>answers, A to D</span></div>
+            <div class="fig"><b>4</b><span>answers to click</span></div>
             <div class="fig"><b>20s</b><span>to answer each one</span></div>
           </div>
-          <p><code>!trivia</code> starts a game and invites your channel. Answer by typing just the letter. The first right answer takes the point.</p>
+          <p><code>!trivia</code> opens a game and invites your channel. When the host sends <code>!trivia start</code>, everyone gets their own link to the trivia page. Click an answer, or press 1 to 4. The first right answer takes the point.</p>
           <p class="note">You can join late. A game only counts on the leaderboard if at least two people answered.</p>` },
         { title: 'Uno', html: `
           <div class="cards" aria-label="Example cards">
             <div class="card r">5</div><div class="card y">7</div><div class="card g">+2</div><div class="card b">&#8635;</div><div class="card w">W</div>
           </div>
-          <p>2 to 10 users.<code>!uno</code> opens a game, <code>!uno join</code> joins it, and whoever opened it sends <code>!uno start</code>.</p>
-          <p>On your turn, just type the card: <code>red5</code>, <code>r5</code>, <code>bs</code> for a blue skip, <code>w blue</code> for a Wild. Or <code>!draw</code> and <code>!pass</code>.</p>
+          <p>2 to 10 users. <code>!uno</code> opens a game, <code>!uno join</code> joins it, and whoever opened it sends <code>!uno start</code>.</p>
+          <p>Everyone then gets their own link to the Uno page. Click a card to play it, or press Draw and Pass (D and P on the keyboard). A chime tells you it's your turn.</p>
           <p class="note">60 seconds a turn. The bot calls Uno for you at one card.</p>` },
+        { title: 'Chess', html: `
+          <p><code>!chess Bob</code> challenges Bob. When Bob accepts, you both get a link to a free Lichess board: 10 minutes each, or name your own clock.</p>
+          <p class="note">Everyone starts at an 800 rating. <code>!chess top</code> shows the top 10.</p>` },
         { title: 'Leaderboards', html: `
           <ul>
             <li><code>!trivia top</code>: the all-time top 10.</li>
             <li><code>!uno top</code>: points, games won and lost, and win rate.</li>
+            <li><code>!chess top</code>: ratings, with wins, draws and losses.</li>
             <li>The website's <b>Leaderboards</b> page shows the same, about 10 minutes behind.</li>
           </ul>
           <p class="note">Uno winners score the cards left in everyone else's hands: numbers at face value, 20 for action cards, 50 for Wilds.</p>` },
@@ -469,7 +473,7 @@
             <li>Nobody can stop a game for everyone else, not even an admin. Nobody can quit while ahead to lock in a lead.</li>
             <li>Leave trivia and your points still count. The rest play on.</li>
             <li>Quit Uno and your cards still count for the winner.</li>
-            <li>Miss 3 Uno turns in a row, or leave the server for a minute, and you're out.</li>
+            <li>Miss 3 Uno turns in a row and you're out. Leaving TeamSpeak doesn't take you out: your page keeps your seat.</li>
           </ul>` },
       ],
     },
@@ -507,8 +511,11 @@
         { title: 'Donors', html: `
           <p>The donor list and the total raised update as soon as a donation is recorded.</p>
           <p class="note">The site never shows how much any one person gave.</p>` },
+        { title: 'Game pages', html: `
+          <p>Trivia and Uno are played on the site: when a game starts, the bot sends each player their own link.</p>
+          <p class="note">mandem.arazez.com/trivia and /uno</p>` },
         { title: 'Leaderboards & Live now', html: `
-          <p>Trivia and Uno leaderboards, and everyone streaming right now who asked to be listed.</p>` },
+          <p>Trivia, Uno and chess leaderboards, and everyone streaming right now who asked to be listed.</p>` },
       ],
     },
   ];

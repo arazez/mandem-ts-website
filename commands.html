@@ -38,7 +38,7 @@
   <aside class="toc" id="toc" aria-label="On this page"></aside>
 
   <!-- Command list: written by the commands-page-writer agent from the bot's docs/COMMANDS.md -->
-  <!-- commands-source sha256=a96c152d5098fa780e85b8ccb0ac0fdd6942193f1ce886a7d5a8289f817707d0 -->
+  <!-- commands-source sha256=965d5f43e803fa7ec40940ccec7a6d4408365d656a22edeb72f8d7252fefcc64 -->
   <div id="commands">
 
     <section class="cmd-group">
@@ -97,7 +97,7 @@
       <div class="card">
         <dl class="cmd-list">
           <dt><code class="cmd">!twitch link &lt;your channel&gt;</code></dt>
-          <dd>Asks to link your Twitch channel, so your name shows [LIVE] while you're streaming. Send just your channel name, or its twitch.tv address. The Owner has to approve it first. Linking a different channel later replaces the old one and needs approving again. If you use TeamSpeak on more than one device, link each one separately — every device needs its own link.<br><span class="cmd-example">Example: <code class="cmd">!twitch link https://twitch.tv/yourname</code></span></dd>
+          <dd>Asks to link your Twitch channel, so your name shows [LIVE] while you're streaming. Send just your channel name, or its twitch.tv address. The bot checks with Twitch that the channel exists, then the Owner has to approve it; you get a message when they do, if you're online. Linking a different channel later replaces the old one and needs approving again. If you use TeamSpeak on more than one device, link each one separately — every device needs its own link.<br><span class="cmd-example">Example: <code class="cmd">!twitch link https://twitch.tv/yourname</code></span></dd>
 
           <dt><code class="cmd">!twitch</code></dt>
           <dd>Shows your current link and whether it's been approved yet.</dd>
@@ -120,7 +120,7 @@
         <p class="muted">For a private lobby or your community channel, when you want to play without being disturbed. A locked channel shows [LOCKED] in its name and gets a hidden password so nobody else can walk in; anyone who somehow gets in is moved straight back out. A lock also ends on its own once the channel has been empty for 2 minutes.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!lock</code></dt>
-          <dd>Locks the channel you're in and protects everyone inside at that moment: nobody can poke them, message them first, move them, kick them or ban them (they can still reply if someone messages them first). Friend, Mandem, Lémön Crew and higher ranks can use it, but Associates can't; in a community channel only its Leader or Channel Admin can lock it. It's refused in Entrance Hall, AFK, the public lobbies and spacers, if you're on your own in there, or if the channel already has its own password.</dd>
+          <dd>Locks the channel you're in and protects everyone inside at that moment: nobody can poke them, message them first, move them, kick them or ban them (they can still reply if someone messages them first). Friend, Mandem, Lémön Crew and higher ranks can use it in any private lobby or community channel, but Associates can't. A community channel's Leader and Channel Admins can also lock that channel. It's refused in Entrance Hall, AFK, the public lobbies and spacers, if you're on your own in there, if the channel already has its own password or is already locked, if someone in it is in jail, or if you already have a lock running somewhere else.</dd>
 
           <dt><code class="cmd">!unlock</code> / <code class="cmd">!unlock &lt;channel&gt;</code></dt>
           <dd>Ends the lock: the name and password go back to normal. Use it in the channel itself, or name the channel to end its lock from anywhere on the server. You can unlock a lock you started; in a community channel, its Leaders can end any lock there. Part of the name is enough — capitals, spaces and symbols like # don't matter — and if it matches more than one locked channel, the bot lists them so you can be more specific.<br><span class="cmd-example">Example: <code class="cmd">!unlock private lobby 2</code></span></dd>
@@ -151,7 +151,7 @@
         <p class="muted">You get a game together in TeamSpeak, then play it on a web page: when the game starts, the bot sends each of you your own link to it. On your page you see each question with a countdown and four answers, and everyone's score, and you click an answer (or press 1 to 4). A wrong answer turns red on your page only; the first right answer ends the question, and everyone sees the right answer in green, who got it and the scores. When a new question comes up the page plays a short chime (you can switch it off). You can't start or join a game from a locked channel, and a game where only one person answered doesn't count on the leaderboard. When a game ends, press Play again on your page to open a new one on the same topic in the same channel: everyone there is invited, and the last game's players can join straight from their page.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!trivia</code></dt>
-          <dd>Opens a 10-question game of mixed topics in the channel you're in, or joins one already running there. You're its host, and everyone else in the channel gets an invite to join. Once your game has started, it sends you your link again.</dd>
+          <dd>Opens a 10-question game of mixed topics in the channel you're in, or joins one already running there. You're its host, and everyone else in the channel gets an invite to join. Once your game has started, it sends you your link again, from any channel.</dd>
 
           <dt><code class="cmd">!trivia &lt;topic&gt;</code></dt>
           <dd>Opens a game on one topic instead. If a game is already running in your channel, you join it, and the bot tells you if it's on a different topic. Capitals and spaces don't matter.<br><span class="cmd-example">Example: <code class="cmd">!trivia football</code></span></dd>
@@ -160,7 +160,7 @@
           <dd>Lists the topics: general, geography, history, science, games, movies, tv, anime, sport, football, basketball and cs (Counter-Strike: the pro scene, the games, maps and fun facts; <code class="cmd">!trivia cs2</code> and <code class="cmd">!trivia csgo</code> work too).</dd>
 
           <dt><code class="cmd">!trivia join</code></dt>
-          <dd>Joins the game in your channel, and everyone already in is told. You can also join after it's started: the bot sends you your link, and you start from the next question.</dd>
+          <dd>Joins the game in your channel; before it starts, everyone already in is told. You can also join after it's started: the bot sends you your link, and you start from the next question.</dd>
 
           <dt><code class="cmd">!trivia start</code></dt>
           <dd>Starts the game once everyone's in. Only the host (the person who opened it) can do this; if they leave first, the next person in takes over as host. A game nobody starts closes 1 minute after it's opened. Everyone then gets a link to their own page, mandem.arazez.com/trivia, and question 1 comes up 15 seconds later so everyone has time to open it. Keep it to yourself: anyone with your link can answer for you. You get 20 seconds per question.</dd>
@@ -189,7 +189,7 @@
           <dd>Starts the game once everyone's in — only the person who opened it can do this (if they leave first, the next person in the game takes over as host). A game nobody starts closes 1 minute after it's opened. Everyone then gets a link to their own page, mandem.arazez.com/uno. Keep it to yourself: anyone with your link can play your cards. You have 60 seconds per turn: if time runs out you draw a card.</dd>
 
           <dt><code class="cmd">!uno quit</code></dt>
-          <dd>Leaves the game, the same as the Quit button on your page. It counts as a loss, but your cards still count toward whoever wins.</dd>
+          <dd>Leaves the game, the same as pressing Quit twice on your page (<code class="cmd">!uno leave</code> works too). It counts as a loss, but your cards still count toward whoever wins.</dd>
 
           <dt><code class="cmd">!uno top</code></dt>
           <dd>Shows the all-time top 10 in chat, with games won and lost and win rate. It's also on the <a href="leaderboards">Leaderboards</a> page.</dd>
@@ -206,7 +206,7 @@
           <dd>Challenges someone who's online. Each of you gets 10 minutes on the clock, or put the minutes after the name (1 to 60) for a quicker or longer game. Part of the name is enough. They have 1 minute to answer, or the challenge lapses and you're told. You can only have one challenge waiting at a time.</dd>
 
           <dt><code class="cmd">!chess accept</code></dt>
-          <dd>Accepts a challenge sent to you. You each get a link for your colour, and white moves first. If you haven't both opened your links within an hour, the game is off. The first time two people play each other, the bot picks white at random; after that you take turns. When the game ends, the bot tells you both and updates your ratings, usually within a minute.</dd>
+          <dd>Accepts a challenge sent to you. You each get a link for your colour, and white moves first. If you haven't both opened your links within an hour, the game is off. The first time two people play each other, the bot picks white at random; after that you take turns. When the game ends, the bot tells whichever of you is online and updates your ratings, usually within a minute.</dd>
 
           <dt><code class="cmd">!chess decline</code></dt>
           <dd>Turns down a challenge sent to you.</dd>

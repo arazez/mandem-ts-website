@@ -52,7 +52,7 @@
 
   <!-- Command list: written by the commands-page-writer agent from the bot's docs/COMMANDS.md.
        Each command's <dd> starts with a "who" row of role pills; assets/admin.js filters by them. -->
-  <!-- commands-source sha256=a96c152d5098fa780e85b8ccb0ac0fdd6942193f1ce886a7d5a8289f817707d0 -->
+  <!-- commands-source sha256=965d5f43e803fa7ec40940ccec7a6d4408365d656a22edeb72f8d7252fefcc64 -->
   <div id="commands">
 
     <div class="notice role-empty" hidden>
@@ -76,13 +76,13 @@
       <div class="card">
         <dl class="cmd-list">
           <dt><code class="cmd">!donation add &lt;name&gt; &lt;pounds&gt; [date]</code></dt>
-          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Records a donation in whole pounds, up to the per-person limit for this donation window, and gives out what it earns: 1 banner week and 1 modal week per £1, plus the mute once that person's donations in the window reach the mute minimum. The date is optional (today if left out), written day first (05/10/2026, 5/10/2026, 05-10-2026 or 05.10.2026; American order is refused), and must fall inside the donation window and not in the future. Refused once the goal is reached, unless that's switched off. Put names with spaces in quotes. If the name's new, the reply says so. It also gives the donation's number, in case it needs voiding.<br><span class="cmd-example">Example date: <code class="cmd">05/10/2026</code></span></dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Records a donation in whole pounds, up to the per-person limit for this donation window, and gives out what it earns: 1 banner week and 1 modal week per £1, plus the mute once that person's donations in the window reach the mute minimum. The date is optional (today if left out), written day first (05/10/2026, 5/10/2026, 05-10-2026 or 05.10.2026), and must fall inside the donation window and not in the future. The bot always reads the day first, so 10/05/2026 means 10 May; an impossible date like 10/13/2026 is refused. Refused once the goal is reached, unless that's switched off. Put names with spaces in quotes. If the name's new, the reply says so. It also gives the donation's number, in case it needs voiding, and says when someone reaches the admin minimum or the goal has just been reached.<br><span class="cmd-example">Example date: <code class="cmd">05/10/2026</code></span></dd>
 
           <dt><code class="cmd">!donation void &lt;number&gt;</code></dt>
           <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Reverses a donation by its number. Takes back the weeks it added, never below zero and not weeks already started. Takes back its mute only if it's unused and the person's window total drops below the mute minimum. Lowers the total raised. A donation can only be voided once.</dd>
 
           <dt><code class="cmd">!donation list [name]</code></dt>
-          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Shows the latest donations, newest first, or just one person's. Marks voided ones and ones that gave a mute.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Shows the latest donations (up to 20), newest first, or just one person's. Marks voided ones and ones that gave a mute.</dd>
         </dl>
       </div>
     </section>
@@ -202,7 +202,7 @@
           <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span> <span class="role-pill role-super-admin" data-rank="super-admin">Super Admin</span></div>Moves hashithefourth into THE BUNKER, where he can't talk, for 3 minutes, or for 1 to 10 minutes if you give a number. He's told who jailed him, and the owner is told when a Super Admin does it. He can't switch channels at all while he's jailed, so trying to join your channel does nothing and makes no sound there; if he somehow ends up outside the bunker anyway, the bot moves him straight back — <code class="cmd">!pull</code>, <code class="cmd">!rejoin</code> and <code class="cmd">!lock</code> won't get him out either. The clock only runs while he's online: he goes back in when he reconnects, and an hour offline in one go counts as served. When his time is up, he goes back to the channel he was in — if that channel has since been locked or deleted, he stays in the bunker, free to leave. Jailing him again while he's inside adds time, up to 10 minutes in all. There are 30 minutes a week, shared by everyone who can use this, resetting Monday at midnight UK time. Each reply says how many minutes are left; if less is left than you asked for, he gets what's left. It's refused if he's offline, or in a locked channel.</dd>
 
           <dt><code class="cmd">!freehashi</code></dt>
-          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span> <span class="role-pill role-super-admin" data-rank="super-admin">Super Admin</span></div>Lets him out early, back to the channel he was in. The whole minutes he didn't serve go back into the week's 30.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span> <span class="role-pill role-super-admin" data-rank="super-admin">Super Admin</span></div>Lets him out early, back to the channel he was in (unless that channel is now locked or gone: then he stays, free to walk out). The whole minutes he didn't serve go back into the week's 30.</dd>
         </dl>
       </div>
     </section>
@@ -219,13 +219,13 @@
           <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Approves a link. Check it really is their channel first. If that channel is already linked to someone else, the reply says so.</dd>
 
           <dt><code class="cmd">!twitch deny &lt;channel or name&gt;</code></dt>
-          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Turns a link down. They're told.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Turns a link down. They're told, if they're online.</dd>
 
           <dt><code class="cmd">!twitch list</code></dt>
           <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Every approved link, who's on the <a href="live">Live now</a> page, and who's live right now. It also says if checking Twitch is switched off.</dd>
 
           <dt><code class="cmd">!twitch remove &lt;channel or name&gt;</code></dt>
-          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Removes someone's link, and their [LIVE] tag with it. They're told.</dd>
+          <dd><div class="who"><span class="who-label">Who can use it</span> <span class="role-pill role-owner" data-rank="owner">Owner</span></div>Removes someone's link, and their [LIVE] tag with it. They're told, if they're online.</dd>
         </dl>
       </div>
     </section>
