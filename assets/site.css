@@ -1414,6 +1414,10 @@ code.cmd.copyable:focus-visible {
 .uno-result { margin-bottom: 1rem; border-color: var(--gold); background: var(--gold-dim); }
 .uno-result p { margin: 0 0 0.4rem; }
 .uno-result p:last-child { margin-bottom: 0; }
+.uno-again { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.uno-again .uno-actions { margin-bottom: 0.4rem; }
+.uno-again-btn { min-width: 0; padding: 0.6rem 1.4rem; font-size: 1rem; background: var(--orange); color: #fff; }
+.uno-again-btn:hover:not(:disabled) { background: var(--orange-hover); }
 
 .uno-table {
   display: grid;

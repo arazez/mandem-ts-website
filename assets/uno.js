@@ -7,13 +7,17 @@
 // (no hints), and names are inserted as text, never HTML. A sound and a
 // flashing tab say it's your turn; nothing is sent in TeamSpeak for it.
 // Keys: D draws, P passes; while picking a Wild's colour, R, Y, G or B, and Esc.
+// Play again (owner ruling): a finished game's page opens or joins the next
+// game in its channel, and moves to that game by itself once it starts.
 // Local testing: ?api=http://localhost:39365/uno/api (the bot's
 // UNO_WEB_ORIGINS must then include this page's address).
 import { el, fill, notice, queryParam } from "./ui.js";
 import { UK, formatUkTime } from "./time.js";
 
 const API = queryParam("api") || "https://breakfastchief.baron.usbx.me/uno/api";
-const TOKEN = /^#[A-Za-z0-9_-]{24}$/.test(window.location.hash) ? window.location.hash.slice(1) : null;
+// Whose page this is. Play again swaps in the new game's token without a reload,
+// so the sound the player has already allowed keeps working.
+let token = /^#[A-Za-z0-9_-]{24}$/.test(window.location.hash) ? window.location.hash.slice(1) : null;
 const BASE_TITLE = "Uno | Mandem Server";
 
 const root = document.getElementById("uno");
@@ -35,6 +39,7 @@ let unoBanner = null;   // { text, until }: someone just got down to one card
 let flashTimer = null;  // the tab title blinking while it's your turn elsewhere
 let audio = null;       // made on the first click or key press, as browsers require
 let soundOn = readSoundSetting();
+let lobbyDeadline = null; // when Play again's new game closes if nobody starts it
 
 // "Uno · Tue 6 Oct, 21.15": when the game started, UK time (owner's choice over the game number).
 function gameTitle(game) {
@@ -146,7 +151,7 @@ async function call(path, options = {}) {
   const res = await fetch(API + path, {
     ...options,
     cache: "no-store",
-    headers: { Authorization: "Bearer " + TOKEN, ...(options.body ? { "Content-Type": "application/json" } : {}) },
+    headers: { Authorization: "Bearer " + token, ...(options.body ? { "Content-Type": "application/json" } : {}) },
   });
   if (res.status === 404) return { gone: true };
   if (!res.ok) throw new Error("The bot answered " + res.status);
@@ -159,7 +164,9 @@ async function follow() {
   let failures = 0;
   for (;;) {
     try {
+      const asked = token;
       const answer = await call("/state" + (view ? "?since=" + view.version : ""));
+      if (asked !== token) continue; // an answer about the game this page has left
       if (answer.gone) return gone();
       failures = 0;
       lostTouch = false;
@@ -188,7 +195,21 @@ function show(next) {
   }
   view = next;
   deadline = typeof next.turnLeftMs === "number" ? performance.now() + next.turnLeftMs : null;
+  lobbyDeadline = next.next && next.next.phase === "lobby" ? performance.now() + next.next.closesInMs : null;
+  if (next.next && next.next.phase === "playing" && next.next.token) return switchTo(next.next.token);
   render();
+}
+
+// Play again's game has started with this player in it: follow it here.
+function switchTo(newToken) {
+  token = newToken;
+  history.replaceState(null, "", "#" + newToken);
+  view = null;
+  message = "";
+  picking = null;
+  quitArmed = false;
+  unoBanner = null;
+  fill(root, el("p", "muted", "Loading the new game…"));
 }
 
 async function move(body) {
@@ -197,7 +218,9 @@ async function move(body) {
   message = "";
   render();
   try {
+    const asked = token;
     const answer = await call("/move", { method: "POST", body: JSON.stringify(body) });
+    if (asked !== token) return;
     if (answer.gone) return gone();
     message = answer.message || "";
     picking = null;
@@ -276,7 +299,7 @@ function render() {
   if (view.over && view.result) {
     parts.push(el("div", "card uno-result",
       ...view.result.map((line) => el("p", null, line)),
-      el("p", "muted", "Fancy another? Type !uno in your channel in TeamSpeak.")));
+      playAgain()));
   }
 
   if (view.playing && !view.over && view.missed > 0 && view.missed === view.dropAfter - 1) {
@@ -362,6 +385,50 @@ function render() {
   fill(root, ...parts);
 }
 
+function button(label, className, action, disabled) {
+  const b = el("button", className, label);
+  b.type = "button";
+  b.disabled = Boolean(disabled) || busy;
+  b.addEventListener("click", () => move({ action }));
+  return b;
+}
+
+// Under the result: open the next game, or the one someone else opened.
+function playAgain() {
+  const next = view.next;
+  const box = el("div", "uno-again");
+  if (!next) {
+    box.append(button("Play again", "btn uno-again-btn", "again"),
+      el("p", "muted small", "Opens a new game in the same channel. Everyone there is invited, and this game's players can join from here."));
+    return box;
+  }
+  if (next.phase === "playing") {
+    box.append(el("p", "muted", "A new game has started without you. Type !uno in your channel in TeamSpeak for the next one."));
+    return box;
+  }
+  box.append(el("p", null, el("strong", null, (next.hosting ? "You" : next.host) + " opened a new game. "), "In it: " + next.players.join(", ") + "."));
+  const row = el("div", "uno-actions");
+  if (!next.joined) row.append(button("Join", "btn uno-again-btn", "join"));
+  else {
+    if (next.hosting) row.append(button("Start", "btn uno-again-btn", "start", next.players.length < 2));
+    row.append(button("Leave", "btn btn-outline", "leave"));
+  }
+  box.append(row);
+  const waiting = next.hosting
+    ? next.players.length < 2 ? "Waiting for at least one more player." : "Press Start once everyone's in."
+    : next.joined ? "Waiting for " + next.host + " to start it." : "";
+  const closes = el("span", null, lobbyText());
+  closes.id = "unoLobbyClock";
+  box.append(el("p", "muted small", waiting ? waiting + " " : "", closes));
+  return box;
+}
+
+function lobbyText() {
+  if (lobbyDeadline === null) return "";
+  const left = Math.max(0, Math.ceil((lobbyDeadline - performance.now()) / 1000));
+  return "It closes in " + left + "s if nobody starts it.";
+}
+
 function colourPicker(card) {
   const box = el("div", "uno-picker", el("p", null, "Pick a colour for your " + cardName(card) + ":"));
   const row = el("div", "uno-picker-row");
@@ -385,6 +452,8 @@ function colourPicker(card) {
 
 // The clock ticks on its own; everything else redraws only when something changes.
 setInterval(() => {
+  const lobbyClock = document.getElementById("unoLobbyClock");
+  if (lobbyClock) lobbyClock.textContent = lobbyText();
   const clock = document.getElementById("unoClock");
   if (!clock || !view || view.locked) return;
   clock.textContent = countdownText();
@@ -421,7 +490,7 @@ document.addEventListener("keydown", (e) => {
 // doesn't reload the page by itself.
 window.addEventListener("hashchange", () => window.location.reload());
 
-if (!TOKEN) {
+if (!token) {
   fill(root, notice("Open this page from your link", "Start a game in TeamSpeak with !uno. When it starts, the bot sends everyone their own link to this page."));
 } else {
   follow();
