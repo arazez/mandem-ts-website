@@ -4,7 +4,9 @@
 // move each time) and sends moves, both with the token. All the rules live
 // in the bot: this page only shows what it's told and passes clicks on.
 // Owner's rulings: every card looks the same whether it can go or not
-// (no hints), and names are inserted as text, never HTML.
+// (no hints), and names are inserted as text, never HTML. A sound and a
+// flashing tab say it's your turn; nothing is sent in TeamSpeak for it.
+// Keys: D draws, P passes; while picking a Wild's colour, R, Y, G or B, and Esc.
 // Local testing: ?api=http://localhost:39365/uno/api (the bot's
 // UNO_WEB_ORIGINS must then include this page's address).
 import { el, fill, notice, queryParam } from "./ui.js";
@@ -28,6 +30,11 @@ let picking = null;     // the wild waiting for a colour
 let message = "";       // the bot's answer to the last move
 let quitArmed = false;  // Quit pressed once: press again to confirm
 let lostTouch = false;  // the bot can't be reached right now
+let animateTop = false; // a new top card: it pops in once
+let unoBanner = null;   // { text, until }: someone just got down to one card
+let flashTimer = null;  // the tab title blinking while it's your turn elsewhere
+let audio = null;       // made on the first click or key press, as browsers require
+let soundOn = readSoundSetting();
 
 // "Uno · Tue 6 Oct, 21.15": when the game started, UK time (owner's choice over the game number).
 function gameTitle(game) {
@@ -35,6 +42,10 @@ function gameTitle(game) {
   const at = new Date(game.startedAt);
   const day = new Intl.DateTimeFormat("en-GB", { timeZone: UK, weekday: "short", day: "numeric", month: "short" }).format(at);
   return "Uno · " + day + ", " + formatUkTime(at);
+}
+
+function sameCard(a, b) {
+  return a.value === b.value && a.colour === b.colour;
 }
 
 function cardName(card) {
@@ -52,6 +63,83 @@ function cardFace(card, extraClass) {
     el("span", "uno-card-colour", card.colour ? COLOUR_NAMES[card.colour] : card.value === "wild" ? "Wild" : "Wild +4"));
   face.setAttribute("aria-hidden", "true");
   return face;
+}
+
+// --- Turn alert: a short two-note chime and a blinking tab -------------------
+function readSoundSetting() {
+  try {
+    return localStorage.getItem("unoSound") !== "off";
+  } catch {
+    return true;
+  }
+}
+
+function setSound(on) {
+  soundOn = on;
+  try {
+    localStorage.setItem("unoSound", on ? "on" : "off");
+  } catch { /* storage blocked: the choice lasts until the page closes */ }
+  render();
+}
+
+// Browsers only allow sound once someone has clicked or pressed a key on the page.
+function unlockAudio() {
+  if (!audio) {
+    try {
+      audio = new AudioContext();
+    } catch {
+      return;
+    }
+  }
+  if (audio.state === "suspended") audio.resume();
+}
+document.addEventListener("pointerdown", unlockAudio);
+document.addEventListener("keydown", unlockAudio);
+
+function chime() {
+  if (!soundOn || !audio || audio.state !== "running") return;
+  const now = audio.currentTime;
+  [[660, 0], [880, 0.16]].forEach(([frequency, at]) => {
+    const tone = audio.createOscillator();
+    const volume = audio.createGain();
+    tone.frequency.value = frequency;
+    volume.gain.setValueAtTime(0.0001, now + at);
+    volume.gain.exponentialRampToValueAtTime(0.25, now + at + 0.02);
+    volume.gain.exponentialRampToValueAtTime(0.0001, now + at + 0.15);
+    tone.connect(volume).connect(audio.destination);
+    tone.start(now + at);
+    tone.stop(now + at + 0.16);
+  });
+}
+
+function turnAlert() {
+  chime();
+  if (!document.hidden || flashTimer) return;
+  let lit = false;
+  flashTimer = setInterval(() => {
+    if (!document.hidden || !view || !view.yourTurn) return stopFlash();
+    lit = !lit;
+    document.title = lit ? "▶ YOUR TURN ◀" : "Your turn · " + BASE_TITLE;
+  }, 1000);
+}
+
+function stopFlash() {
+  clearInterval(flashTimer);
+  flashTimer = null;
+  if (view) document.title = (view.yourTurn ? "Your turn · " : "") + BASE_TITLE;
+}
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) stopFlash();
+});
+
+function showUno(text) {
+  unoBanner = { text, until: Date.now() + 3000 };
+  setTimeout(() => {
+    if (unoBanner && Date.now() >= unoBanner.until) {
+      unoBanner = null;
+      render();
+    }
+  }, 3100);
 }
 
 async function call(path, options = {}) {
@@ -86,6 +174,13 @@ async function follow() {
 }
 
 function show(next) {
+  const before = view && !view.locked ? view : null;
+  if (before && !next.locked) {
+    if (!sameCard(before.top, next.top) || before.colour !== next.colour) animateTop = true;
+    const uno = next.players.find((p) => p.cards === 1 && before.players.find((q) => q.name === p.name)?.cards !== 1);
+    if (uno && !next.over) showUno(uno.you ? "Uno! You have one card left." : "Uno! " + uno.name + " has one card left.");
+    if (next.yourTurn && !before.yourTurn && !next.over) turnAlert();
+  }
   if (!view || next.version !== view.version) {
     // A new turn or a new card: anything half done no longer applies.
     if (view && !next.yourTurn) picking = null;
@@ -168,9 +263,15 @@ function render() {
     status.append(el("strong", null, view.yourTurn ? "Your turn" : current.name + "'s turn"));
     const clock = el("span", "uno-clock", countdownText());
     clock.id = "unoClock";
-    status.append(clock);
+    const sound = el("button", "uno-sound", soundOn ? "🔔 Sound on" : "🔕 Sound off");
+    sound.type = "button";
+    sound.title = "A chime when it's your turn. It plays once you've clicked anywhere on this page.";
+    sound.setAttribute("aria-pressed", String(soundOn));
+    sound.addEventListener("click", () => setSound(!soundOn));
+    status.append(el("span", "uno-status-side", clock, sound));
   }
   parts.push(status);
+  if (unoBanner && Date.now() < unoBanner.until && !view.over) parts.push(el("div", "uno-banner", unoBanner.text));
 
   if (view.over && view.result) {
     parts.push(el("div", "card uno-result",
@@ -184,7 +285,7 @@ function render() {
 
   // The table: the top card and the colour in play, then everyone in seat order.
   const colourNote = view.colour ? "Colour: " + COLOUR_NAMES[view.colour] : "Any colour";
-  const top = el("div", "uno-top", cardFace(view.top, "big"), el("div", "uno-top-info",
+  const top = el("div", "uno-top", cardFace(view.top, "big" + (animateTop ? " just-played" : "")), el("div", "uno-top-info",
     el("span", "muted small", "Top card"),
     el("strong", null, cardName(view.top)),
     el("span", "uno-colour-note" + (view.colour ? " uno-text-" + view.colour : ""), colourNote),
@@ -195,6 +296,7 @@ function render() {
       el("span", "uno-player-name", p.name + (p.you ? " (you)" : "")),
       el("span", "uno-player-cards", p.cards + (p.cards === 1 ? " card · Uno!" : " cards")))));
   parts.push(el("div", "card uno-table", top, players));
+  animateTop = false;
 
   // Your hand, and what you can do.
   if (view.playing && !view.over) {
@@ -242,7 +344,8 @@ function render() {
     });
     actions.append(draw, pass, quit);
 
-    const handCard = el("div", "card uno-hand-card", el("h2", null, "Your cards"), hand, actions);
+    const handCard = el("div", "card uno-hand-card", el("h2", null, "Your cards"), hand, actions,
+      el("p", "muted small uno-keys", "Keys: D to draw, P to pass."));
     if (message) handCard.append(el("p", "uno-message", message));
     if (quitArmed) handCard.append(el("p", "muted small", "Quitting counts as giving up, and your cards still count for whoever wins."));
     if (picking) handCard.append(colourPicker(picking));
@@ -253,7 +356,7 @@ function render() {
 
   if (view.log.length) {
     parts.push(el("section", "uno-log", el("h2", null, "Latest moves"),
-      el("ol", "card", ...view.log.slice().reverse().map((line) => el("li", null, line)))));
+      el("ol", "card", ...view.log.slice().reverse().map((line, i) => el("li", i === 0 ? "newest" : null, line)))));
   }
 
   fill(root, ...parts);
@@ -276,7 +379,7 @@ function colourPicker(card) {
     render();
   });
   row.append(cancel);
-  box.append(row);
+  box.append(row, el("p", "muted small uno-keys", "Or press R, Y, G or B. Esc cancels."));
   return box;
 }
 
@@ -288,6 +391,31 @@ setInterval(() => {
   const left = secondsLeft();
   clock.classList.toggle("warn", left !== null && left * 1000 <= view.warnMs);
 }, 250);
+
+// D draws, P passes; R, Y, G or B picks a Wild's colour, and Esc cancels.
+document.addEventListener("keydown", (e) => {
+  if (e.ctrlKey || e.metaKey || e.altKey || e.repeat) return;
+  if (!view || view.locked || view.over || !view.playing || !view.yourTurn || busy) return;
+  const key = e.key.toLowerCase();
+  if (picking) {
+    const colour = { r: "red", y: "yellow", g: "green", b: "blue" }[key];
+    if (colour) {
+      e.preventDefault();
+      move({ action: "play", card: picking, choose: colour });
+    } else if (key === "escape") {
+      picking = null;
+      render();
+    }
+    return;
+  }
+  if (key === "d" && !view.drawn) {
+    e.preventDefault();
+    move({ action: "draw" });
+  } else if (key === "p" && view.drawn) {
+    e.preventDefault();
+    move({ action: "pass" });
+  }
+});
 
 // A new game's link opened over this one changes only the part after #, which
 // doesn't reload the page by itself.

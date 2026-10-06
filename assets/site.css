@@ -1486,6 +1486,45 @@ code.cmd.copyable:focus-visible {
 }
 
 .uno-log ol { margin: 0; padding-left: 2.2rem; display: grid; gap: 0.3rem; }
+.uno-log li { color: var(--text-dim); }
+.uno-log li.newest { color: var(--text); font-weight: 600; }
+
+.uno-status-side { display: inline-flex; align-items: center; gap: 0.8rem; }
+.uno-sound {
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 0.2rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+}
+.uno-sound:hover { color: var(--text); border-color: var(--orange); }
+.uno-keys { margin: 0.6rem 0 0; }
+
+/* A new top card pops in; someone down to one card gets a banner. */
+.uno-card.just-played { animation: uno-pop 0.45s ease-out; }
+@keyframes uno-pop {
+  0% { transform: scale(0.6) rotate(-10deg); opacity: 0.2; }
+  60% { transform: scale(1.12) rotate(3deg); opacity: 1; }
+  100% { transform: none; }
+}
+.uno-banner {
+  margin-bottom: 1rem;
+  padding: 0.6rem 1rem;
+  border-radius: 12px;
+  background: #e53935;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-align: center;
+  animation: uno-banner-in 0.3s ease-out;
+}
+@keyframes uno-banner-in {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
 
 @media (max-width: 600px) {
   .uno-table { grid-template-columns: 1fr; }
@@ -1495,6 +1534,7 @@ code.cmd.copyable:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .uno-card.just-played, .uno-banner { animation: none; }
   .uno-card-btn { transition: none; }
   .uno-card-btn:hover:not(:disabled) { transform: none; }
 }
