@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-06T05:19:55Z",
+  "updatedAt": "2026-10-06T05:43:42Z",
   "trivia": [
     {
       "name": "ahmed",
@@ -34,6 +34,12 @@
     {
       "name": "arazez",
       "points": 231,
+      "won": 1,
+      "lost": 1
+    },
+    {
+      "name": "parceldeliverer",
+      "points": 38,
       "won": 1,
       "lost": 0
     }
