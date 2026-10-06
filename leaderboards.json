@@ -1,24 +1,24 @@
 {
-  "updatedAt": "2026-10-06T23:32:57Z",
+  "updatedAt": "2026-10-06T23:34:57Z",
   "trivia": [],
   "uno": [
     {
       "name": "arazez",
-      "points": 477,
-      "won": 5,
+      "points": 565,
+      "won": 6,
       "lost": 3
     },
     {
       "name": "faux",
       "points": 129,
       "won": 2,
-      "lost": 5
+      "lost": 6
     },
     {
       "name": "ahmed",
       "points": 60,
       "won": 1,
-      "lost": 1
+      "lost": 2
     }
   ],
   "chess": [
