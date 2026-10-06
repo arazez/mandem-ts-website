@@ -1,20 +1,20 @@
 {
-  "updatedAt": "2026-10-06T23:38:27Z",
+  "updatedAt": "2026-10-06T23:39:57Z",
   "trivia": [
     {
-      "name": "arazez",
-      "points": 2
-    },
-    {
       "name": "ahmed",
-      "points": 2
+      "points": 8
     },
     {
       "name": "faux",
-      "points": 2
+      "points": 3
     },
     {
       "name": "t.u.r.k.s",
+      "points": 3
+    },
+    {
+      "name": "arazez",
       "points": 2
     }
   ],
