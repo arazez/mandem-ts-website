@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-06T06:00:01Z",
+  "updatedAt": "2026-10-06T06:00:31Z",
   "trivia": [
     {
       "name": "ahmed",
@@ -33,15 +33,9 @@
   "uno": [
     {
       "name": "arazez",
-      "points": 236,
-      "won": 2,
-      "lost": 3
-    },
-    {
-      "name": "parceldeliverer",
-      "points": 160,
-      "won": 3,
-      "lost": 1
+      "points": 231,
+      "won": 1,
+      "lost": 0
     }
   ],
   "chess": [
