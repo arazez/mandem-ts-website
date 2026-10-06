@@ -1,9 +1,9 @@
 {
-  "updatedAt": "2026-10-06T09:52:20Z",
+  "updatedAt": "2026-10-06T09:55:20Z",
   "trivia": [
     {
       "name": "arazez",
-      "points": 56
+      "points": 62
     },
     {
       "name": "ahmed",
@@ -26,15 +26,15 @@
       "points": 5
     },
     {
+      "name": "parceldeliverer",
+      "points": 3
+    },
+    {
       "name": "hashithefourth",
       "points": 2
     },
     {
       "name": "Fizzy",
-      "points": 1
-    },
-    {
-      "name": "parceldeliverer",
       "points": 1
     }
   ],
