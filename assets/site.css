@@ -1544,3 +1544,81 @@ code.cmd.copyable:focus-visible {
   .uno-card-btn { transition: none; }
   .uno-card-btn:hover:not(:disabled) { transform: none; }
 }
+
+/* ---- Trivia page (trivia.html, assets/trivia.js) ----
+   It shares the Uno page's status bar, sound switch, alerts, result box and
+   Play again styles (the uno- classes above). Green marks the right answer
+   and red a miss; the words on the button say so too. */
+.trivia-card { margin-bottom: 1rem; }
+.trivia-category { margin: 0 0 0.3rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.trivia-question { margin: 0 0 1rem; font-size: 1.35rem; line-height: 1.35; overflow-wrap: anywhere; }
+.trivia-bar { height: 6px; margin: 0 0 1rem; border-radius: 999px; background: var(--border); overflow: hidden; }
+.trivia-bar[hidden] { display: none; }
+.trivia-bar span { display: block; height: 100%; width: 100%; background: var(--orange); transition: width 0.1s linear; }
+.trivia-answers { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+.trivia-answer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.75rem;
+  padding: 0.85rem 1rem;
+  font: inherit;
+  font-size: 1.05rem;
+  text-align: left;
+  color: var(--text);
+  background: var(--bg-alt);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.12s ease, transform 0.12s ease;
+}
+.trivia-answer:hover:not(:disabled) { border-color: var(--orange); transform: translateY(-2px); }
+.trivia-answer:disabled { cursor: default; }
+.trivia-number {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 8px;
+  font-weight: 800;
+  background: var(--orange-dim);
+  color: var(--orange);
+}
+.trivia-choice { flex: 1; min-width: 8rem; overflow-wrap: anywhere; }
+.trivia-tag { flex-basis: 100%; font-size: 0.85rem; font-weight: 600; }
+.trivia-answer.right { border-color: var(--green); background: var(--green-dim); }
+.trivia-answer.right .trivia-number { background: var(--green); color: var(--bg); }
+.trivia-answer.right .trivia-tag { color: var(--green); }
+.trivia-answer.wrong { border-color: #e53935; background: #e5393514; }
+.trivia-answer.wrong .trivia-number { background: #e53935; color: #fff; }
+.trivia-answer.wrong .trivia-tag { color: #e53935; }
+.trivia-actions { align-items: center; margin-top: 1rem; }
+.trivia-actions .uno-keys { margin: 0; }
+
+.trivia-scores ol { list-style: none; margin: 0; padding: 0.75rem; display: grid; gap: 0.35rem; }
+.trivia-scores li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.trivia-scores li.you .trivia-player-name { color: var(--orange); font-weight: 600; }
+.trivia-player-name { overflow-wrap: anywhere; }
+.trivia-player-side { display: inline-flex; gap: 0.8rem; white-space: nowrap; }
+.trivia-player-score { font-variant-numeric: tabular-nums; color: var(--text-dim); }
+.trivia-answered { color: var(--green); }
+
+@media (max-width: 600px) {
+  .trivia-answers { grid-template-columns: 1fr; }
+  .trivia-question { font-size: 1.15rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trivia-answer, .trivia-bar span { transition: none; }
+  .trivia-answer:hover:not(:disabled) { transform: none; }
+}

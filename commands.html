@@ -38,7 +38,7 @@
   <aside class="toc" id="toc" aria-label="On this page"></aside>
 
   <!-- Command list: written by the commands-page-writer agent from the bot's docs/COMMANDS.md -->
-  <!-- commands-source sha256=159e89d016c283e44eab7d69a112dd5e706b5085cba436f05183138f41912bd5 -->
+  <!-- commands-source sha256=6beb2fb460b72cea3ec3fe229936db27085c40276af2e66a3904d988c83e8601 -->
   <div id="commands">
 
     <section class="cmd-group">
@@ -148,10 +148,10 @@
     <section class="cmd-group">
       <h2>Trivia</h2>
       <div class="card">
-        <p class="muted">Played in your private chat with the bot, so only the people playing see it. You can't start or join a game from a locked channel, and a game where only one person answered doesn't count on the leaderboard.</p>
+        <p class="muted">You get a game together in TeamSpeak, then play it on a web page: when the game starts, the bot sends each of you your own link to it. On your page you see each question with a countdown and four answers, and everyone's score, and you click an answer (or press 1 to 4). A wrong answer turns red on your page only; the first right answer ends the question, and everyone sees the right answer in green, who got it and the scores. When a new question comes up the page plays a short chime (you can switch it off). You can't start or join a game from a locked channel, and a game where only one person answered doesn't count on the leaderboard. When a game ends, press Play again on your page to open a new one on the same topic in the same channel: everyone there is invited, and the last game's players can join straight from their page.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!trivia</code></dt>
-          <dd>Opens a 10-question game of mixed topics in the channel you're in, or joins one already running there. You're its host, and everyone else in the channel gets an invite to join.</dd>
+          <dd>Opens a 10-question game of mixed topics in the channel you're in, or joins one already running there. You're its host, and everyone else in the channel gets an invite to join. Once your game has started, it sends you your link again.</dd>
 
           <dt><code class="cmd">!trivia &lt;topic&gt;</code></dt>
           <dd>Opens a game on one topic instead. If a game is already running in your channel, you join it, and the bot tells you if it's on a different topic. Capitals and spaces don't matter.<br><span class="cmd-example">Example: <code class="cmd">!trivia football</code></span></dd>
@@ -160,13 +160,13 @@
           <dd>Lists the topics: general, geography, history, science, games, movies, tv, anime, sport, football, basketball and cs (Counter-Strike: the pro scene, the games, maps and fun facts; <code class="cmd">!trivia cs2</code> and <code class="cmd">!trivia csgo</code> work too).</dd>
 
           <dt><code class="cmd">!trivia join</code></dt>
-          <dd>Joins the game in your channel, and everyone already in is told. You can also join after it's started, and you start from the next question. Once it's going, answer each question by typing just the letter of your choice (A to D), like <code class="cmd">b</code>, in your private chat with the bot. You get 20 seconds per question.</dd>
+          <dd>Joins the game in your channel, and everyone already in is told. You can also join after it's started: the bot sends you your link, and you start from the next question.</dd>
 
           <dt><code class="cmd">!trivia start</code></dt>
-          <dd>Starts the game once everyone's in, with no countdown: question 1 goes out straight away. Only the host (the person who opened it) can do this; if they leave first, the next person in takes over as host. A game nobody starts closes 1 minute after it's opened.</dd>
+          <dd>Starts the game once everyone's in, with no countdown. Only the host (the person who opened it) can do this; if they leave first, the next person in takes over as host. A game nobody starts closes 1 minute after it's opened. Everyone then gets a link to their own page, mandem.arazez.com/trivia, with question 1 already up. Keep it to yourself: anyone with your link can answer for you. You get 20 seconds per question.</dd>
 
           <dt><code class="cmd">!trivia leave</code></dt>
-          <dd>Leaves the game. Before it starts, you're simply out. After that, your points so far still count, and the others play on.</dd>
+          <dd>Leaves the game, the same as Leave on your page. Before it starts, you're simply out. After that, your points so far still count, and the others play on.</dd>
 
           <dt><code class="cmd">!trivia top</code></dt>
           <dd>Shows the all-time top 10 in chat. It's also on the <a href="leaderboards">Leaderboards</a> page.</dd>
