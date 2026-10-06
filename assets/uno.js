@@ -8,6 +8,7 @@
 // Local testing: ?api=http://localhost:39365/uno/api (the bot's
 // UNO_WEB_ORIGINS must then include this page's address).
 import { el, fill, notice, queryParam } from "./ui.js";
+import { UK, formatUkTime } from "./time.js";
 
 const API = queryParam("api") || "https://breakfastchief.baron.usbx.me/uno/api";
 const TOKEN = /^#[A-Za-z0-9_-]{24}$/.test(window.location.hash) ? window.location.hash.slice(1) : null;
@@ -27,6 +28,14 @@ let picking = null;     // the wild waiting for a colour
 let message = "";       // the bot's answer to the last move
 let quitArmed = false;  // Quit pressed once: press again to confirm
 let lostTouch = false;  // the bot can't be reached right now
+
+// "Uno · Tue 6 Oct, 21.15": when the game started, UK time (owner's choice over the game number).
+function gameTitle(game) {
+  if (!game.startedAt) return "Uno";
+  const at = new Date(game.startedAt);
+  const day = new Intl.DateTimeFormat("en-GB", { timeZone: UK, weekday: "short", day: "numeric", month: "short" }).format(at);
+  return "Uno · " + day + ", " + formatUkTime(at);
+}
 
 function cardName(card) {
   if (card.value === "wild") return "Wild";
@@ -135,7 +144,7 @@ function countdownText() {
 function render() {
   if (!view) return;
   if (view.locked) {
-    title.textContent = "Uno game " + view.game;
+    title.textContent = "Uno";
     lead.textContent = "";
     document.title = BASE_TITLE;
     fill(root, notice("You're in a locked channel", "Games are off while you're there. Your turns run out until you leave it, and miss 3 in a row and you're out."));
@@ -143,8 +152,9 @@ function render() {
   }
 
   const current = view.players.find((p) => p.turn);
-  title.textContent = "Uno game " + view.game;
-  lead.textContent = view.over ? "This game is over." : view.playing ? "Click a card to play it." : "You're out of this game, but you can still watch.";
+  title.textContent = gameTitle(view);
+  // The number is what !uno games and !uno void go by.
+  lead.textContent = "Game " + view.game + " · " + (view.over ? "This game is over." : view.playing ? "Click a card to play it." : "You're out of this game, but you can still watch.");
   document.title = (view.yourTurn ? "Your turn · " : "") + BASE_TITLE;
 
   const parts = [];
