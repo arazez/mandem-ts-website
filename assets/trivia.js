@@ -12,7 +12,7 @@
 // game in its channel, and moves to that game by itself once it starts.
 // Local testing: ?api=http://localhost:39365/uno/trivia/api (the bot's
 // UNO_WEB_ORIGINS must then include this page's address).
-import { el, fill, notice, queryParam } from "./ui.js";
+import { el, fill, notice, queryParam, toggleSwitch } from "./ui.js";
 import { UK, formatUkTime } from "./time.js";
 
 // Trivia rides on the Uno page's address at the seedbox, under /uno/trivia/.
@@ -261,11 +261,7 @@ function render() {
   if (!view.over) {
     const clock = el("span", "uno-clock", clockText());
     clock.id = "triviaClock";
-    const sound = el("button", "uno-sound", soundOn ? "🔔 Sound on" : "🔕 Sound off");
-    sound.type = "button";
-    sound.title = "A chime when a new question comes up. It plays once you've clicked anywhere on this page.";
-    sound.setAttribute("aria-pressed", String(soundOn));
-    sound.addEventListener("click", () => setSound(!soundOn));
+    const sound = toggleSwitch("🔔 Sound", soundOn, setSound, "A chime when a new question comes up. It plays once you've clicked anywhere on this page.");
     status.append(el("span", "uno-status-side", clock, sound));
   }
   parts.push(status);

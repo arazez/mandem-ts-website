@@ -11,7 +11,7 @@
 // game in its channel, and moves to that game by itself once it starts.
 // Local testing: ?api=http://localhost:39365/uno/api (the bot's
 // UNO_WEB_ORIGINS must then include this page's address).
-import { el, fill, notice, queryParam } from "./ui.js";
+import { el, fill, notice, queryParam, toggleSwitch } from "./ui.js";
 import { UK, formatUkTime } from "./time.js";
 
 const API = queryParam("api") || "https://breakfastchief.baron.usbx.me/uno/api";
@@ -286,11 +286,7 @@ function render() {
     status.append(el("strong", null, view.yourTurn ? "Your turn" : current.name + "'s turn"));
     const clock = el("span", "uno-clock", countdownText());
     clock.id = "unoClock";
-    const sound = el("button", "uno-sound", soundOn ? "🔔 Sound on" : "🔕 Sound off");
-    sound.type = "button";
-    sound.title = "A chime when it's your turn. It plays once you've clicked anywhere on this page.";
-    sound.setAttribute("aria-pressed", String(soundOn));
-    sound.addEventListener("click", () => setSound(!soundOn));
+    const sound = toggleSwitch("🔔 Sound", soundOn, setSound, "A chime when it's your turn. It plays once you've clicked anywhere on this page.");
     status.append(el("span", "uno-status-side", clock, sound));
   }
   parts.push(status);

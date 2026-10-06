@@ -39,6 +39,20 @@ export function comingSoon(what) {
   return notice("Coming soon", what);
 }
 
+// An on/off switch, such as the game pages' Sound: the label stays the same
+// and the slider says On or Off, so it always shows the state, never the
+// action. Its knob and colour move too, but the words carry the meaning.
+export function toggleSwitch(label, on, onChange, title) {
+  const button = el("button", "switch" + (on ? " on" : ""), el("span", "switch-label", label),
+    el("span", "switch-track", el("span", "switch-knob"), el("span", "switch-state", on ? "On" : "Off")));
+  button.type = "button";
+  button.setAttribute("role", "switch");
+  button.setAttribute("aria-checked", String(on));
+  if (title) button.title = title;
+  button.addEventListener("click", () => onChange(!on));
+  return button;
+}
+
 // Replace a container's contents.
 export function fill(container, ...children) {
   container.replaceChildren(...children.filter(Boolean));
