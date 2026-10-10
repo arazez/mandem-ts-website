@@ -1,4 +1,10 @@
 {
-  "updatedAt": "2026-10-08T04:50:12Z",
-  "live": []
+  "updatedAt": "2026-10-10T00:47:39Z",
+  "live": [
+    {
+      "name": "arazez",
+      "twitch": "arazez",
+      "since": "2026-10-10T00:47:04Z"
+    }
+  ]
 }
