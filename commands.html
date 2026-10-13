@@ -117,28 +117,30 @@
     <section class="cmd-group">
       <h2>Prayer pokes</h2>
       <div class="card">
-        <p class="muted">The bot can poke you at each prayer's adhan time, with a box that says, for example, "Maghrib time (London Central Mosque)". On Fridays the Dhuhr poke says Jumu'ah. Nobody's poked unless they sign up, pokes only reach you while you're on the server, and nobody in a locked lobby or in jail is poked. If you're not on at the time, you still get it if you connect within 10 minutes. Pick where your times come from: a mosque, or your city. If you use TeamSpeak on more than one device, sign up on each one.</p>
+        <p class="muted">Get a poke from the bot when it's time to pray. At each adhan time, a box pops up on your screen saying which prayer it is, for example "Maghrib time (London Central Mosque)". On Fridays, the Dhuhr poke says Jumu'ah instead.</p>
+        <p class="muted">It's off until you turn it on. To start, choose where your prayer times come from, using one of the first two commands below: London Central Mosque's timetable, or times worked out for your city. Choosing one signs you up straight away, with all five prayers switched on. You can change your choice whenever you like.</p>
+        <p class="muted">Good to know: pokes only reach you while you're connected to the server. If you're not on at a prayer's time but connect within 10 minutes, you still get that poke; after that, it's skipped. You won't be poked while you're in a locked lobby. Each device you use TeamSpeak on counts separately, so sign up on every device you want pokes on.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!prayer mosque lcm</code></dt>
-          <dd>Signs you up for London Central Mosque's times, taken from its own yearly calendar, so they match the paper calendar. It's the only mosque for now; ask the Owner if you'd like another. <code class="cmd">!prayer mosques</code> lists them.</dd>
+          <dd>Uses London Central Mosque's prayer times. They're copied from the mosque's own calendar for the year, so they match its paper timetable exactly.<br><br>It's the only mosque for now. If you'd like your own mosque added, ask the Owner. To see the mosques the bot has, send <code class="cmd">!prayer mosques</code>.</dd>
 
           <dt><code class="cmd">!prayer city &lt;your city&gt;</code></dt>
-          <dd>Signs you up for times worked out from the sun for your city. The bot knows about 1,700 cities worldwide, from every capital to UK towns of about 40,000 people, and names like Mecca or Bombay work too. If the name is in more than one country, the bot asks which: add the country. You're poked on that city's own clock, so a city abroad gets that city's prayer times. The calculation method starts as the one usually used in that country. A city it doesn't know is refused: try the nearest big city, or ask the Owner to add it.<br><span class="cmd-example">Example: <code class="cmd">!prayer city Hyderabad, Pakistan</code></span></dd>
+          <dd>Uses prayer times worked out for your city, from where the sun is there each day. Type your city's name after the command. The bot knows about 1,700 cities around the world: every capital, big cities everywhere, and UK towns down to about 40,000 people. You don't need to type accents, and common names work too, like Mecca or Bombay.<br><br>If the same name exists in more than one country (Hyderabad is in both India and Pakistan), the bot asks which one you mean. Send it again with the country after a comma, as in the example.<br><br>If you pick a city abroad, you're poked at that city's prayer times: Karachi's Maghrib, not London's. If the bot doesn't know your city, pick the nearest big city, or ask the Owner to add yours.<br><span class="cmd-example">Example: <code class="cmd">!prayer city Hyderabad, Pakistan</code></span></dd>
 
           <dt><code class="cmd">!prayer method</code> / <code class="cmd">!prayer method &lt;number&gt;</code></dt>
-          <dd>City times only. Lists the 23 calculation methods, numbered (Moonsighting Committee for the UK, Muslim World League, ISNA, Umm al-Qura, Karachi, Egyptian, Diyanet, Dubai, the Gulf states, Malaysia, Indonesia, Singapore, France, Russia, Jordan, Morocco, Tunisia, Algeria, Portugal, Tehran and Shia Ithna Ashari), then pick one by its number or short name.<br><span class="cmd-example">Example: <code class="cmd">!prayer method karachi</code></span></dd>
+          <dd>Only for city times. Countries and Islamic organisations work out prayer times in slightly different ways, mostly for Fajr and Isha. These are called calculation methods. When you pick a city, the bot starts you on the method usually used in that country; in the UK, that's the Moonsighting Committee's.<br><br>To use a different one, send <code class="cmd">!prayer method</code> to see all 23, numbered, then <code class="cmd">!prayer method</code> followed by its number. They include Muslim World League, ISNA (North America), Umm al-Qura (Saudi Arabia), Karachi (Pakistan, India, Bangladesh), Egyptian, Diyanet (Turkey), the Gulf states, Malaysia, Indonesia, Singapore, France, Russia, Tehran and Shia Ithna Ashari.<br><br>Mosque times don't use a method, because the mosque sets its own.<br><span class="cmd-example">Example: <code class="cmd">!prayer method 2</code></span></dd>
 
           <dt><code class="cmd">!prayer madhab hanafi</code> / <code class="cmd">!prayer madhab standard</code></dt>
-          <dd>City times only. Changes Asr: Standard (Shafi'i, Maliki, Hanbali) is what you start with, and Hanafi Asr is later in the afternoon. Nothing else moves.</dd>
+          <dd>Only for city times. This changes when Asr is. You start on Standard, the Asr time used by the Shafi'i, Maliki and Hanbali madhabs. If you follow the Hanafi madhab, switch to Hanafi, and Asr comes later in the afternoon. No other prayer changes.</dd>
 
           <dt><code class="cmd">!prayer off fajr</code> / <code class="cmd">!prayer on fajr</code></dt>
-          <dd>You start with all five prayers. Stops pokes for just one prayer, or has it back. You can name more than one, and spellings like zuhr, asar or magrib work too.</dd>
+          <dd>Turns off the poke for one prayer and keeps the rest, for example if you'd rather not be poked for Fajr. <code class="cmd">!prayer on fajr</code> turns it back on. Any of the five prayers works the same way. You can name more than one at once, and other spellings like zuhr, asar or magrib work too.<br><span class="cmd-example">Example: <code class="cmd">!prayer off fajr isha</code></span></dd>
 
           <dt><code class="cmd">!prayer off</code> / <code class="cmd">!prayer on</code></dt>
-          <dd>Stops all your pokes, keeping your settings, or starts them again just as they were.</dd>
+          <dd><code class="cmd">!prayer off</code> pauses all your pokes. Your choices are saved, so <code class="cmd">!prayer on</code> picks up exactly where you left off.</dd>
 
           <dt><code class="cmd">!prayer</code> / <code class="cmd">!prayer times</code></dt>
-          <dd>Shows your settings and today's times, or just the times.</dd>
+          <dd><code class="cmd">!prayer</code> shows what you've set up: where your times come from, which prayers you're poked for, and today's times. <code class="cmd">!prayer times</code> shows just today's times. Before you've signed up, <code class="cmd">!prayer</code> explains how to start.</dd>
         </dl>
       </div>
     </section>
