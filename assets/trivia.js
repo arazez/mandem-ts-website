@@ -226,16 +226,23 @@ function barShare() {
   return Math.max(0, Math.min(1, (deadline - performance.now()) / view.answerMs));
 }
 
-// What happened to the open or last question, in words.
+const points = (n) => n + (Math.abs(n) === 1 ? " point" : " points");
+
+// What happened to the open or last question, in words, and how it went for you:
+// "good" (green) or "bad" (red) shows as a banner, so who got it can't be missed.
 function feedback() {
-  if (view.waiting) return "You joined during this question. You'll get the next one.";
+  if (view.waiting) return { text: "You joined during this question. You'll get the next one.", tone: "" };
   // While the question is open, an answer given is wrong: a right one closes it.
-  if (view.phase === "question") return view.yourChoice !== null ? "Wrong, wait for the next one." : "";
+  if (view.phase === "question") return view.yourChoice !== null ? { text: "Wrong: minus 1 point. Wait for the next one.", tone: "bad" } : null;
   const r = view.reveal;
-  if (!r) return "";
-  if (r.how === "got") return view.yourChoice === view.correct ? "You got it!" : r.name + " got it.";
-  if (r.how === "nobody") return "Nobody got it.";
-  return "Time's up.";
+  if (!r) return null;
+  if (r.how === "got") {
+    if (view.yourChoice === view.correct) return { text: "You got it first! Plus 2 points.", tone: "good" };
+    // The bot says when you pressed a moment after them.
+    return { text: (view.slow ? "Too slow! " : "") + r.name + " got it first.", tone: "bad" };
+  }
+  if (r.how === "nobody") return { text: "Nobody got it.", tone: "" };
+  return { text: "Time's up.", tone: "" };
 }
 
 function render() {
@@ -291,7 +298,7 @@ function render() {
     const button = el("button", "trivia-answer" + (right ? " right" : "") + (wrong ? " wrong" : ""),
       el("span", "trivia-number", String(i + 1)),
       el("span", "trivia-choice", choice),
-      right ? el("span", "trivia-tag", mine ? "✓ Right: your answer" : "✓ Right answer") : wrong ? el("span", "trivia-tag", "✗ Your answer") : null);
+      right ? el("span", "trivia-tag", mine ? "✓ Right: your answer" : view.reveal && view.reveal.how === "got" ? "✓ Right answer: " + view.reveal.name + " got it" : "✓ Right answer") : wrong ? el("span", "trivia-tag", "✗ Your answer") : null);
     button.type = "button";
     button.disabled = !canAnswer() || busy;
     button.addEventListener("click", () => move({ action: "answer", choice: i }));
@@ -310,7 +317,7 @@ function render() {
       bar,
       answers);
   const said = feedback();
-  if (said) card.append(el("p", "uno-message", said));
+  if (said) card.append(el("p", said.tone ? "trivia-feedback " + said.tone : "uno-message", said.text));
   if (message) card.append(el("p", "uno-message", message));
   if (view.playing && !view.over) {
     const leave = el("button", "btn btn-outline uno-quit", leaveArmed ? "Press again to leave" : "Leave");
@@ -325,7 +332,7 @@ function render() {
       leaveArmed = false;
       move({ action: "quit" });
     });
-    card.append(el("div", "uno-actions trivia-actions", el("p", "muted small uno-keys", "Keys: 1, 2, 3 or 4 to answer."), leave));
+    card.append(el("div", "uno-actions trivia-actions", el("p", "muted small uno-keys", "Keys: 1, 2, 3 or 4 to answer. Right: plus 2. Wrong: minus 1. No answer: 0."), leave));
     if (leaveArmed) card.append(el("p", "muted small", "Your points so far still count, and the others play on."));
   }
   // A game everyone left before question 1 has no question to show.
@@ -338,7 +345,7 @@ function render() {
         el("span", "trivia-player-name", p.name + (p.you ? " (you)" : "") + (p.left ? " (left)" : "")),
         el("span", "trivia-player-side",
           p.answered ? el("span", "trivia-answered", "✓ answered") : null,
-          el("span", "trivia-player-score", p.score + (p.score === 1 ? " point" : " points"))))))));
+          el("span", "trivia-player-score", points(p.score))))))));
 
   fill(root, ...parts);
 }

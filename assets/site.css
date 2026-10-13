@@ -1655,6 +1655,22 @@ code.cmd.copyable:focus-visible {
   .trivia-answer:hover:not(:disabled) { transform: none; }
 }
 
+/* Trivia: who got the question, as a banner (green when it was you, red when not). */
+.trivia-feedback {
+  margin: 0.9rem 0 0;
+  padding: 0.6rem 1rem;
+  border-radius: 12px;
+  font-size: 1.3rem;
+  font-weight: 800;
+  text-align: center;
+  animation: uno-banner-in 0.3s ease-out;
+}
+.trivia-feedback.good { background: var(--green); color: var(--bg); }
+.trivia-feedback.bad { background: #e53935; color: #fff; }
+@media (prefers-reduced-motion: reduce) {
+  .trivia-feedback { animation: none; }
+}
+
 /* Trivia: the countdown before question 1, while everyone opens their page. */
 .trivia-ready { text-align: center; }
 .trivia-ready-count { margin: 0.5rem 0; font-size: 4rem; font-weight: 800; line-height: 1; color: var(--orange); font-variant-numeric: tabular-nums; }

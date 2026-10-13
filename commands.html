@@ -38,7 +38,7 @@
   <aside class="toc" id="toc" aria-label="On this page"></aside>
 
   <!-- Command list: written by the commands-page-writer agent from the bot's docs/COMMANDS.md -->
-  <!-- commands-source sha256=965d5f43e803fa7ec40940ccec7a6d4408365d656a22edeb72f8d7252fefcc64 -->
+  <!-- commands-source sha256=909f0892c5c94d8ef05b56ac0e626355f2c958c9c3a79c7209a89ae4aed34472 -->
   <div id="commands">
 
     <section class="cmd-group">
@@ -115,6 +115,35 @@
     </section>
 
     <section class="cmd-group">
+      <h2>Prayer pokes</h2>
+      <div class="card">
+        <p class="muted">The bot can poke you at each prayer's adhan time, with a box that says, for example, "Maghrib time (London Central Mosque)". On Fridays the Dhuhr poke says Jumu'ah. Nobody's poked unless they sign up, pokes only reach you while you're on the server, and nobody in a locked lobby or in jail is poked. If you're not on at the time, you still get it if you connect within 10 minutes. Pick where your times come from: a mosque, or your city. If you use TeamSpeak on more than one device, sign up on each one.</p>
+        <dl class="cmd-list">
+          <dt><code class="cmd">!prayer mosque lcm</code></dt>
+          <dd>Signs you up for London Central Mosque's times, taken from its own yearly calendar, so they match the paper calendar. It's the only mosque for now; ask the Owner if you'd like another. <code class="cmd">!prayer mosques</code> lists them.</dd>
+
+          <dt><code class="cmd">!prayer city &lt;your city&gt;</code></dt>
+          <dd>Signs you up for times worked out from the sun for your city. The bot knows about 1,700 cities worldwide, from every capital to UK towns of about 40,000 people, and names like Mecca or Bombay work too. If the name is in more than one country, the bot asks which: add the country. You're poked on that city's own clock, so a city abroad gets that city's prayer times. The calculation method starts as the one usually used in that country. A city it doesn't know is refused: try the nearest big city, or ask the Owner to add it.<br><span class="cmd-example">Example: <code class="cmd">!prayer city Hyderabad, Pakistan</code></span></dd>
+
+          <dt><code class="cmd">!prayer method</code> / <code class="cmd">!prayer method &lt;number&gt;</code></dt>
+          <dd>City times only. Lists the 23 calculation methods, numbered (Moonsighting Committee for the UK, Muslim World League, ISNA, Umm al-Qura, Karachi, Egyptian, Diyanet, Dubai, the Gulf states, Malaysia, Indonesia, Singapore, France, Russia, Jordan, Morocco, Tunisia, Algeria, Portugal, Tehran and Shia Ithna Ashari), then pick one by its number or short name.<br><span class="cmd-example">Example: <code class="cmd">!prayer method karachi</code></span></dd>
+
+          <dt><code class="cmd">!prayer madhab hanafi</code> / <code class="cmd">!prayer madhab standard</code></dt>
+          <dd>City times only. Changes Asr: Standard (Shafi'i, Maliki, Hanbali) is what you start with, and Hanafi Asr is later in the afternoon. Nothing else moves.</dd>
+
+          <dt><code class="cmd">!prayer off fajr</code> / <code class="cmd">!prayer on fajr</code></dt>
+          <dd>You start with all five prayers. Stops pokes for just one prayer, or has it back. You can name more than one, and spellings like zuhr, asar or magrib work too.</dd>
+
+          <dt><code class="cmd">!prayer off</code> / <code class="cmd">!prayer on</code></dt>
+          <dd>Stops all your pokes, keeping your settings, or starts them again just as they were.</dd>
+
+          <dt><code class="cmd">!prayer</code> / <code class="cmd">!prayer times</code></dt>
+          <dd>Shows your settings and today's times, or just the times.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section class="cmd-group">
       <h2>Locking a channel</h2>
       <div class="card">
         <p class="muted">For a private lobby or your community channel, when you want to play without being disturbed. A locked channel shows [LOCKED] in its name and gets a hidden password so nobody else can walk in; anyone who somehow gets in is moved straight back out. A lock also ends on its own once the channel has been empty for 2 minutes.</p>
@@ -148,7 +177,7 @@
     <section class="cmd-group">
       <h2>Trivia</h2>
       <div class="card">
-        <p class="muted">You get a game together in TeamSpeak, then play it on a web page: when the game starts, the bot sends each of you your own link to it. On your page you see each question with a countdown and four answers, and everyone's score, and you click an answer (or press 1 to 4). A wrong answer turns red on your page only; the first right answer ends the question, and everyone sees the right answer in green, who got it and the scores. When a new question comes up the page plays a short chime (you can switch it off). You can't start or join a game from a locked channel, and a game where only one person answered doesn't count on the leaderboard. When a game ends, press Play again on your page to open a new one on the same topic in the same channel: everyone there is invited, and the last game's players can join straight from their page.</p>
+        <p class="muted">You get a game together in TeamSpeak, then play it on a web page: when the game starts, the bot sends each of you your own link to it. On your page you see each question with a countdown and four answers, and everyone's score, and you click an answer (or press 1 to 4). The first right answer scores 2 points and ends the question; a wrong one loses you 1 point, and not answering scores 0, so only answer when you think you know. A wrong answer turns red on your page only. Once someone gets it, everyone sees the right answer in green and the scores, and a banner says who got it first ("Too slow!" if you pressed just after them, which costs nothing). A game you finish below 0 takes points off your leaderboard total. When a new question comes up the page plays a short chime (you can switch it off). You can't start or join a game from a locked channel, and a game where only one person answered doesn't count on the leaderboard. When a game ends, press Play again on your page to open a new one on the same topic in the same channel: everyone there is invited, and the last game's players can join straight from their page.</p>
         <dl class="cmd-list">
           <dt><code class="cmd">!trivia</code></dt>
           <dd>Opens a 10-question game of mixed topics in the channel you're in, or joins one already running there. You're its host, and everyone else in the channel gets an invite to join. Once your game has started, it sends you your link again, from any channel.</dd>
