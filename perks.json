@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-08",
+  "lastUpdated": "2026-10-24",
   "perks": {
     "hashithefourth": {
       "banner": 5,
@@ -7,9 +7,10 @@
       "mute": true
     },
     "Rack": {
-      "banner": 4,
+      "banner": 3,
       "modal": 5,
-      "mute": true
+      "mute": true,
+      "bannerUntil": "2026-10-31T15:04:58Z"
     },
     "Raadeh": {
       "banner": 5,
