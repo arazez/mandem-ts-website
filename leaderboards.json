@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T20:03:07Z",
+  "updatedAt": "2026-11-23T20:21:37Z",
   "trivia": [
     {
       "name": "arazez",
@@ -51,18 +51,18 @@
       "lost": 0
     },
     {
-      "name": "Faux",
-      "rating": 800,
-      "won": 6,
-      "drawn": 1,
-      "lost": 8
-    },
-    {
       "name": "arazez",
-      "rating": 784,
-      "won": 8,
+      "rating": 801,
+      "won": 9,
       "drawn": 1,
       "lost": 7
+    },
+    {
+      "name": "Faux",
+      "rating": 783,
+      "won": 6,
+      "drawn": 1,
+      "lost": 9
     }
   ]
 }
